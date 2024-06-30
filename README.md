@@ -40,5 +40,5 @@ PlebsForge (Animation dictionary look up)
 
 # Disclaimer
 
-You are NOT Authorized to redistribute this pack on other websites. Only websites this pack is being distributed on is GitHub. Redsitrbuting this pack will
+You are NOT Authorized to redistribute this pack on other websites. Only websites this pack is being distributed on is GitHub. Redistributing this pack will
 result in a DMCA  Takedown Notice. 
