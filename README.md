@@ -20,6 +20,12 @@ Loitering
 
 Vehicle Blocking Crosswalk
 
+Abandoned Vehicle
+
+Drugs Found
+
+Suspicious Person
+
 # Features:
 
 - Customizable ini
