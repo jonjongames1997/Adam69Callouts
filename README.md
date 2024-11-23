@@ -41,7 +41,7 @@ None currently planned.
 - Add own callout audio
 - Smashing Bugs
 - Add more locations to certain callouts for more variety
-and so much more (Undisclosed)
+- and so much more (Undisclosed)
 
 # Incompatibility
 
