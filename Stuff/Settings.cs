@@ -6,7 +6,6 @@ namespace Adam69Callouts
     internal static class Settings
     {
         internal static bool LostDog = true;
-        internal static bool IndecentExposureSFW = true;
         internal static bool VehicleBlockingSidewalk = true;
         internal static bool BicyclePursuit = true;
         internal static bool PersonCarryingAConcealedWeapon = true;
@@ -34,7 +33,6 @@ namespace Adam69Callouts
             ini.Create();
             Game.LogTrivial("Initializing config for Adam69 Callouts....");
             Settings.LostDog = ini.ReadBoolean("Callouts", "LostDog", true);
-            Settings.IndecentExposureSFW = ini.ReadBoolean("Callouts", "IndecentExposureSFW", true);
             Settings.VehicleBlockingSidewalk = ini.ReadBoolean("Callouts", "VehicleBlockingSidewalk", true);
             Settings.BicyclePursuit = ini.ReadBoolean("Callouts", "BicyclePursuit", true);
             Settings.PersonCarryingAConcealedWeapon = ini.ReadBoolean("Callouts", "PersonCarryingAConcealedWeapon", true);
@@ -52,6 +50,6 @@ namespace Adam69Callouts
             PickUp = ini.ReadEnum<Keys>("Keys", "PickUp", Keys.E);
         }
 
-        public static readonly string PluginVersion = "0.1.0";
+        public static readonly string PluginVersion = "0.1.2";
     }
 }

@@ -2,8 +2,6 @@
 using Adam69Callouts.Callouts;
 using Adam69Callouts.VersionChecker;
 using LSPD_First_Response.Mod.Utils;
-using StopThePed;
-using UltimateBackup;
 
 [assembly: Rage.Attributes.Plugin("Adam69Callouts", Description = "LSPDFR Callout Pack", Author = "OfficerMorrison")]
 namespace Adam69Callouts
@@ -40,9 +38,7 @@ namespace Adam69Callouts
 
 
                     Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "Adam69 Callouts", "~g~v" + Assembly.GetExecutingAssembly().GetName().Version.ToString() + " ~g~by ~o~OfficerMorrison", "~b~successfully loaded!");
-                    Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "Adam69 Callouts", "by OfficerMorrison", "Adam69 Callouts Preview 5 ~g~successfully~w~ loaded. Have a great patrol.");
 
-                    GameFiber.Wait(300);
 
                     if (Settings.HelpMessages)
                     {
@@ -53,6 +49,10 @@ namespace Adam69Callouts
                     {
                         Settings.HelpMessages = false;
                     }
+
+                    VersionChecker.PluginCheck.IsUpdateAvailable();
+
+                    GameFiber.Wait(300);
                 });
         }
 
@@ -103,7 +103,6 @@ namespace Adam69Callouts
             Game.Console.Print("================================================== Adam69 Callouts ===================================================");
             Game.Console.Print();
             if (Settings.LostDog) { Functions.RegisterCallout(typeof(LostDog)); }
-            if (Settings.IndecentExposureSFW) { Functions.RegisterCallout(typeof(IndecentExposureSFW)); }
             if (Settings.VehicleBlockingSidewalk) { Functions.RegisterCallout(typeof(VehicleBlockingSidewalk)); }
             if (Settings.BicyclePursuit) { Functions.RegisterCallout(typeof(BicyclePursuit)); }
             if (Settings.PersonCarryingAConcealedWeapon) { Functions.RegisterCallout(typeof(PersonCarryingAConcealedWeapon)); }

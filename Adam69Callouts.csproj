@@ -80,7 +80,6 @@
     <Compile Include="Callouts\BicycleBlockingRoadway.cs" />
     <Compile Include="Callouts\BicyclePursuit.cs" />
     <Compile Include="Callouts\DrugsFound.cs" />
-    <Compile Include="Callouts\IndecentExposureSFW.cs" />
     <Compile Include="Callouts\Loitering.cs" />
     <Compile Include="Callouts\LostDog.cs" />
     <Compile Include="Callouts\PersonCarryingAConcealedWeapon.cs" />

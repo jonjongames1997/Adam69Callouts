@@ -20,5 +20,7 @@ global using static Adam69Callouts.Settings;
 global using static Adam69Callouts.VersionChecker.PluginCheck;
 global using static Adam69Callouts.Stuff.LocationChooser;
 global using static Adam69Callouts.Stuff.Vector3Extension;
+global using StopThePed;
+global using UltimateBackup;
 
 #endregion

@@ -6,7 +6,7 @@
         public static bool IsUpdateAvailable()
         {
             string curVersion = Settings.PluginVersion;
-            Uri latestVersionUri = new("https://www.lcpdfr.com/applications/downloadsng/interface/api.php?do=checkForUpdates&fileId=43616&textOnly=1");
+            Uri latestVersionUri = new("https://www.lcpdfr.com/applications/downloadsng/interface/api.php?do=checkForUpdates&fileId=49465&textOnly=1");
             WebClient webClient = new();
             string recieveData;
             try
