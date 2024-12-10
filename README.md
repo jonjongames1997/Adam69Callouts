@@ -43,10 +43,6 @@ None currently planned.
 - Add more locations to certain callouts for more variety
 - and so much more (Undisclosed)
 
-# Incompatibility
-
-Adam69Callouts is INCOMPATIBLE with Callout Launcher. Using this pack with Callout Launcher will crash your LSPDFR. 
-
 # Credits for making this pack
 
 LSPDFR API by G17 Media 
