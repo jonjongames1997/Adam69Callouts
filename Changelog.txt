@@ -1,0 +1,33 @@
+﻿Changelog:
+
+v0.2.5.1:
+
+- Added custom callout audio made with ElevenLabs AI and modified with Audacity
+- Added 1 new callout
+- Added a texture install OIV for faster installation
+- Fixed an issue where the version checker checking the wrong version when it's the correct version
+
+v0.2.3:
+
+- Fixed the issue with disabling help messages. Thanks to Haze for noticing.
+- Updated LSPDFR API Reference to latest version
+- Removed unused code from the project (I forgot to remove it as I don't use the code anywhere in the project)
+- Fixed the ini not reading the values properly. 
+- Updated credits section
+- Suspicious Person and Loitering callouts will now spawn randomly for now. I'm getting a list of locations for these callouts. 
+- Removed Distance Checker
+- Drugs Found is now considered a beta callout.
+
+v0.1.2:
+
+- Added Version Checker
+
+v0.1.1: 
+
+- Removed the preview notification (Was left there by accident)
+- Removed Attempted Indecent Exposure SFW Callout
+- Updated Ini
+
+v0.1.0:
+
+Initial Release
