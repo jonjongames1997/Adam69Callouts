@@ -1,5 +1,29 @@
 ﻿Changelog:
 
+v0.2.7.0:
+
+- Fixed some grammatical errors
+- Minor adjustments
+- bug fixes
+- Fixed an issue with "Deranged Drunken Feller" callout
+- Removed Distance check from "Bicycle Pursuit" callout
+- Minor ini adjustments
+
+v0.2.6.3:
+
+- Fixed an error of the instant code 4 issue when accepting "Deranged Drunken Feller" callout.
+- Added the missing callout audio for "Deranged Drunken Feller" callout.
+- Misc fixes and adjustments
+
+v0.2.6.2:
+
+- This update fixes the OIV Texture Install (wrong texture name for Adam69Callouts notifications)
+- Removed Lost Dog Callout permanently
+- ini update
+- Added 1 new callout
+- Added 3 new weapons in "Suspicious Person" callout
+- Fixed an error the audio is not playing the correct custom audio files in "Bicycle Pursuit" callout
+
 v0.2.5.1:
 
 - Added custom callout audio made with ElevenLabs AI and modified with Audacity
