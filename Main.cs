@@ -94,7 +94,6 @@ namespace Adam69Callouts
             Game.Console.Print();
             Game.Console.Print("================================================== Adam69 Callouts ===================================================");
             Game.Console.Print();
-            if (Settings.LostDog) { Functions.RegisterCallout(typeof(LostDog)); }
             if (Settings.VehicleBlockingSidewalk) { Functions.RegisterCallout(typeof(VehicleBlockingSidewalk)); }
             if (Settings.BicyclePursuit) { Functions.RegisterCallout(typeof(BicyclePursuit)); }
             if (Settings.PersonCarryingAConcealedWeapon) { Functions.RegisterCallout(typeof(PersonCarryingAConcealedWeapon)); }
@@ -105,6 +104,7 @@ namespace Adam69Callouts
             if (Settings.AbandonedVehicle) { Functions.RegisterCallout(typeof(AbandonedVehicle)); }
             if (Settings.DrugsFound) { Functions.RegisterCallout(typeof(DrugsFound)); }
             if (Settings.SuspiciousPerson) { Functions.RegisterCallout(typeof(SuspiciousPerson)); }
+            if (Settings.OfficerDown) { Functions.RegisterCallout(typeof(OfficerDown)); }
             Game.Console.Print("[LOG]: All callouts of the Adam69Callouts.ini were loaded successfully.");
             Game.Console.Print();
             Game.Console.Print("================================================== Adam69 Callouts ===================================================");
