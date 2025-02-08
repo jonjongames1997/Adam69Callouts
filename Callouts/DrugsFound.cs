@@ -1,6 +1,5 @@
 ﻿using CalloutInterfaceAPI;
 using LSPD_First_Response.Engine;
-using System.Security.Cryptography.X509Certificates;
 
 namespace Adam69Callouts.Callouts
 {
@@ -10,7 +9,6 @@ namespace Adam69Callouts.Callouts
     public class DrugsFound : Callout
     {
         private const bool V = false;
-        private static readonly string[] drugList = new string[] { "sf_prop_sf_bag_weed_01b", "bkr_prop_weed_bigbag_open_01a", "m24_1_prop_m41_weed_bigbag_01a", "sf_prop_sf_bag_weed_open_01a" };
         private static Vector3 spawnpoint;
         public Rage.Object theDrugs;
         private static Ped theCaller;
@@ -28,7 +26,7 @@ namespace Adam69Callouts.Callouts
         private static Blip policeCarBlip;
         private static Vehicle policeVehicle;
         private static string copGender;
-        private static bool isCollected = V;
+        private static bool isCollected;
         private static float callerHeading;
         private static float copHeading;
 
@@ -42,6 +40,7 @@ namespace Adam69Callouts.Callouts
             leoVehicleSpawn = new(1000.69f, -1958.26f, 30.86f);
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
             CalloutInterfaceAPI.Functions.SendMessage(this, "Reports of illegal drugs found by a nearby citizen.");
+            LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Drugs_Found_Audio");
             CalloutMessage = "Illegal drugs found";
             CalloutPosition = spawnpoint;
 
@@ -52,7 +51,7 @@ namespace Adam69Callouts.Callouts
         {
             Game.LogTrivial("Adam69 Callouts [LOG]: Drugs Found callout has been accepted!");
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~y~Drugs Found", "~b~Dispatch~w~: The caller has been located. Respond ~r~Code 2~w~.");
-            
+
             if (Settings.HelpMessages == true)
             {
                 Game.DisplayHelp("Press ~y~" + Settings.EndCall + "~w~ at anytime to end the callout");
@@ -61,6 +60,8 @@ namespace Adam69Callouts.Callouts
             {
                 Settings.HelpMessages = false;
             }
+
+            LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_2_Audio");
 
             theCaller = new Ped(callerSpawn);
             theCaller.IsPersistent = true;
@@ -128,7 +129,7 @@ namespace Adam69Callouts.Callouts
 
         public override void Process()
         {
-            if(MainPlayer.DistanceTo(theCaller) <= 5f)
+            if (MainPlayer.DistanceTo(theCaller) <= 5f)
             {
                 if (Settings.HelpMessages == true)
                 {
@@ -143,36 +144,37 @@ namespace Adam69Callouts.Callouts
                 {
                     counter++;
 
-                    if(counter == 1)
+                    if (counter == 1)
                     {
+                        theCop.Tasks.PlayAnimation(new AnimationDictionary("amb@world_human_cop_idles@male@idle_b"), "idle_e", -1f, AnimationFlags.Loop);
                         Game.DisplaySubtitle("~b~You~w~: Hello there, " + malefemale + ". Are you the caller?");
                     }
-                    if(counter == 2)
+                    if (counter == 2)
                     {
                         theCaller.Tasks.PlayAnimation(new AnimationDictionary("anim@amb@casino@brawl@fights@argue@"), "arguement_loop_mp_m_brawler_01", -1f, AnimationFlags.Loop);
                         Game.DisplaySubtitle("~o~The Caller~w~: Yes I am, " + copGender + ".");
                     }
-                    if(counter == 3)
+                    if (counter == 3)
                     {
                         theCaller.Tasks.PlayAnimation(new AnimationDictionary("rcmjosh1"), "idle", -1f, AnimationFlags.Loop);
                         Game.DisplaySubtitle("~b~You~w~: Can you explain how did you find the drugs?");
                     }
-                    if(counter == 4)
+                    if (counter == 4)
                     {
                         theCaller.Tasks.PlayAnimation(new AnimationDictionary("anim@amb@casino@brawl@fights@argue@"), "arguement_loop_mp_m_brawler_01", -1f, AnimationFlags.Loop);
                         Game.DisplaySubtitle("~o~The Caller~w~: I was going for a walk then I spotted this opened bag of weed from LD Organics. I didn't know who owns that bag of weed. That's why I called.");
                     }
-                    if(counter == 5)
+                    if (counter == 5)
                     {
                         theCaller.Tasks.PlayAnimation(new AnimationDictionary("rcmjosh1"), "idle", -1f, AnimationFlags.Loop);
                         Game.DisplaySubtitle("~b~You~w~: We really appreciate that you reported it. I'll investiagte this. I just need to see your ID so I know who I'm talking to.");
                     }
-                    if(counter == 6)
+                    if (counter == 6)
                     {
                         theCaller.Tasks.PlayAnimation(new AnimationDictionary("anim@amb@casino@brawl@fights@argue@"), "arguement_loop_mp_m_brawler_01", -1f, AnimationFlags.Loop);
                         Game.DisplaySubtitle("~o~The Caller~w~: Ok, no problem. I'm really in a hurry. I got to go watch Kansas City Chiefs vs Buffalo Bills game. Buffalo Bills is my team and I hope they give KC a good 'ol fashion spanking. Them cheating ass fuckers.");
                     }
-                    if(counter == 7)
+                    if (counter == 7)
                     {
                         Game.DisplaySubtitle("Convo Ended. Deal with the situation you may see fit.");
                         theCaller.Tasks.PlayAnimation(new AnimationDictionary("rcmjosh1"), "idle", -1f, AnimationFlags.Loop);
@@ -182,14 +184,8 @@ namespace Adam69Callouts.Callouts
 
             if (MainPlayer.DistanceTo(theDrugs) <= 10f)
             {
-                if (Settings.HelpMessages == true)
-                {
-                    Game.DisplayHelp("Press ~y~" + Settings.PickUp + "~w~ to pick up the drugs.");
-                }
-                else
-                {
-                    Settings.HelpMessages = false;
-                }
+                Game.DisplayHelp("Press ~y~" + Settings.PickUp + "~w~ to pick up the drugs.");
+
 
                 if (Game.IsKeyDown(Settings.PickUp))
                 {
@@ -218,6 +214,7 @@ namespace Adam69Callouts.Callouts
             if (policeVehicle) policeVehicle.Delete();
             if (policeCarBlip) policeCarBlip.Delete();
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~y~Drugs Found", "~b~You~w~: Dispatch, we are ~g~Code 4~w~. Show me back 10-8.");
+            LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
 
             base.End();
 
