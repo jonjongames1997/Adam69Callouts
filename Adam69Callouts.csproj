@@ -78,7 +78,6 @@
     <Compile Include="Callouts\BicyclePursuit.cs" />
     <Compile Include="Callouts\DrugsFound.cs" />
     <Compile Include="Callouts\Loitering.cs" />
-    <Compile Include="Callouts\LostDog.cs" />
     <Compile Include="Callouts\OfficerDown.cs" />
     <Compile Include="Callouts\PersonCarryingAConcealedWeapon.cs" />
     <Compile Include="Callouts\SuspiciousPerson.cs" />
@@ -98,7 +97,6 @@
     <Compile Include="VersionChecker\PluginCheck.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include=".editorconfig" />
     <None Include="Adam69Callouts.ini" />
   </ItemGroup>
   <ItemGroup>
