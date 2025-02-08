@@ -6,7 +6,6 @@ namespace Adam69Callouts
 {
     internal static class Settings
     {
-        internal static bool LostDog = true;
         internal static bool VehicleBlockingSidewalk = true;
         internal static bool BicyclePursuit = true;
         internal static bool PersonCarryingAConcealedWeapon = true;
@@ -17,6 +16,7 @@ namespace Adam69Callouts
         internal static bool AbandonedVehicle = true;
         internal static bool DrugsFound = true;
         internal static bool SuspiciousPerson = true;
+        internal static bool OfficerDown = true;
         internal static bool HelpMessages = true;
         internal static Keys EndCall = Keys.End;
         internal static Keys Dialog = Keys.Y;
@@ -29,7 +29,6 @@ namespace Adam69Callouts
             var ini = new InitializationFile(@"Plugins/LSPDFR/Adam69Callouts.ini");
             ini.Create();
             Game.LogTrivial("Initializing config for Adam69 Callouts....");
-            Settings.LostDog = ini.ReadBoolean("Callouts", "LostDog", true);
             Settings.VehicleBlockingSidewalk = ini.ReadBoolean("Callouts", "VehicleBlockingSidewalk", true);
             Settings.BicyclePursuit = ini.ReadBoolean("Callouts", "BicyclePursuit", true);
             Settings.PersonCarryingAConcealedWeapon = ini.ReadBoolean("Callouts", "PersonCarryingAConcealedWeapon", true);
@@ -40,6 +39,7 @@ namespace Adam69Callouts
             Settings.AbandonedVehicle = ini.ReadBoolean("Callouts", "AbandonedVehicle", true);
             Settings.DrugsFound = ini.ReadBoolean("Callouts", "DrugsFound", true);
             Settings.SuspiciousPerson = ini.ReadBoolean("Callouts", "SuspiciousPerson", true);
+            Settings.OfficerDown = ini.ReadBoolean("Callouts", "OfficerDown", true);
             Settings.HelpMessages = ini.ReadBoolean("Settings", "HelpMessages", true);
             EndCall = ini.ReadEnum<Keys>("Keys", "EndCall", Keys.End);
             Dialog = ini.ReadEnum<Keys>("Keys", "Dialog", Keys.Y);
@@ -50,7 +50,6 @@ namespace Adam69Callouts
         internal static void SaveSettings()
         {
             var ini = new InitializationFile(@"Plugins/LSPDFR/Adam69Callouts.ini");
-            ini.Write("Callouts", "LostDog", true);
             ini.Write("Callouts", "VehicleBlockingSidewalk", true);
             ini.Write("Callouts", "BicyclePursuit", true);
             ini.Write("Callouts", "PersonCarryingAConcealedWeapon", true);
@@ -60,6 +59,7 @@ namespace Adam69Callouts
             ini.Write("Callouts", "AbandonedVehicle", true);
             ini.Write("Callouts", "DrugsFound", true);
             ini.Write("Callouts", "SuspiciousPerson", true);
+            ini.Write("Callouts", "OfficerDown", true);
             ini.Write("Settings", "HelpMessages", true);
             ini.Write("Keys", "EndCall", Keys.End);
             ini.Write("Keys", "Dialog", Keys.Y);
