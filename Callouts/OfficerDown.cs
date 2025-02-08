@@ -19,6 +19,7 @@ namespace Adam69Callouts.Callouts
         private static Vector3 spawnpoint;
         private static Vector3 vehicleSpawn;
         private static Vector3 susSpawn;
+        private static float vehicleHeading;
         private static float officerheading;
         private static float susHeading;
         private static Blip suspectBlip;
@@ -27,12 +28,14 @@ namespace Adam69Callouts.Callouts
 
         public override bool OnBeforeCalloutDisplayed()
         {
-            spawnpoint = new();
-            officerheading = 125.69f;
-            susSpawn = new();
-            susHeading = 199.65f;
+            spawnpoint = new(132.69f, -1308.34f, 29.03f);
+            officerheading = 318.26f;
+            susSpawn = new(116.04f, -1291.59f, 28.26f);
+            susHeading = 246.21f;
+            vehicleSpawn = new(140.00f, -1308.37f, 29.00f);
+            vehicleHeading = 46.70f;
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
-            LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_OfficerDown_Callout_Audio");
+            LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_OfficerDown_Audio");
             CalloutInterfaceAPI.Functions.SendMessage(this, "Officer panic button pressed");
             CalloutMessage = "Officer Down reported by an unknown civilian";
             CalloutPosition = spawnpoint;
@@ -54,7 +57,7 @@ namespace Adam69Callouts.Callouts
                 Settings.HelpMessages = false;
             }
 
-            LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_2_Audio");
+            LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_3_Audio");
 
             officer = new Ped(pedsList[new Random().Next((int)pedsList.Length)], spawnpoint, 0f);
             officer.IsPersistent = true;
@@ -98,7 +101,11 @@ namespace Adam69Callouts.Callouts
         public override void OnCalloutNotAccepted()
         {
             if (suspect) suspect.Delete();
+            if (suspectBlip) suspectBlip.Delete();
+            if (copBlip) copBlip.Delete();
             if (officer) officer.Delete();
+            if (officerVehicleBlip) officerVehicleBlip.Delete();
+            if (copBlip) copBlip.Delete();
             if (emergencyVehicle) emergencyVehicle.Delete();
 
             base.OnCalloutNotAccepted();
@@ -106,23 +113,73 @@ namespace Adam69Callouts.Callouts
 
         public override void Process()
         {
-            Game.LogTrivial("Adam69 Callouts [LOG]: Officer Down callout accepted!");
-            Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Officer Down", "~b~You~w~: Suspect has been spotted! Respond Code 2.");
-
-            if(Settings.HelpMessages == true)
+            if (MainPlayer.DistanceTo(officer) <= 10f)
             {
-                Game.DisplayHelp("Press ~y~" + Settings.EndCall + "~w~ to end the callout at anytime.");
-            }
-            else
-            {
-                Settings.HelpMessages = false;
-            }
+                if (Settings.HelpMessages == true)
+                {
+                    Game.DisplayHelp("Press ~y~" + Settings.EndCall + " to end the callout anytime.");
+                }
+                else
+                {
+                    Settings.HelpMessages = false;
+                }
 
-            suspect = new Ped(spawnpoint, susHeading);
-            suspect.BlockPermanentEvents = true;
-            suspect.IsValid();
+                if (Game.IsKeyDown(Settings.Dialog))
+                {
+                    counter++;
+
+                    if (counter == 1)
+                    {
+                        Game.DisplaySubtitle("~b~You~w~: Dispatch, we got an officer down, requesting medic but have them stage a few blocks away from the scene until the scene is secured.");
+                        MainPlayer.Tasks.PlayAnimation(new AnimationDictionary("random@arrests"), "generic_radio_chatter", -1f, AnimationFlags.UpperBodyOnly);
+                    }
+                    if (counter == 2)
+                    {
+                        LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Dispatch_Response_Audio_01");
+                    }
+                    if (counter == 3)
+                    {
+                        Game.DisplaySubtitle("~r~Suspect~w~: Time to die, you donut pigs!");
+                        suspect.Tasks.FightAgainst(MainPlayer);
+                        suspect.Inventory.GiveNewWeapon("WEAPON_COMBATPISTOL", 500, true);
+                        suspect.Armor = 500;
+                    }
+                    if (counter == 3)
+                    {
+                        UltimateBackup.API.Functions.callPanicButtonBackup(true);
+                        LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_ShotsFired_Audio");
+                    }
+                }
+
+                if (MainPlayer.IsDead)
+                {
+                    End();
+                }
+
+                if (Game.IsKeyDown(Settings.EndCall))
+                {
+                    End();
+                }
+
+            }
 
             base.Process();
+        }
+
+        public override void End()
+        {
+            if (officer) officer.Dismiss();
+            if (copBlip) copBlip.Delete();
+            if (suspect) suspect.Dismiss();
+            if (suspectBlip) suspectBlip.Delete();
+            if (emergencyVehicle) emergencyVehicle.Dismiss();
+            if (officerVehicleBlip) officerVehicleBlip.Delete();
+            LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
+            Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Officer Down", "~b~You~w~: We are Code 4. Show me back 10-8!");
+            base.End();
+
+            Game.LogTrivial("Adam69 Callouts [LOG]: Officer Down callout is code 4!");
+
         }
 
     }
