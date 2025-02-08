@@ -118,7 +118,9 @@ namespace Adam69Callouts.Callouts
                 Settings.HelpMessages = false;
             }
 
-
+            suspect = new Ped(spawnpoint, susHeading);
+            suspect.BlockPermanentEvents = true;
+            suspect.IsValid();
 
             base.Process();
         }
