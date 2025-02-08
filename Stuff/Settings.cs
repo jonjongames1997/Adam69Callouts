@@ -66,6 +66,6 @@ namespace Adam69Callouts
             ini.Write("Keys", "PickUp", Keys.E);
         }
 
-        public static readonly string PluginVersion = "0.2.5.1";
+        public static readonly string PluginVersion = "0.2.7.0";
     }
 }
