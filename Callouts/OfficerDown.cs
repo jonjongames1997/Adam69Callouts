@@ -131,7 +131,6 @@ namespace Adam69Callouts.Callouts
                     if (counter == 1)
                     {
                         Game.DisplaySubtitle("~b~You~w~: Dispatch, we got an officer down, requesting medic but have them stage a few blocks away from the scene until the scene is secured.");
-                        MainPlayer.Tasks.PlayAnimation(new AnimationDictionary("random@arrests"), "generic_radio_chatter", -1f, AnimationFlags.UpperBodyOnly);
                     }
                     if (counter == 2)
                     {
