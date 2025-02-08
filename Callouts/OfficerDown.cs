@@ -97,9 +97,30 @@ namespace Adam69Callouts.Callouts
 
         public override void OnCalloutNotAccepted()
         {
-
+            if (suspect) suspect.Delete();
+            if (officer) officer.Delete();
+            if (emergencyVehicle) emergencyVehicle.Delete();
 
             base.OnCalloutNotAccepted();
+        }
+
+        public override void Process()
+        {
+            Game.LogTrivial("Adam69 Callouts [LOG]: Officer Down callout accepted!");
+            Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Officer Down", "~b~You~w~: Suspect has been spotted! Respond Code 2.");
+
+            if(Settings.HelpMessages == true)
+            {
+                Game.DisplayHelp("Press ~y~" + Settings.EndCall + "~w~ to end the callout at anytime.");
+            }
+            else
+            {
+                Settings.HelpMessages = false;
+            }
+
+
+
+            base.Process();
         }
 
     }
