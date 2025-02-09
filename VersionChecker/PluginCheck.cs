@@ -28,7 +28,7 @@
             }
             if (recieveData != Settings.PluginVersion)
             {
-                Game.DisplayNotification("commonmenu", "mp_alerttriangle", "~w~Adam69 Callouts Warning", "~y~A new update is available!", "Current Version: ~r~" + curVersion + "~w~<br>New Version: ~y~" + recieveData + "<br>~r~Please Update to the latest build for new callouts and improvments! :-)");
+                Game.DisplayNotification("commonmenu", "mp_alerttriangle", "~w~Adam69 Callouts Warning", "~y~A new update is available!", "Current Version: ~r~" + curVersion + "~w~<br>New Version: ~y~" + recieveData + "<br>~w~Please Update to the latest build for ~y~new callouts~w~ and ~g~improvments! :-)");
                 Game.Console.Print();
                 Game.Console.Print("===================================================== Adam69 Callouts ===========================================");
                 Game.Console.Print();
