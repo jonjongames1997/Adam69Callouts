@@ -117,7 +117,7 @@ namespace Adam69Callouts.Callouts
             {
                 if (Settings.HelpMessages == true)
                 {
-                    Game.DisplayHelp("Press ~y~" + Settings.EndCall + " to end the callout anytime.");
+                    Game.DisplayHelp("Press ~y~" + Settings.Dialog + " ~w~to notify dispatch about the officer down.");
                 }
                 else
                 {
@@ -143,7 +143,7 @@ namespace Adam69Callouts.Callouts
                         suspect.Inventory.GiveNewWeapon("WEAPON_COMBATPISTOL", 500, true);
                         suspect.Armor = 500;
                     }
-                    if (counter == 3)
+                    if (counter == 4)
                     {
                         UltimateBackup.API.Functions.callPanicButtonBackup(true);
                         LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_ShotsFired_Audio");
