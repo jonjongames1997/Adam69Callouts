@@ -77,7 +77,7 @@ namespace Adam69Callouts.Callouts
             suspect.BlockPermanentEvents = true;
 
             copBlip = officer.AttachBlip();
-            copBlip.Color = System.Drawing.Color.Blue;
+            copBlip.Color = System.Drawing.Color.LightBlue;
             copBlip.IsRouteEnabled = true;
 
             suspectBlip = suspect.AttachBlip();
@@ -85,7 +85,7 @@ namespace Adam69Callouts.Callouts
             suspectBlip.IsFriendly = false;
 
             officerVehicleBlip = emergencyVehicle.AttachBlip();
-            officerVehicleBlip.Color = System.Drawing.Color.LightBlue;
+            officerVehicleBlip.Color = System.Drawing.Color.DarkBlue;
             officerVehicleBlip.IsFriendly = true;
 
             if (suspect.IsMale)
@@ -134,7 +134,8 @@ namespace Adam69Callouts.Callouts
                     }
                     if (counter == 2)
                     {
-                        LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Dispatch_Response_Audio_01");
+                        LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_OfficerDown_Audio_2");
+
                     }
                     if (counter == 3)
                     {
@@ -146,7 +147,7 @@ namespace Adam69Callouts.Callouts
                     if (counter == 4)
                     {
                         UltimateBackup.API.Functions.callPanicButtonBackup(true);
-                        LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_ShotsFired_Audio");
+                        LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_ShotsFired_Audio_Remastered_01");
                     }
                 }
 
