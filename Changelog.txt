@@ -8,6 +8,8 @@ v0.2.7.0:
 - Fixed an issue with "Deranged Drunken Feller" callout
 - Removed Distance check from "Bicycle Pursuit" callout
 - Minor ini adjustments
+- Added 2 new audio files for "Officer Down" callout
+- Fixed some errors in "Officer Down" callout
 
 v0.2.6.3:
 
