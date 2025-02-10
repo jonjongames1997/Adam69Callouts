@@ -142,11 +142,10 @@ namespace Adam69Callouts.Callouts
                         Game.DisplaySubtitle("~r~Suspect~w~: Time to die, you donut pigs!");
                         suspect.Tasks.FightAgainst(MainPlayer);
                         suspect.Inventory.GiveNewWeapon("WEAPON_COMBATPISTOL", 500, true);
-                        suspect.Armor = 500;
+                        suspect.Armor = 1000;
                     }
                     if (counter == 4)
                     {
-                        UltimateBackup.API.Functions.callPanicButtonBackup(true);
                         LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_ShotsFired_Audio_Remastered_01");
                     }
                 }
