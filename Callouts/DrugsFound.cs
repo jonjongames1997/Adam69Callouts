@@ -190,7 +190,7 @@ namespace Adam69Callouts.Callouts
                 if (Game.IsKeyDown(Settings.PickUp))
                 {
                     isCollected = true;
-                    MainPlayer.Tasks.PlayAnimation(new AnimationDictionary("missfbi_s4mop"), "pickup_bucket", -1f, AnimationFlags.UpperBodyOnly);
+                    MainPlayer.Tasks.PlayAnimation(new AnimationDictionary("anim@move_m@trash"), "pickup", -1f, AnimationFlags.UpperBodyOnly);
                     theDrugs.AttachTo(MainPlayer, 6286, Vector3.RelativeRight, Rotator.Zero);
                     GameFiber.Yield();
                     theDrugs.Delete();
