@@ -6,16 +6,16 @@ Adam69 callouts is the sequel to JM Callouts Remastered. Adam69 Callouts brings 
 
 # Callouts: 
 
-Vehicle Blocking Sidewalk
-Bicycle Pursuit
-Person Carrying A Condealed Weapon
-Loitering
-Vehicle Blocking Crosswalk
-Abandoned Vehicle
-Drugs Found
-Suspicious Person
-Officer Down
-Deranged Drunken Feller
+* Vehicle Blocking Sidewalk
+* Bicycle Pursuit
+* Person Carrying A Condealed Weapon
+* Loitering
+* Vehicle Blocking Crosswalk
+* Abandoned Vehicle
+* Drugs Found
+* Suspicious Person
+* Officer Down
+* Deranged Drunken Feller
 
 
 # Features:
