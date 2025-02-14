@@ -10,6 +10,7 @@ v0.2.7.0:
 - Minor ini adjustments
 - Added 2 new audio files for "Officer Down" callout
 - Fixed some errors in "Officer Down" callout
+- Changed the animation for picking up the drugs in "Drugs Found" callout
 
 v0.2.6.3:
 
