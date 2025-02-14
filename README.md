@@ -38,8 +38,8 @@ want to contribute to the callout pack by adding your desired callout idea or wa
 
 # Requirements:
 
-Basic Knowledge of C# 
-Visual Studio Community 2022 (Language version: v10 or preview)
+* Basic Knowledge of C# 
+* Visual Studio Community 2022 (Language version: v10 or preview)
 
  
 
@@ -50,13 +50,13 @@ Join my Discord: https://discord.gg/N9KgZx4KUn
 
 # 🛠️ Planned Updates: 🛠️
 
-Add own callout audio ✅ Complete
+* Add own callout audio ✅ Complete
 
-Smashing Bugs
+* Smashing Bugs
 
-Add more locations to certain callouts for more variety
+* Add more locations to certain callouts for more variety
 
-and so much more (Undisclosed)
+* and so much more (Undisclosed)
 
 
 # Mod/Scripts compatibility:
