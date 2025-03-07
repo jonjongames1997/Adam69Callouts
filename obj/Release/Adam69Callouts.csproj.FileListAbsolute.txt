@@ -1,0 +1,14 @@
+E:\Adam69 Callouts\Adam69Callouts\obj\Release\Adam69Callouts.csproj.AssemblyReference.cache
+E:\Adam69 Callouts\Adam69Callouts\obj\Release\Adam69Callouts.csproj.CoreCompileInputs.cache
+E:\Adam69 Callouts\Adam69Callouts\bin\Release\Adam69Callouts.dll
+E:\Adam69 Callouts\Adam69Callouts\bin\Release\Adam69Callouts.pdb
+E:\Adam69 Callouts\Adam69Callouts\bin\Release\CalloutInterfaceAPI.dll
+E:\Adam69 Callouts\Adam69Callouts\bin\Release\LSPD First Response.dll
+E:\Adam69 Callouts\Adam69Callouts\bin\Release\RagePluginHookSDK.dll
+E:\Adam69 Callouts\Adam69Callouts\bin\Release\StopThePed.dll
+E:\Adam69 Callouts\Adam69Callouts\bin\Release\UltimateBackup.dll
+E:\Adam69 Callouts\Adam69Callouts\bin\Release\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+E:\Adam69 Callouts\Adam69Callouts\bin\Release\RAGENativeUI.dll
+E:\Adam69 Callouts\Adam69Callouts\obj\Release\Adam69Ca.98F163C7.Up2Date
+E:\Adam69 Callouts\Adam69Callouts\obj\Release\Adam69Callouts.dll
+E:\Adam69 Callouts\Adam69Callouts\obj\Release\Adam69Callouts.pdb

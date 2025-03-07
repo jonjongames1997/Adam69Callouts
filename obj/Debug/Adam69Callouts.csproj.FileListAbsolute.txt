@@ -1,0 +1,17 @@
+E:\Adam69 Callouts\Adam69Callouts\bin\Debug\Adam69Callouts.dll
+E:\Adam69 Callouts\Adam69Callouts\bin\Debug\Adam69Callouts.pdb
+E:\Adam69 Callouts\Adam69Callouts\bin\Debug\CalloutInterfaceAPI.dll
+E:\Adam69 Callouts\Adam69Callouts\bin\Debug\LSPD First Response.dll
+E:\Adam69 Callouts\Adam69Callouts\bin\Debug\RagePluginHookSDK.dll
+E:\Adam69 Callouts\Adam69Callouts\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+E:\Adam69 Callouts\Adam69Callouts\obj\Debug\Adam69Callouts.csproj.AssemblyReference.cache
+E:\Adam69 Callouts\Adam69Callouts\obj\Debug\Adam69Callouts.csproj.CoreCompileInputs.cache
+E:\Adam69 Callouts\Adam69Callouts\obj\Debug\Adam69Callouts.dll
+E:\Adam69 Callouts\Adam69Callouts\obj\Debug\Adam69Callouts.pdb
+E:\Adam69 Callouts\Adam69Callouts\bin\Debug\StopThePed.dll
+E:\Adam69 Callouts\Adam69Callouts\bin\Debug\UltimateBackup.dll
+E:\Adam69 Callouts\Adam69Callouts\bin\Debug\RAGENativeUI.dll
+E:\Adam69 Callouts\Adam69Callouts\obj\Debug\Adam69Ca.98F163C7.Up2Date
+E:\Adam69 Callouts\Adam69Callouts\bin\Debug\NativeUI.dll
+E:\Adam69 Callouts\Adam69Callouts\bin\Debug\ScriptHookVDotNet2.dll
+E:\Adam69 Callouts\Adam69Callouts\bin\Debug\ScriptHookVDotNet2.xml
