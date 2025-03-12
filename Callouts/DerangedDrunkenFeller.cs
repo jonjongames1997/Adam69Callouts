@@ -21,7 +21,7 @@ namespace Adam69Callouts.Callouts
             spawnpoint = World.GetNextPositionOnStreet(MainPlayer.Position.Around(500f));
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Deranged_Drunken_Feller_Audio");
-            CalloutMessage = "A deranged drunken feller threatening people with a weapon";
+            CalloutMessage = "A Deranged Drunken Feller Reported";
             CalloutPosition = spawnpoint;
 
             return base.OnBeforeCalloutDisplayed();
@@ -31,12 +31,6 @@ namespace Adam69Callouts.Callouts
         {
             Game.LogTrivial("Adam69 Callouts [LOG]: Deranged Drunken Feller callout has been accepted!");
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "Deranged Drunken Feller", "~b~Dispatch~w~: Suspect has been located. Respond ~r~Code 2~w~.");
-
-            bool helpMessages = Settings.HelpMessages;
-            if(helpMessages)
-            {
-                Game.DisplayHelp("Press ~y~" + Settings.EndCall + "~w~ at anytime to end the callout");
-            }
 
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_2_Audio");
 
@@ -69,7 +63,7 @@ namespace Adam69Callouts.Callouts
                 bool helpMessages = Settings.HelpMessages;
                 if (helpMessages)
                 {
-                    Game.DisplayHelp("Press ~y~" + Settings.Dialog + "~w~ to interact with the suspect.");
+                    Game.DisplayHelp("Press ~y~" + Settings.Dialog.ToString() + "~w~ to interact with the suspect.", 5000);
                 }
 
                 if (Game.IsKeyDown(Settings.Dialog))
@@ -104,13 +98,11 @@ namespace Adam69Callouts.Callouts
 
             if (MainPlayer.IsDead)
             {
+                Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Mission Failed!", "~w~We'll get 'em next time!");
                 End();
             }
 
-            if (Game.IsKeyDown(Settings.EndCall))
-            {
-                End();
-            }
+            if (Game.IsKeyDown(Settings.EndCall)) End();
 
             base.Process();
         }

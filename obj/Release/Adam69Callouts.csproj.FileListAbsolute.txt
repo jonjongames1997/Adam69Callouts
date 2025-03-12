@@ -12,3 +12,6 @@ E:\Adam69 Callouts\Adam69Callouts\bin\Release\RAGENativeUI.dll
 E:\Adam69 Callouts\Adam69Callouts\obj\Release\Adam69Ca.98F163C7.Up2Date
 E:\Adam69 Callouts\Adam69Callouts\obj\Release\Adam69Callouts.dll
 E:\Adam69 Callouts\Adam69Callouts\obj\Release\Adam69Callouts.pdb
+E:\Adam69 Callouts\Adam69Callouts\bin\Release\NativeUI.dll
+E:\Adam69 Callouts\Adam69Callouts\bin\Release\ScriptHookVDotNet2.dll
+E:\Adam69 Callouts\Adam69Callouts\bin\Release\ScriptHookVDotNet2.xml

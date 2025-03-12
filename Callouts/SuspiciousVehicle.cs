@@ -37,7 +37,7 @@ namespace Adam69Callouts.Callouts
             bool helpMessages = Settings.HelpMessages;
             if (helpMessages)
             {
-                Game.DisplayHelp("Press ~y~" + Settings.EndCall + "~w~ at anytime to end the callout");
+                Game.DisplayHelp("Press ~y~" + Settings.EndCall.ToString() + "~w~ at anytime to end the callout", 5000);
             }
 
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_2_Audio");
@@ -45,6 +45,7 @@ namespace Adam69Callouts.Callouts
             motorVehicle = new Vehicle(spawnpoint);
             motorVehicle.IsPersistent = true;
             motorVehicle.IsValid();
+            motorVehicle.IsStolen = false;
 
             vehBlip = motorVehicle.AttachBlip();
             vehBlip.Color = System.Drawing.Color.Red;
@@ -67,7 +68,7 @@ namespace Adam69Callouts.Callouts
         {
             if(MainPlayer.DistanceTo(motorVehicle) <= 10f)
             {
-                Game.DisplayHelp("Deal with the situation to your liking.");
+                Game.DisplayHelp("Deal with the situation to your liking.", 5000);
             }
 
             if (Game.IsKeyDown(Settings.EndCall)) End();

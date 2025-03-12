@@ -16,7 +16,7 @@ namespace Adam69Callouts.Callouts
 
         public override bool OnBeforeCalloutDisplayed()
         {
-            spawnpoint = World.GetNextPositionOnStreet(MainPlayer.Position.Around(1000f));
+            spawnpoint = World.GetNextPositionOnStreet(MainPlayer.Position.Around(500f));
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
             AddMinimumDistanceCheck(100f, spawnpoint);
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("Adam69Callouts_PersonCarryingAConcealedWeapon_Audio", spawnpoint);
@@ -32,11 +32,6 @@ namespace Adam69Callouts.Callouts
             Game.LogTrivial("Adam69 Callouts [LOG]: Person Carrying A Concealed Weapon callout has been accepted!");
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Person Carrying A Concealed Weapon", "~b~Dispatch~w~: Suspect has been spotted. Respond ~y~Code 2~w~.");
 
-            bool helpMessages = Settings.HelpMessages;
-            if (helpMessages)
-            {
-                Game.DisplayHelp("Press ~y~" + Settings.EndCall + "~w~ at anytime to end the callout");
-            }
 
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_2_Audio");
 
@@ -46,7 +41,7 @@ namespace Adam69Callouts.Callouts
 
             suspect.Tasks.StandStill(6000);
 
-            suspect.Armor = 500;
+            suspect.Armor = 1000;
 
             susBlip = suspect.AttachBlip();
             susBlip.Color = System.Drawing.Color.Red;
@@ -79,7 +74,7 @@ namespace Adam69Callouts.Callouts
                 bool helpMessages = Settings.HelpMessages;
                 if(helpMessages)
                 {
-                    Game.DisplayHelp("Press ~y~ " + Settings.Dialog + " to interact with suspect.");
+                    Game.DisplayHelp("Press ~y~ " + Settings.Dialog.ToString() + " to interact with suspect.", 5000);
                 }
 
                 if (Game.IsKeyDown(Settings.Dialog))

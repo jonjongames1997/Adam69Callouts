@@ -36,12 +36,6 @@ namespace Adam69Callouts.Callouts
             Game.LogTrivial("Adam69 Callouts [LOG]: Vehicle Blocking Sidewalk callout has been accepted!");
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Vehicle Blocking Sidewalk", "~b~Dispatch~w~: Vehicle has been located. Respond ~g~Code 1~w~.");
 
-            bool helpMessages = Settings.HelpMessages;
-            if (helpMessages)
-            {
-                Game.DisplayHelp("Press ~y~" + Settings.EndCall + "~w~ at anytime to end the callout");
-            }
-
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_1_Audio");
 
             motorVehicle = new Vehicle(spawnpoint);
@@ -68,13 +62,10 @@ namespace Adam69Callouts.Callouts
 
             if(MainPlayer.DistanceTo(motorVehicle) <= 10f)
             {
-                Game.DisplaySubtitle("Investigate the Vehicle, check vehicle record, then call tow truck");
+                Game.DisplaySubtitle("Investigate the Vehicle, check vehicle record, then call tow truck", 5000);
             }
 
-            if (Game.IsKeyDown(Settings.EndCall)) 
-            { 
-                End(); 
-            }
+            if (Game.IsKeyDown(Settings.EndCall)) End();
         }
 
         public override void End()

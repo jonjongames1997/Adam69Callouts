@@ -1,5 +1,20 @@
 ﻿Changelog:
 
+v0.2.9.0:
+
+- Added Localization Support for: English, Russian, Brazilian, Portuguese, and French.
+
+More localization support coming  soon.
+
+v0.2.8.2:
+
+- Forgot to add a route to the officer down callout
+- misc fixes
+- Removed an unused variable in the code that was never used XD.
+
+Localization support is coming soon. Want to see this callout pack to be translated to your language? Submit your translations 
+to the Jon Jon Games Discord server.
+
 v0.2.8.1:
 
 - Fixed the issue with help messages not correctly being disabled when set to false in the ini

@@ -32,12 +32,6 @@ namespace Adam69Callouts.Callouts
             Game.LogTrivial("Adam69 Callouts [LOG]: Bicycle Pursuit callout has been accepted!");
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Bicycle Pursuit", "~b~Dispatch~w~: The suspect has been spotted! Respond ~r~Code 3~w~.");
 
-            bool helpMessages = Settings.HelpMessages;
-            if (helpMessages)
-            {
-                Game.DisplayHelp("Press ~y~" + Settings.EndCall + "~w~ at anytime to end the callout");
-            }
-
             bicycle = new Vehicle(bikeList[new Random().Next((int)bikeList.Length)], spawnpoint);
             bicycle.IsPersistent = true;
             bicycle.IsValid();
@@ -73,13 +67,10 @@ namespace Adam69Callouts.Callouts
 
         public override void Process()
         {
-            if (Settings.HelpMessages == true)
+            bool helpMessages = Settings.HelpMessages;
+            if (helpMessages)
             {
-                Game.DisplayHelp("Chase the bicycle and asrrest the suspect.");
-            }
-            else
-            {
-                Settings.HelpMessages = false;
+                Game.DisplayHelp("Chase the bicycle and asrrest the suspect.", 5000);
             }
 
             if (MainPlayer.IsDead) End();

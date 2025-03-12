@@ -13,7 +13,7 @@ namespace Adam69Callouts.Callouts
 
         public override bool OnBeforeCalloutDisplayed()
         {
-            spawnpoint = World.GetNextPositionOnStreet(MainPlayer.Position.Around(1000f));
+            spawnpoint = World.GetNextPositionOnStreet(MainPlayer.Position.Around(500f));
             CalloutInterfaceAPI.Functions.SendMessage(this, "Reports of an Abandoned Vehicle");
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Abandoned_Vehicle_Callout_Audio");
             CalloutMessage = "Vehicle left abandoned several weeks ago. No owner to be found on scene.";
@@ -26,12 +26,6 @@ namespace Adam69Callouts.Callouts
         {
             Game.LogTrivial("[Adam69 Callouts LOG]: Bicycle Blocking Roadway callout accepted!");
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Abandoned Vehicle", "~b~Dispatch~w~: The vehicle has been spotted! Respond ~r~Code 2~w~.");
-
-            bool helpMessages = Settings.HelpMessages;
-            if (helpMessages)
-            {
-                Game.DisplayHelp("Press ~y~" + Settings.EndCall + "~w~ at anytime to end the callout");
-            }
 
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_1_Audio");
 
@@ -59,7 +53,7 @@ namespace Adam69Callouts.Callouts
         {
             if (MainPlayer.DistanceTo(_Vehicle) <= 10f)
             {
-                Game.DisplayHelp("Deal with the situation as you see fit.");
+                Game.DisplayHelp("Deal with the situation as you see fit.", 5000);
             }
 
             if (Game.IsKeyDown(Settings.EndCall))

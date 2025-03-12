@@ -14,7 +14,6 @@ namespace Adam69Callouts.Callouts
         private static int counter;
         private static string malefemale;
         private static string copGender;
-        private static bool EndCalloutKey;
 
         public override bool OnBeforeCalloutDisplayed()
         {
@@ -32,12 +31,6 @@ namespace Adam69Callouts.Callouts
         {
             Game.LogTrivial("[Adam69 Callouts LOG]: Suspicous Person callout accepted!");
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Suspicious Person", "~b~Dispatch~w~: The suspect has been spotted! Respond ~r~Code 2~w~.");
-
-            bool helpMessages = Settings.HelpMessages;
-            if (helpMessages)
-            {
-                Game.DisplayHelp("Press ~y~" + Settings.EndCall + "~w~ at anytime to end the callout");
-            }
 
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_2_Audio");
 
@@ -83,7 +76,7 @@ namespace Adam69Callouts.Callouts
                 bool helpMessages = Settings.HelpMessages;
                 if (helpMessages)
                 {
-                    Game.DisplayHelp("Press ~y~" + Settings.Dialog + "~w~ to interact with the suspect.");
+                    Game.DisplayHelp("Press ~y~" + Settings.Dialog.ToString()+ "~w~ to interact with the suspect.", 5000);
                 }
 
                 if (Game.IsKeyDown(Settings.Dialog))
@@ -131,15 +124,9 @@ namespace Adam69Callouts.Callouts
 
             base.Process();
 
-            if (MainPlayer.IsDead)
-            {
-                End();
-            }
+            if (MainPlayer.IsDead) End();
 
-            if (Game.IsKeyDown(Settings.EndCall))
-            {
-                End();
-            }
+            if (Game.IsKeyDown(Settings.EndCall)) End();
         }
    
 

@@ -54,12 +54,6 @@ namespace Adam69Callouts.Callouts
             Game.LogTrivial("Adam69 Callouts [LOG]: Drugs Found callout has been accepted!");
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~y~Drugs Found", "~b~Dispatch~w~: The caller has been located. Respond ~r~Code 2~w~.");
 
-            bool helpMessages = Settings.HelpMessages;
-            if (helpMessages)
-            {
-                Game.DisplayHelp("Press ~y~" + Settings.EndCall + "~w~ at anytime to end the callout");
-            }
-
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_2_Audio");
 
             theCaller = new Ped(callerSpawn);
@@ -132,7 +126,7 @@ namespace Adam69Callouts.Callouts
                 bool helpMessages = Settings.HelpMessages;
                 if (helpMessages)
                 {
-                    Game.DisplayHelp("Press ~y~" + Settings.Dialog + "~w~ to interact with the caller");
+                    Game.DisplayHelp("Press ~y~" + Settings.Dialog.ToString() + "~w~ to speak to the caller.", 5000);
                 }
 
                 if (Game.IsKeyDown(Settings.Dialog))
@@ -179,8 +173,7 @@ namespace Adam69Callouts.Callouts
 
             if (MainPlayer.DistanceTo(theDrugs) <= 10f)
             {
-                Game.DisplayHelp("Press ~y~" + Settings.PickUp + "~w~ to pick up the drugs.");
-               
+                Game.DisplayHelp("Press ~y~" + Settings.PickUp.ToString() + "~w~ to pick up the drugs.", 5000);
 
                 if (Game.IsKeyDown(Settings.PickUp))
                 {

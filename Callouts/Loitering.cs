@@ -32,11 +32,6 @@ namespace Adam69Callouts.Callouts
             Game.LogTrivial("Adam69 Callouts [LOG]: Loitering callout has been accepted!");
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Loitering", "~b~Dispatch~w~: Suspect has been spotted. Respond ~y~Code 2~w~.");
 
-            bool helpMessages = Settings.HelpMessages;
-            if (helpMessages)
-            {
-                Game.DisplayHelp("Press ~y~" + Settings.EndCall + "~w~ at anytime to end the callout");
-            }
 
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_2_Audio");
 
@@ -80,7 +75,7 @@ namespace Adam69Callouts.Callouts
                 bool helpMessages = Settings.HelpMessages;
                 if (helpMessages)
                 {
-                    Game.DisplayHelp("Press ~y~" + Settings.Dialog + "~w~ to interact with suspect.");
+                    Game.DisplayHelp("Press ~y~" + Settings.Dialog.ToString() + "~w~ to interact with suspect.", 5000);
                 }
 
                 if (Game.IsKeyDown(Settings.Dialog))

@@ -48,11 +48,6 @@ namespace Adam69Callouts.Callouts
             Game.LogTrivial("Adam69 Callouts [LOG]: Officer Down callout has been accepted!");
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Officer Down", "~b~Dispatch~w~: The suspect has been spotted! Respond ~r~Code 3~w~.");
 
-            bool helpMessages = Settings.HelpMessages;
-            if (helpMessages)
-            {
-                Game.DisplayHelp("Press ~y~" + Settings.EndCall + "~w~ at anytime to end the callout.");
-            }
 
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_3_Audio");
 
@@ -113,7 +108,7 @@ namespace Adam69Callouts.Callouts
                 bool helpMessages = Settings.HelpMessages;
                 if (helpMessages)
                 {
-                    Game.DisplayHelp("Press ~y~" + Settings.Dialog + " ~w~to notify dispatch of an officer down.");
+                    Game.DisplayHelp("Press ~y~" + Settings.Dialog.ToString() + " ~w~to notify dispatch of an officer down.", 5000);
                 }
 
                 if (Game.IsKeyDown(Settings.Dialog))
@@ -145,15 +140,9 @@ namespace Adam69Callouts.Callouts
                     }
                 }
 
-                if (MainPlayer.IsDead)
-                {
-                    End();
-                }
+                if (MainPlayer.IsDead) End();
 
-                if (Game.IsKeyDown(Settings.EndCall))
-                {
-                    End();
-                }
+                if (Game.IsKeyDown(Settings.EndCall)) End();
 
             }
 
@@ -166,7 +155,7 @@ namespace Adam69Callouts.Callouts
             if (copBlip) copBlip.Delete();
             if (suspect) suspect.Dismiss();
             if (suspectBlip) suspectBlip.Delete();
-            if (emergencyVehicle) emergencyVehicle.Dismiss();
+            if (emergencyVehicle) emergencyVehicle.Delete();
             if(officerVehicleBlip) officerVehicleBlip.Delete();
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Officer Down", "~b~You~w~: We are Code 4. Show me back 10-8!");
