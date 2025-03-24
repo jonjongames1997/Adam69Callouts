@@ -1,0 +1,86 @@
+﻿Changelog:
+
+v0.2.9.0:
+
+- Refactored code for better readability
+- Fixed some grammatical errors
+- Refactored version checker for more stability.
+- Refactored some callout logic for better performance
+- Disabled Drunken Feller callout until a fix is made.s
+
+v0.2.8.2:
+
+- Forgot to add a route to the officer down callout
+- misc fixes
+- Removed an unused variable in the code that was never used XD.
+
+Localization support is coming soon. Want to see this callout pack to be translated to your language? Submit your translations 
+to the Jon Jon Games Discord server.
+
+v0.2.8.1:
+
+- Fixed the issue with help messages not correctly being disabled when set to false in the ini
+- Minor code clean up
+- Misc fixes
+
+v0.2.7.0:
+
+- Fixed some grammatical errors
+- Minor adjustments
+- bug fixes
+- Fixed an issue with "Deranged Drunken Feller" callout
+- Removed Distance check from "Bicycle Pursuit" callout
+- Minor ini adjustments
+- Added 2 new audio files for "Officer Down" callout
+- Fixed some errors in "Officer Down" callout
+- Changed the animation for picking up the drugs in "Drugs Found" callout
+
+v0.2.6.3:
+
+- Fixed an error of the instant code 4 issue when accepting "Deranged Drunken Feller" callout.
+- Added the missing callout audio for "Deranged Drunken Feller" callout.
+- Misc fixes and adjustments
+
+v0.2.6.2:
+
+- This update fixes the OIV Texture Install (wrong texture name for Adam69Callouts notifications)
+- Removed Lost Dog Callout permanently
+- ini update
+- Added 1 new callout
+- Added 3 new weapons in "Suspicious Person" callout
+- Fixed an error the audio is not playing the correct custom audio files in "Bicycle Pursuit" callout
+
+v0.2.5.1:
+
+- Added custom callout audio made with ElevenLabs AI and modified with Audacity
+- Added 1 new callout
+- Added a texture install OIV for faster installation
+- Fixed an issue where the version checker checking the wrong version when it's the correct version
+- Added 2 new weapons to "Suspicious Person" callout
+- Added armor to the suspect in "Suspicious Person" callout for a longer gun fight.
+- Added 2 new locations for "Vehicle Blocking Crosswalk" and "Vehicle Blocking Sidewalk" callouts
+
+v0.2.3:
+
+- Fixed the issue with disabling help messages. Thanks to Haze for noticing.
+- Updated LSPDFR API Reference to latest version
+- Removed unused code from the project (I forgot to remove it as I don't use the code anywhere in the project)
+- Fixed the ini not reading the values properly. 
+- Updated credits section
+- Suspicious Person and Loitering callouts will now spawn randomly for now. I'm getting a list of locations for these callouts. 
+- Removed Distance Checker
+- Drugs Found is now considered a beta callout.
+
+v0.1.2:
+
+- Added Version Checker
+
+v0.1.1: 
+
+- Removed the preview notification (Was left there by accident)
+- Removed Attempted Indecent Exposure SFW Callout
+- Updated Ini
+
+v0.1.0:
+
+Initial Release
