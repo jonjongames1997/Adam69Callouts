@@ -4,11 +4,12 @@
 
 This is a list of Supported/Not Suppported versions for JM Callouts Remastered
 
-| Build Version    | Supported          |
+| API/Build Version    | Supported          |
 | -------------    | ------------------ |
-| 9110.3442        |  ✅               |
-| 9110.3411        |  ✅               |
-| 9110.3407        |  ✅               |
+| 9231.3504        |  ✅               |
+| 9110.3442        |  ❌ (Out of Support)|
+| 9110.3411        |  ❌ (Out of Support)|
+| 9110.3407        |  ❌ (Out of Support)|
 | 8943.3351        |  ❌ (Out of Support)|
 | 8943.3337        |  ❌ (Out of Support)|
 | 8943.3323        |  ❌ (Out of Support)|
