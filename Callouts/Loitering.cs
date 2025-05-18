@@ -94,75 +94,87 @@ namespace Adam69Callouts.Callouts
 
             if (MainPlayer.DistanceTo(suspect) <= 10f)
             {
-                bool helpMessages = Settings.HelpMessages;
-                if (helpMessages)
-                {
-                    Game.DisplayHelp($"Press ~y~{Settings.Dialog}~w~ to interact with suspect.", 5000);
-                }
 
                 if (Game.IsKeyDown(Settings.Dialog))
                 {
                     if (MainPlayer.DistanceTo(suspect) <= 10f)
-                    { 
-                            Game.DisplayHelp("Press ~y~" + Settings.Dialog.ToString() + "~w~ to interact with suspect.");
-                        
+                    {
+                        Game.DisplayHelp("Press ~y~" + Settings.Dialog.ToString() + "~w~ to interact with suspect.");
+
 
                         if (Game.IsKeyDown(Settings.Dialog))
                         {
                             counter++;
 
-                            if (counter == 1)
+                            try
                             {
-                                suspect.Tasks.PlayAnimation(new AnimationDictionary("rcmjosh1"), "idle", -1f, AnimationFlags.Loop);
-                                Game.DisplaySubtitle("~b~You~w~: Pardon me, " + malefemale + ". What are you doing here loitering for?");
+                                if (counter == 1)
+                                {
+                                    suspect.Tasks.PlayAnimation(new AnimationDictionary("rcmjosh1"), "idle", -1f, AnimationFlags.Loop);
+                                    Game.DisplaySubtitle("~b~You~w~: Pardon me, " + malefemale + ". What are you doing here loitering for?");
+                                }
+                                if (counter == 2)
+                                {
+                                    suspect.Tasks.PlayAnimation(new AnimationDictionary("anim@amb@casino@brawl@fights@argue@"), "arguement_loop_mp_m_brawler_01", -1f, AnimationFlags.Loop);
+                                    Game.DisplaySubtitle("~r~Suspect~w~: What you mean, officer? I'm not loitering. You are mistaken. I'm a street entertainer. You want to be entertained, Officer?");
+                                }
+                                if (counter == 3)
+                                {
+                                    suspect.Tasks.PlayAnimation(new AnimationDictionary("rcmjosh1"), "idle", -1f, AnimationFlags.Loop);
+                                    Game.DisplaySubtitle("~b~You~w~: Oh, you're of those people and no, thank you " + malefemale + ". I just need to verify your information and we'll go from there.");
+                                }
+                                if (counter == 4)
+                                {
+                                    suspect.Tasks.PlayAnimation(new AnimationDictionary("mini@strip_club@private_dance@idle"), "priv_dance_idle", 1f, AnimationFlags.Loop);
+                                    Game.DisplaySubtitle("~r~Suspect~w~: Are you sure, Officer? It's FREE. Nothing says in the law that I can entertain you for free.");
+                                }
+                                if (counter == 5)
+                                {
+                                    suspect.Tasks.PlayAnimation(new AnimationDictionary("rcmjosh1"), "idle", -1f, AnimationFlags.Loop);
+                                    Game.DisplaySubtitle("~b~You~w~: I'm positive.");
+                                }
+                                if (counter == 6)
+                                {
+                                    suspect.Tasks.PlayAnimation(new AnimationDictionary("mini@strip_club@private_dance@idle"), "priv_dance_idle", 1f, AnimationFlags.Loop);
+                                    Game.DisplaySubtitle("~r~Suspect~w~: Ok, Officer. My offer stands whenever you want to be entertained.");
+                                }
+                                if (counter == 7)
+                                {
+                                    Game.DisplaySubtitle("~b~You~w~: Dispatch, request a 10-27.");
+                                    StopThePed.API.Functions.requestDispatchPedCheck(true);
+                                }
+                                if (counter == 8)
+                                {
+                                    suspect.Tasks.PlayAnimation(new AnimationDictionary("rcmjosh1"), "idle", -1f, AnimationFlags.Loop);
+                                    Game.DisplaySubtitle("Conversation Ended. Deal with the situation you may see fit.");
+                                }
                             }
-                            if (counter == 2)
+                            catch (Exception ex)
                             {
-                                suspect.Tasks.PlayAnimation(new AnimationDictionary("anim@amb@casino@brawl@fights@argue@"), "arguement_loop_mp_m_brawler_01", -1f, AnimationFlags.Loop);
-                                Game.DisplaySubtitle("~r~Suspect~w~: What you mean, officer? I'm not loitering. You are mistaken. I'm a street entertainer. You want to be entertained, Officer?");
-                            }
-                            if (counter == 3)
-                            {
-                                suspect.Tasks.PlayAnimation(new AnimationDictionary("rcmjosh1"), "idle", -1f, AnimationFlags.Loop);
-                                Game.DisplaySubtitle("~b~You~w~: Oh, you're of those people and no, thank you " + malefemale + ". I just need to verify your information and we'll go from there.");
-                            }
-                            if (counter == 4)
-                            {
-                                suspect.Tasks.PlayAnimation(new AnimationDictionary("mini@strip_club@private_dance@idle"), "priv_dance_idle", 1f, AnimationFlags.Loop);
-                                Game.DisplaySubtitle("~r~Suspect~w~: Are you sure, Officer? It's FREE. Nothing says in the law that I can entertain you for free.");
-                            }
-                            if (counter == 5)
-                            {
-                                suspect.Tasks.PlayAnimation(new AnimationDictionary("rcmjosh1"), "idle", -1f, AnimationFlags.Loop);
-                                Game.DisplaySubtitle("~b~You~w~: I'm positive.");
-                            }
-                            if (counter == 6)
-                            {
-                                suspect.Tasks.PlayAnimation(new AnimationDictionary("mini@strip_club@private_dance@idle"), "priv_dance_idle", 1f, AnimationFlags.Loop);
-                                Game.DisplaySubtitle("~r~Suspect~w~: Ok, Officer. My offer stands whenever you want to be entertained.");
-                            }
-                            if (counter == 7)
-                            {
-                                Game.DisplaySubtitle("~b~You~w~: Dispatch, request a 10-27.");
-                                StopThePed.API.Functions.requestDispatchPedCheck(true);
-                            }
-                            if (counter == 8)
-                            {
-                                suspect.Tasks.PlayAnimation(new AnimationDictionary("rcmjosh1"), "idle", -1f, AnimationFlags.Loop);
-                                Game.DisplaySubtitle("Conversation Ended. Deal with the situation you may see fit.");
+                                Game.LogTrivial($"Error in {nameof(Process)}: {ex.Message}");
                             }
                         }
                     }
+                }
 
-
-                    if (Game.IsKeyDown(Settings.EndCall))
+                if (MainPlayer.IsDead || Game.IsKeyDown(Settings.EndCall))
+                {
+                    bool missionMessages = Settings.MissionMessages;
+                    if (missionMessages == true)
                     {
-                        End();
+                        BigMessageThread bigMessage = new BigMessageThread();
+                        bigMessage.MessageInstance.ShowColoredShard("MISSION FAILED!", "You'll get 'em next time!", RAGENativeUI.HudColor.Red, RAGENativeUI.HudColor.Black, 5000);
                     }
+                    else
+                    {
+                        missionMessages = false;
+                        Game.LogTrivial("Adam69 Callouts [LOG]: Mission messages are disabled in the config file.");
+                        return;
+                    }
+                    
+                    End();
                 }
             }
-
-            if (Game.IsKeyDown(Settings.EndCall)) End();
         }
 
 
@@ -178,9 +190,19 @@ namespace Adam69Callouts.Callouts
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Loitering", "~b~You~w~: Dispatch, we are ~g~CODE 4~w~. Show me back 10-8.");
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio(Code4Audio);
 
-            BigMessageThread bigMessage = new BigMessageThread();
+            bool missionMessages = Settings.MissionMessages;
+            if (missionMessages == true)
+            {
+                BigMessageThread bigMessage = new BigMessageThread();
 
-            bigMessage.MessageInstance.ShowColoredShard("Callout Completed!", "You are now ~g~CODE 4~w~.", RAGENativeUI.HudColor.Green, RAGENativeUI.HudColor.Black, 5000);
+                bigMessage.MessageInstance.ShowColoredShard("Callout Completed!", "You are now ~g~CODE 4~w~.", RAGENativeUI.HudColor.Green, RAGENativeUI.HudColor.Black, 5000);
+            }
+            else
+            {
+                missionMessages = false;
+                Game.LogTrivial("Adam69 Callouts [LOG]: Mission messages are disabled in the config file.");
+                return;
+            }
 
             base.End();
 

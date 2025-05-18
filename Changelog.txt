@@ -1,12 +1,47 @@
 ﻿Changelog:
 
+[May 2025]
+
+v0.3.2.3 [Hotfix]:
+
+- Renamed the call key to 'CallAnimalControlKey' for better clarity
+- Misc changes to "Dead Bird On The Road" callout
+- Misc changes to other callouts
+- Enabled the police lighting in "Drugs Found" and "Officer Down" callouts
+- Added an option to enable/disable the mission messages in the config file
+- Added 3 new locations for "Bicycle Blocking Roadway" callout
+- Added 5 new locations for "Suspicious Vehicle" callout
+- Added 3 new locations for "Vehicle Blocking Crosswalk" callout
+
+[May 6, 2025]
+
+v0.3.1.1:
+
+- Added 1 new callout ("Dead Bird On The Road")
+- Added Console Commands for the callouts - Thanks to Rich's LSPDFR Plugin Template for the guidance.
+- Bug Fixes
+
+[April 10, 2025]
+
+v0.3.0.0:
+
+- Updated RAGE SDK and LSPDFR API to latest version
+- Refactored code for better readability
+- Fixed some grammatical errors
+- Refactored version checker for more stability.
+- Refactored some callout logic for better performance
+
+v0.2.9.1:
+- Fixed an issue with the version checker not reading the correct version correctly.
+- Fixed some minor errors
+
 v0.2.9.0:
 
 - Refactored code for better readability
 - Fixed some grammatical errors
 - Refactored version checker for more stability.
 - Refactored some callout logic for better performance
-- Disabled Drunken Feller callout until a fix is made.s
+- Fixed the issue where the Deranged Drunken feller callout will instant code 4. Error was on my end LMFAO.
 
 v0.2.8.2:
 

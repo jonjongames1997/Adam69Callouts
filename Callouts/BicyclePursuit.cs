@@ -37,23 +37,14 @@ namespace Adam69Callouts.Callouts
                 IsStolen = true
             };
 
-            if (!bicycle.IsValid())
-            {
-                End();
-                return false;
-            }
+            bicycle.IsValid();
 
             suspect = new Ped(spawnpoint);
             suspect.WarpIntoVehicle(bicycle, -1);
             suspect.Inventory.GiveNewWeapon("WEAPON_COMBATPISTOL", 500, true);
             suspect.IsPersistent = true;
             suspect.BlockPermanentEvents = true;
-
-            if (!suspect.IsValid())
-            {
-                End();
-                return false;
-            }
+            suspect.IsValid();
 
             blip = suspect.AttachBlip();
             blip.Color = System.Drawing.Color.Red;
@@ -78,9 +69,16 @@ namespace Adam69Callouts.Callouts
 
         public override void Process()
         {
-            if (Settings.HelpMessages)
+            bool helpMessages = Settings.HelpMessages;
+            if (helpMessages)
             {
                 Game.DisplayHelp("Chase the bicycle and arrest the suspect.", 5000);
+            }
+            else
+            {
+                helpMessages = false;
+                Game.LogTrivial("Adam69 Callouts [LOG]: Help messages are disabled in the config file.");
+                return;
             }
 
             if (MainPlayer.IsDead || Game.IsKeyDown(Settings.EndCall))

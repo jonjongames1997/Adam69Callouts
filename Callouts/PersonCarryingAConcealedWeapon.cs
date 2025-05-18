@@ -71,60 +71,70 @@ namespace Adam69Callouts.Callouts
 
             if (MainPlayer.DistanceTo(suspect) <= 10f)
             {
-                bool helpMessages = Settings.HelpMessages;
-                if(helpMessages)
-                {
-                    Game.DisplayHelp("Press ~y~ " + Settings.Dialog.ToString() + " to interact with suspect.", 5000);
-                }
 
                 if (Game.IsKeyDown(Settings.Dialog))
                 {
                     counter++;
-
-                    if (counter == 1)
+                    try
                     {
-                        Game.DisplaySubtitle("~b~You~w~: LSPD, freeze, mothertrucker!");
+                        if (counter == 1)
+                        {
+                            Game.DisplaySubtitle("~b~You~w~: LSPD, freeze, mothertrucker!");
+                        }
+                        if (counter == 2)
+                        {
+                            Game.DisplaySubtitle("~r~Suspect~w~: What's going on, Officer?");
+                        }
+                        if (counter == 3)
+                        {
+                            Game.DisplaySubtitle("~b~You~w~: Don't reach for anything, " + malefemale + ".");
+                        }
+                        if (counter == 4)
+                        {
+                            Game.DisplaySubtitle("~r~Suspect~w~: What the f are you talking about? I don't have a weapon on me!");
+                        }
+                        if (counter == 5)
+                        {
+                            Game.DisplaySubtitle("~b~You~w~: I said, 'Don't reach for anything'. keep your hands where I can see them.");
+                        }
+                        if (counter == 6)
+                        {
+                            Game.DisplaySubtitle("~r~Suspect~w~: And I said, 'I don't have a weapon on me', motherfucker! Are you deaf?");
+                        }
+                        if (counter == 7)
+                        {
+                            Game.DisplaySubtitle("~b~You~w~: I will shoot if you reach for anything!");
+                        }
+                        if (counter == 8)
+                        {
+                            Game.DisplaySubtitle("~r~Suspect~w~: Screw this! Die, motherfucker, you!");
+                            suspect.Tasks.FightAgainst(MainPlayer);
+                            suspect.Inventory.GiveNewWeapon(wepList[new Random().Next((int)wepList.Length)], 500, true);
+                        }
                     }
-                    if (counter == 2)
+                    catch (Exception ex)
                     {
-                        Game.DisplaySubtitle("~r~Suspect~w~: What's going on, Officer?");
-                    }
-                    if (counter == 3)
-                    {
-                        Game.DisplaySubtitle("~b~You~w~: Don't reach for anything, " + malefemale + ".");
-                    }
-                    if (counter == 4)
-                    {
-                        Game.DisplaySubtitle("~r~Suspect~w~: What the f are you talking about? I don't have a weapon on me!");
-                    }
-                    if (counter == 5)
-                    {
-                        Game.DisplaySubtitle("~b~You~w~: I said, 'Don't reach for anything'. keep your hands where I can see them.");
-                    }
-                    if (counter == 6)
-                    {
-                        Game.DisplaySubtitle("~r~Suspect~w~: And I said, 'I don't have a weapon on me', motherfucker! Are you deaf?");
-                    }
-                    if (counter == 7)
-                    {
-                        Game.DisplaySubtitle("~b~You~w~: I will shoot if you reach for anything!");
-                    }
-                    if (counter == 8)
-                    {
-                        Game.DisplaySubtitle("~r~Suspect~w~: Screw this! Die, motherfucker, you!");
-                        suspect.Tasks.FightAgainst(MainPlayer);
-                        suspect.Inventory.GiveNewWeapon(wepList[new Random().Next((int)wepList.Length)], 500, true);
+                        Game.LogTrivial("Adam69 Callouts [LOG]: Error found in Person Carrying An Explosive Weapon: " + ex.Message);
+                        Game.LogTrivial("Adam69 Callouts [LOG]: Error found in Person Carrying An Explosive Weapon: " + ex.StackTrace);
                     }
                 }
             }
 
-            if (MainPlayer.IsDead)
+            if (MainPlayer.IsDead || Game.IsKeyDown(Settings.EndCall))
             {
-                End();
-            }
+                bool missionMessages = Settings.MissionMessages;
+                if (missionMessages == true)
+                {
+                    BigMessageThread bigMessage = new BigMessageThread();
+                    bigMessage.MessageInstance.ShowColoredShard("MISSION FAILED!", "You'll get 'em next time!", RAGENativeUI.HudColor.Red, RAGENativeUI.HudColor.Black, 5000);
+                }
+                else
+                {
+                    missionMessages = false;
+                    Game.LogTrivial("Adam69 Callouts [LOG]: Mission messages are disabled in the config file.");
+                    return;
+                }
 
-            if (Game.IsKeyDown(Settings.EndCall))
-            {
                 End();
             }
         }
@@ -136,9 +146,19 @@ namespace Adam69Callouts.Callouts
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Person Carrying A Concealed Weapon", "~b~You~w~: Dispatch, we are ~g~CODE 4~w~. Show me back 10-8.");
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
 
-            BigMessageThread bigMessage = new BigMessageThread();
+            bool missionMessages = Settings.MissionMessages;
+            if (missionMessages == true)
+            {
+                BigMessageThread bigMessage = new BigMessageThread();
 
-            bigMessage.MessageInstance.ShowColoredShard("Callout Completed!", "You are now ~g~CODE 4~w~.", RAGENativeUI.HudColor.Green, RAGENativeUI.HudColor.Black, 5000);
+                bigMessage.MessageInstance.ShowColoredShard("Callout Completed!", "You are now ~g~CODE 4~w~.", RAGENativeUI.HudColor.Green, RAGENativeUI.HudColor.Black, 5000);
+            }
+            else
+            {
+                missionMessages = false;
+                Game.LogTrivial("Adam69 Callouts [LOG]: Mission messages are disabled in the config file.");
+                return;
+            }
 
             base.End();
 

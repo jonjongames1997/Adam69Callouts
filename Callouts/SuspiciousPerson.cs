@@ -67,10 +67,6 @@ namespace Adam69Callouts.Callouts
         {
             if (MainPlayer.DistanceTo(suspect) <= 10f)
             {
-                if (Settings.HelpMessages)
-                {
-                    Game.DisplayHelp($"Press ~y~{Settings.Dialog}~w~ to interact with the suspect.", 5000);
-                }
 
                 if (Game.IsKeyDown(Settings.Dialog))
                 {
@@ -79,9 +75,24 @@ namespace Adam69Callouts.Callouts
                 }
             }
 
-            base.Process();
+            if (MainPlayer.IsDead || Game.IsKeyDown(Settings.EndCall))
+            {
+                bool missionMessages = Settings.MissionMessages;
+                if (missionMessages == true)
+                {
+                    BigMessageThread bigMessage = new BigMessageThread();
+                    bigMessage.MessageInstance.ShowColoredShard("Callout Failed!", "You are now ~r~CODE 4~w~.", RAGENativeUI.HudColor.Red, RAGENativeUI.HudColor.Black, 5000);
+                }
+                else
+                {
+                    missionMessages = false;
+                    return;
+                }
 
-            if (MainPlayer.IsDead || Game.IsKeyDown(Settings.EndCall)) End();
+                End();
+            }
+
+            base.Process();
         }
 
         private void HandleInteraction()
@@ -114,7 +125,7 @@ namespace Adam69Callouts.Callouts
                 case 7:
                     Game.DisplaySubtitle("convo ended.");
                     suspect.Tasks.FightAgainst(MainPlayer);
-                    suspect.Armor = 500;
+                    suspect.Armor = 1500;
                     suspect.Inventory.GiveNewWeapon(wepList[random.Next(wepList.Length)], 500, true);
                     break;
             }
@@ -127,9 +138,18 @@ namespace Adam69Callouts.Callouts
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Suspicious Person", "~b~You~w~: Dispatch, we are ~g~Code 4~w~. Show me back 10-8..");
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
 
-            BigMessageThread bigMessage = new BigMessageThread();
+            bool missionMessages = Settings.MissionMessages;
+            if (missionMessages == true)
+            {
+                BigMessageThread bigMessage = new BigMessageThread();
 
-            bigMessage.MessageInstance.ShowColoredShard("Callout Completed!", "You are now ~g~CODE 4~w~.", RAGENativeUI.HudColor.Green, RAGENativeUI.HudColor.Black, 5000);
+                bigMessage.MessageInstance.ShowColoredShard("Callout Completed!", "You are now ~g~CODE 4~w~.", RAGENativeUI.HudColor.Green, RAGENativeUI.HudColor.Black, 5000);
+            }
+            else
+            {
+                missionMessages = false;
+                return;
+            }
 
             Game.LogTrivial("Adam69 Callouts [LOG]: Suspicious Person callout is code 4!");
             base.End();

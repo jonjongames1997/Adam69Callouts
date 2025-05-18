@@ -1,4 +1,5 @@
-﻿using CalloutInterfaceAPI;
+﻿using Adam69Callouts.Utilities;
+using CalloutInterfaceAPI;
 using LSPD_First_Response.Engine;
 
 namespace Adam69Callouts.Callouts
@@ -85,7 +86,18 @@ namespace Adam69Callouts.Callouts
 
             policeVehicle = new Vehicle(backupVehicle[new Random().Next((int)backupVehicle.Length)], leoVehicleSpawn, 0f);
             policeVehicle.IsPersistent = true;
-            policeVehicle.IsValid();
+
+            // Ensure the cop vehicle exists and is valid
+            if (policeVehicle != null && policeVehicle.IsValid())
+            {
+                // Turn on emergency lights
+                policeVehicle.IsSirenOn = true; // Activates the siren and emergency lights
+                policeVehicle.IsSirenSilent = true; // Keeps the siren silent while lights are active (optional)
+            }
+            else
+            {
+                Game.LogTrivial("copVehicle is null or invalid. Cannot enable emergency lights.");
+            }
 
             policeCarBlip = policeVehicle.AttachBlip();
             policeCarBlip.Color = System.Drawing.Color.DarkBlue;
@@ -123,50 +135,51 @@ namespace Adam69Callouts.Callouts
         {
             if (MainPlayer.DistanceTo(theCaller) <= 5f)
             {
-                bool helpMessages = Settings.HelpMessages;
-                if (helpMessages)
-                {
-                    Game.DisplayHelp("Press ~y~" + Settings.Dialog.ToString() + "~w~ to speak to the caller.", 5000);
-                }
-
                 if (Game.IsKeyDown(Settings.Dialog))
                 {
                     counter++;
 
-                    if (counter == 1)
+                    try
                     {
-                        theCop.Tasks.PlayAnimation(new AnimationDictionary("amb@world_human_cop_idles@male@idle_b"), "idle_e", -1f, AnimationFlags.Loop);
-                        Game.DisplaySubtitle("~b~You~w~: Hello there, " + malefemale + ". Are you the caller?");
+                        if (counter == 1)
+                        {
+                            theCop.Tasks.PlayAnimation(new AnimationDictionary("amb@world_human_cop_idles@male@idle_b"), "idle_e", -1f, AnimationFlags.Loop);
+                            Game.DisplaySubtitle("~b~You~w~: Hello there, " + malefemale + ". Are you the caller?");
+                        }
+                        if (counter == 2)
+                        {
+                            theCaller.Tasks.PlayAnimation(new AnimationDictionary("anim@amb@casino@brawl@fights@argue@"), "arguement_loop_mp_m_brawler_01", -1f, AnimationFlags.Loop);
+                            Game.DisplaySubtitle("~o~The Caller~w~: Yes I am, " + copGender + ".");
+                        }
+                        if (counter == 3)
+                        {
+                            theCaller.Tasks.PlayAnimation(new AnimationDictionary("rcmjosh1"), "idle", -1f, AnimationFlags.Loop);
+                            Game.DisplaySubtitle("~b~You~w~: Can you explain how did you find the drugs?");
+                        }
+                        if (counter == 4)
+                        {
+                            theCaller.Tasks.PlayAnimation(new AnimationDictionary("anim@amb@casino@brawl@fights@argue@"), "arguement_loop_mp_m_brawler_01", -1f, AnimationFlags.Loop);
+                            Game.DisplaySubtitle("~o~The Caller~w~: I was going for a walk then I spotted this opened bag of weed from LD Organics. I didn't know who owns that bag of weed. That's why I called.");
+                        }
+                        if (counter == 5)
+                        {
+                            theCaller.Tasks.PlayAnimation(new AnimationDictionary("rcmjosh1"), "idle", -1f, AnimationFlags.Loop);
+                            Game.DisplaySubtitle("~b~You~w~: We really appreciate that you reported it. I'll investiagte this. I just need to see your ID so I know who I'm talking to.");
+                        }
+                        if (counter == 6)
+                        {
+                            theCaller.Tasks.PlayAnimation(new AnimationDictionary("anim@amb@casino@brawl@fights@argue@"), "arguement_loop_mp_m_brawler_01", -1f, AnimationFlags.Loop);
+                            Game.DisplaySubtitle("~o~The Caller~w~: Ok, no problem. I'm really in a hurry. I got to go watch Kansas City Chiefs vs Buffalo Bills game. Buffalo Bills is my team and I hope they give KC a good 'ol fashion spanking. Them cheating ass fuckers.");
+                        }
+                        if (counter == 7)
+                        {
+                            Game.DisplaySubtitle("Convo Ended. Deal with the situation you may see fit.");
+                            theCaller.Tasks.PlayAnimation(new AnimationDictionary("rcmjosh1"), "idle", -1f, AnimationFlags.Loop);
+                        }
                     }
-                    if (counter == 2)
+                    catch (Exception ex)
                     {
-                        theCaller.Tasks.PlayAnimation(new AnimationDictionary("anim@amb@casino@brawl@fights@argue@"), "arguement_loop_mp_m_brawler_01", -1f, AnimationFlags.Loop);
-                        Game.DisplaySubtitle("~o~The Caller~w~: Yes I am, " + copGender + ".");
-                    }
-                    if (counter == 3)
-                    {
-                        theCaller.Tasks.PlayAnimation(new AnimationDictionary("rcmjosh1"), "idle", -1f, AnimationFlags.Loop);
-                        Game.DisplaySubtitle("~b~You~w~: Can you explain how did you find the drugs?");
-                    }
-                    if (counter == 4)
-                    {
-                        theCaller.Tasks.PlayAnimation(new AnimationDictionary("anim@amb@casino@brawl@fights@argue@"), "arguement_loop_mp_m_brawler_01", -1f, AnimationFlags.Loop);
-                        Game.DisplaySubtitle("~o~The Caller~w~: I was going for a walk then I spotted this opened bag of weed from LD Organics. I didn't know who owns that bag of weed. That's why I called.");
-                    }
-                    if (counter == 5)
-                    {
-                        theCaller.Tasks.PlayAnimation(new AnimationDictionary("rcmjosh1"), "idle", -1f, AnimationFlags.Loop);
-                        Game.DisplaySubtitle("~b~You~w~: We really appreciate that you reported it. I'll investiagte this. I just need to see your ID so I know who I'm talking to.");
-                    }
-                    if (counter == 6)
-                    {
-                        theCaller.Tasks.PlayAnimation(new AnimationDictionary("anim@amb@casino@brawl@fights@argue@"), "arguement_loop_mp_m_brawler_01", -1f, AnimationFlags.Loop);
-                        Game.DisplaySubtitle("~o~The Caller~w~: Ok, no problem. I'm really in a hurry. I got to go watch Kansas City Chiefs vs Buffalo Bills game. Buffalo Bills is my team and I hope they give KC a good 'ol fashion spanking. Them cheating ass fuckers.");
-                    }
-                    if (counter == 7)
-                    {
-                        Game.DisplaySubtitle("Convo Ended. Deal with the situation you may see fit.");
-                        theCaller.Tasks.PlayAnimation(new AnimationDictionary("rcmjosh1"), "idle", -1f, AnimationFlags.Loop);
+                        Game.LogTrivial("Adam69 Callouts [LOG]: Error in Drugs Found callout. Error: " + ex.Message);
                     }
                 }
             }
@@ -177,6 +190,12 @@ namespace Adam69Callouts.Callouts
                 if (helpMessages)
                 {
                     Game.DisplayHelp("Press ~y~" + Settings.PickUp.ToString() + "~w~ to pick up the drugs.", 5000);
+                }
+                else
+                {
+                    helpMessages = false;
+                    Game.LogTrivial("Adam69 Callouts [LOG]: Help messages are disabled in the config file.");
+                    return;
                 }
 
                 if (Game.IsKeyDown(Settings.PickUp))
@@ -189,8 +208,23 @@ namespace Adam69Callouts.Callouts
                 }
             }
 
-            if (MainPlayer.IsDead) End();
-            if (Game.IsKeyDown(Settings.EndCall)) End();
+            if (MainPlayer.IsDead || Game.IsKeyDown(Settings.EndCall))
+            {
+                bool missionMessages = Settings.MissionMessages;
+                if (missionMessages == true)
+                {
+                    BigMessageThread bigMessage = new BigMessageThread();
+                    bigMessage.MessageInstance.ShowColoredShard("Callout Failed!", "You are now ~r~CODE 4~w~.", RAGENativeUI.HudColor.Red, RAGENativeUI.HudColor.Black, 5000);
+                }
+                else
+                {
+                    missionMessages = false;
+                    Game.LogTrivial("Adam69 Callouts [LOG]: Mission messages are disabled in the config file.");
+                    return;
+                }
+
+                End();
+            }
 
             base.Process();
         }
@@ -208,9 +242,19 @@ namespace Adam69Callouts.Callouts
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~y~Drugs Found", "~b~You~w~: Dispatch, we are ~g~Code 4~w~. Show me back 10-8.");
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
 
-            BigMessageThread bigMessage = new BigMessageThread();
+            bool missionMessages = Settings.MissionMessages;
+            if (missionMessages == true)
+            {
+                BigMessageThread bigMessage = new BigMessageThread();
 
-            bigMessage.MessageInstance.ShowColoredShard("Callout Complete!", "Return to patrol!", RAGENativeUI.HudColor.Green, RAGENativeUI.HudColor.Black, 5000);
+                bigMessage.MessageInstance.ShowColoredShard("Callout Complete!", "Return to patrol!", RAGENativeUI.HudColor.Green, RAGENativeUI.HudColor.Black, 5000);
+            }
+            else
+            {
+                missionMessages = false;
+                Game.LogTrivial("Adam69 Callouts [LOG]: Mission messages are disabled in the config file.");
+                return;
+            }
 
             base.End();
 

@@ -20,5 +20,15 @@ global using static Adam69Callouts.Settings;
 global using System.IO;
 global using static Adam69Callouts.Stuff.Helper;
 global using RAGENativeUI.Elements;
+global using RAGENativeUI;
+global using static Adam69Callouts.Utilities.LoggingManager;
+global using System.Windows.Forms;
+global using System.Reflection;
+global using System.Xml;
+global using Adam69Callouts.Utilities;
+global using Adam69Callouts.VersionChecker;
+global using static Adam69Callouts.VersionChecker.PluginCheck;
+global using LSPD_First_Response.Mod.Utils;
+
 
 #endregion

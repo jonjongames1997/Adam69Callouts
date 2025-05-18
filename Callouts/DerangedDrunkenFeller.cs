@@ -10,7 +10,7 @@ namespace Adam69Callouts.Callouts
     {
         private static Ped suspect;
         private static Vector3 spawnpoint;
-        private static Blip susBlip;
+        private static Blip blip;
         private static int counter;
         private static string malefemale;
         private static int copgender;
@@ -34,10 +34,18 @@ namespace Adam69Callouts.Callouts
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "Deranged Drunken Feller", "~b~Dispatch~w~: Suspect has been located. Respond ~r~Code 2~w~.");
 
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_2_Audio");
-
-            susBlip = suspect.AttachBlip();
-            susBlip.Color = System.Drawing.Color.Red;
-            susBlip.IsRouteEnabled = true;
+           
+            try
+            {
+                blip = suspect.AttachBlip();
+                blip.Color = System.Drawing.Color.Red;
+                blip.IsRouteEnabled = true;
+            }
+            catch (Exception ex)
+            {
+                Game.LogTrivial("Adam69 Callouts [LOG]: Blip not found. " + ex.Message);
+                Game.LogTrivial("Adam69 Callouts [LOG]: Blip not found. " + ex.StackTrace);
+            }
 
             if (suspect.IsMale)
                 malefemale = "Sir";
@@ -52,7 +60,7 @@ namespace Adam69Callouts.Callouts
         public override void OnCalloutNotAccepted()
         {
             if (suspect) suspect.Delete();
-            if (susBlip) susBlip.Delete();
+            if (blip) blip.Delete();
 
             base.OnCalloutNotAccepted();
         }
@@ -66,47 +74,67 @@ namespace Adam69Callouts.Callouts
                 {
                     Game.DisplayHelp("Press ~y~" + Settings.Dialog.ToString() + "~w~ to interact with the suspect.", 5000);
                 }
+                else
+                {
+                    helpMessages = false;
+                    return;
+                }
 
                 if (Game.IsKeyDown(Settings.Dialog))
                 {
                     counter++;
+                    try
+                    {
+                        if (counter == 1)
+                        {
+                            Game.DisplaySubtitle("~b~You~w~: What goin' on, feller? Have anything to drink today?");
+                        }
+                        if (counter == 2)
+                        {
+                            Game.DisplaySubtitle("~r~Suspect~w~: *slurring* What you want, officer pigfucker?");
+                        }
+                        if (counter == 3)
+                        {
+                            Game.DisplaySubtitle("~b~You~w~: Ok, we'll do a few tests to see if you're drunk.");
+                        }
+                        if (counter == 4)
+                        {
+                            Game.DisplaySubtitle("~r~Suspect~w~: *slurring* You got to catch me first, donut eater.");
+                        }
+                        if (counter == 5)
+                        {
+                            Game.DisplaySubtitle("Convo ended. Chase and arrest the suspect.");
+                            suspect.Tasks.FightAgainst(MainPlayer);
+                            suspect.Armor = 500;
+                            suspect.Inventory.GiveNewWeapon(wepList[new Random().Next((int)wepList.Length)], 500, true);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Game.LogTrivial("Adam69 Callouts [LOG]: Exception in Deranged Drunken Feller callout: " + ex.Message);
+                        Game.LogTrivial("Adam69 Callouts [LOG]: Exception in Deranged Drunken Feller callout: " + ex.StackTrace);
+                    }
 
-                    if (counter == 1)
-                    {
-                        Game.DisplaySubtitle("~b~You~w~: What goin' on, feller? Have anything to drink today?");
-                    }
-                    if (counter == 2)
-                    {
-                        Game.DisplaySubtitle("~r~Suspect~w~: *slurring* What you want, officer pigfucker?");
-                    }
-                    if (counter == 3)
-                    {
-                        Game.DisplaySubtitle("~b~You~w~: Ok, we'll do a few tests to see if you're drunk.");
-                    }
-                    if (counter == 4)
-                    {
-                        Game.DisplaySubtitle("~r~Suspect~w~: *slurring* You got to catch me first, donut eater.");
-                    }
-                    if (counter == 5)
-                    {
-                        Game.DisplaySubtitle("Convo ended. Chase and arrest the suspect.");
-                        suspect.Tasks.FightAgainst(MainPlayer);
-                        suspect.Armor = 500;
-                        suspect.Inventory.GiveNewWeapon(wepList[new Random().Next((int)wepList.Length)], 500, true);
-                    }
                 }
             }
 
-            if (MainPlayer.IsDead)
+            if (MainPlayer.IsDead || Game.IsKeyDown(Settings.EndCall))
             {
-                BigMessageThread bigMessage = new BigMessageThread();
-
-                bigMessage.MessageInstance.ShowColoredShard("~r~MISSION FAILED!", "You'll get em next time", RAGENativeUI.HudColor.Red, RAGENativeUI.HudColor.Black, 5000);
+                bool missionMessages = Settings.MissionMessages;
+                if (missionMessages == true)
+                {
+                    BigMessageThread bigMessage = new BigMessageThread();
+                    bigMessage.MessageInstance.ShowColoredShard("MISSION FAILED!", "You'll get 'em next time!", RAGENativeUI.HudColor.Red, RAGENativeUI.HudColor.Black, 5000);
+                }
+                else
+                {
+                    missionMessages = false;
+                    Game.LogTrivial("[LOG]: Mission messages are disabled in the config file.");
+                    return;
+                }
 
                 End();
             }
-
-            if (Game.IsKeyDown(Settings.EndCall)) End();
 
             base.Process();
         }
@@ -114,13 +142,23 @@ namespace Adam69Callouts.Callouts
         public override void End()
         {
             if (suspect.Exists()) suspect.Dismiss();
-            if (susBlip) susBlip.Delete();
+            if (blip) blip.Delete();
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Deranged Drunken Feller", "~b~You~w~: Dispatch, we are ~g~Code 4~w~. Show me back 10-8.");
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
 
-            BigMessageThread bigMessage = new BigMessageThread();
+            bool missionMessages = Settings.MissionMessages;
+            if (missionMessages == true)
+            {
+                BigMessageThread bigMessage = new BigMessageThread();
 
-            bigMessage.MessageInstance.ShowColoredShard("~g~Code 4", "Suspect Neutralized!", RAGENativeUI.HudColor.Green, RAGENativeUI.HudColor.Black, 5000);
+                bigMessage.MessageInstance.ShowColoredShard("~g~Code 4", "Suspect Neutralized!", RAGENativeUI.HudColor.Green, RAGENativeUI.HudColor.Black, 5000);
+            }
+            else
+            {
+                missionMessages = false;
+                Game.LogTrivial("[LOG]: Mission messages are disabled in the config file.");
+                return;
+            }
 
             base.End();
 

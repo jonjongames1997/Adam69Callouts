@@ -18,10 +18,13 @@ namespace Adam69Callouts
         internal static bool SuspiciousPerson = true;
         internal static bool OfficerDown = true;
         internal static bool DerangedDrunkenFeller = true;
+        internal static bool DeadBirdOnTheRoad = true;
         internal static bool HelpMessages = true;
+        internal static bool MissionMessages = true;
         internal static Keys EndCall = Keys.End;
         internal static Keys Dialog = Keys.Y;
         internal static Keys PickUp = Keys.E;
+        internal static Keys CallAnimalControlKey = Keys.NumPad1;
         internal static string Language = "English";
 
 
@@ -42,12 +45,15 @@ namespace Adam69Callouts
             Settings.DrugsFound = initializationFile.ReadBoolean("Callouts", "DrugsFound", true);
             Settings.SuspiciousPerson = initializationFile.ReadBoolean("Callouts", "SuspiciousPerson", true);
             Settings.OfficerDown = initializationFile.ReadBoolean("Callouts", "OfficerDown", true);
-            Settings.DerangedDrunkenFeller = initializationFile.ReadBoolean("Callouts", "DerangedDrunkenFeller", false);
+            Settings.DerangedDrunkenFeller = initializationFile.ReadBoolean("Callouts", "DerangedDrunkenFeller", true);
+            Settings.DeadBirdOnTheRoad = initializationFile.ReadBoolean("Callouts", "DeadBirdOnTheRoad", true);
             HelpMessages = initializationFile.ReadBoolean("Settings", "HelpMessages", true);
+            MissionMessages = initializationFile.ReadBoolean("Settings", "MissionMessages", true);
             EndCall = initializationFile.ReadEnum<Keys>("Keys", "EndCall", Keys.End);
             Dialog = initializationFile.ReadEnum<Keys>("Keys", "Dialog", Keys.Y);
             PickUp = initializationFile.ReadEnum<Keys>("Keys", "PickUp", Keys.E);
-            Language = initializationFile.ReadString("Settings", "Language", "English");
+            CallAnimalControlKey = initializationFile.ReadEnum<Keys>("Keys", "CallAnimalControlKey", Keys.NumPad1);
+            Language = initializationFile.ReadString("Settings", "Language", Language);
         }
 
         internal static void SaveConfigSettings()
@@ -66,13 +72,16 @@ namespace Adam69Callouts
             ini.Write("Callouts", "SuspiciousPerson", SuspiciousPerson);
             ini.Write("Callouts", "OfficerDown", OfficerDown);
             ini.Write("Callouts", "DerangedDrunkenFeller", DerangedDrunkenFeller);
+            ini.Write("Callouts", "DeadBirdOnTheRoad", DeadBirdOnTheRoad);
             ini.Write("Settings", "HelpMessages", HelpMessages);
+            ini.Write("Settings", "MissionMessages", MissionMessages);
             ini.Write("Keys", "EndCall", EndCall);
             ini.Write("Keys", "Dialog", Dialog);
             ini.Write("Keys", "PickUp", PickUp);
             ini.Write("Settings", "Language", Language);
+            ini.Write("Keys", "CallAnimalControlKey", CallAnimalControlKey);
         }
 
-        public static readonly string PluginVersion = "0.2.9.0";
+        public static readonly string PluginVersion = "0.3.2.3";
     }
 }

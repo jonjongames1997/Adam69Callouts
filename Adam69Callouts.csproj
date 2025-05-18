@@ -40,25 +40,21 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CalloutInterfaceAPI">
-      <HintPath>..\..\JMCalloutsRemasteredReferences\CalloutInterfaceAPI.dll</HintPath>
+      <HintPath>..\..\..\OneDrive\Documentos\references\CalloutInterfaceAPI.dll</HintPath>
     </Reference>
     <Reference Include="LSPD First Response, Version=0.4.8943.27879, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\JMCalloutsRemasteredReferences\LSPD First Response.dll</HintPath>
+      <HintPath>..\..\..\OneDrive\Documentos\references\LSPD First Response.dll</HintPath>
     </Reference>
-    <Reference Include="RAGENativeUI, Version=1.9.2.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\JMCalloutsRemasteredReferences\RAGENativeUI.dll</HintPath>
+    <Reference Include="RAGENativeUI, Version=1.9.3.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>packages\RAGENativeUI.1.9.3\lib\net472\RAGENativeUI.dll</HintPath>
     </Reference>
-    <Reference Include="RagePluginHookSDK">
-      <HintPath>..\..\JMCalloutsRemasteredReferences\RagePluginHookSDK.dll</HintPath>
-    </Reference>
-    <Reference Include="ScriptHookVDotNet2, Version=2.11.6.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>packages\ScriptHookVDotNet2.2.11.6\lib\net48\ScriptHookVDotNet2.dll</HintPath>
+    <Reference Include="RagePluginHook, Version=0.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>packages\RagePluginHook.1.109.1\lib\net472\RagePluginHook.dll</HintPath>
     </Reference>
     <Reference Include="StopThePed, Version=4.9.5.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\JMCalloutsRemasteredReferences\StopThePed.dll</HintPath>
+      <HintPath>..\..\..\OneDrive\Documentos\references\StopThePed.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -78,9 +74,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="UltimateBackup, Version=1.8.7.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\JMCalloutsRemasteredReferences\UltimateBackup.dll</HintPath>
+    <Reference Include="UltimateBackup">
+      <HintPath>..\..\..\OneDrive\Documentos\references\UltimateBackup.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
@@ -88,6 +83,7 @@
     <Compile Include="Callouts\AbandonedVehicle.cs" />
     <Compile Include="Callouts\BicycleBlockingRoadway.cs" />
     <Compile Include="Callouts\BicyclePursuit.cs" />
+    <Compile Include="Callouts\DeadBirdOnTheRoad.cs" />
     <Compile Include="Callouts\DerangedDrunkenFeller.cs" />
     <Compile Include="Callouts\DrugsFound.cs" />
     <Compile Include="Callouts\Loitering.cs" />
@@ -97,6 +93,7 @@
     <Compile Include="Callouts\SuspiciousVehicle.cs" />
     <Compile Include="Callouts\VehicleBlockingCrosswalk.cs" />
     <Compile Include="Callouts\VehicleBlockingSidewalk.cs" />
+    <Compile Include="Stuff\ConsoleCommands.cs" />
     <Compile Include="Stuff\GlobalUsing.cs" />
     <Compile Include="IniFile.cs" />
     <Compile Include="Main.cs" />
@@ -106,12 +103,13 @@
     <Compile Include="Stuff\Helper.cs" />
     <Compile Include="Stuff\LocationChooser.cs" />
     <Compile Include="Stuff\Vector3Extension.cs" />
+    <Compile Include="Utilities\GlobalsManager.cs" />
+    <Compile Include="Utilities\LoggingManager.cs" />
     <Compile Include="Utilities\VehicleColor.cs" />
     <Compile Include="Utilities\VehicleExtension.cs" />
     <Compile Include="VersionChecker\PluginCheck.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include=".editorconfig" />
     <None Include="Adam69Callouts.ini" />
     <None Include="packages.config" />
   </ItemGroup>

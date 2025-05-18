@@ -75,6 +75,19 @@ namespace Adam69Callouts.Callouts
             suspectBlip = suspect.AttachBlip();
             suspectBlip.Color = System.Drawing.Color.Red;
 
+            // Ensure the cop vehicle exists and is valid
+            if (emergencyVehicle != null && emergencyVehicle.IsValid())
+            {
+                // Turn on emergency lights
+                emergencyVehicle.IsSirenOn = true; // Activates the siren and emergency lights
+                emergencyVehicle.IsSirenSilent = true; // Keeps the siren silent while lights are active (optional)
+                emergencyVehicle.LockStatus = VehicleLockStatus.Locked; // Locks the vehicle
+            }
+            else
+            {
+                Game.LogTrivial("Emergency Vehicle is null or invalid. Cannot enable emergency lights.");
+            }
+
             officerVehicleBlip = emergencyVehicle.AttachBlip();
             officerVehicleBlip.Color = System.Drawing.Color.LightBlue;
 
@@ -105,45 +118,58 @@ namespace Adam69Callouts.Callouts
         {
             if (MainPlayer.DistanceTo(officer) <= 10f)
             {
-                bool helpMessages = Settings.HelpMessages;
-                if (helpMessages)
-                {
-                    Game.DisplayHelp("Press ~y~" + Settings.Dialog.ToString() + " ~w~to notify dispatch of an officer down.", 5000);
-                }
 
                 if (Game.IsKeyDown(Settings.Dialog))
                 {
                     counter++;
 
-                    if (counter == 1)
+                    try
                     {
-                        Game.DisplaySubtitle("~b~You~w~: Dispatch, we got an officer down, requesting medic but have them stage a few blocks away from the scene until the scene is secured.");
-                    }
-                    if (counter == 2)
-                    {
-                        LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_OfficerDown_Audio_2");
-                        UltimateBackup.API.Functions.callAmbulance();
-                        UltimateBackup.API.Functions.callCode3Backup();
+                        if (counter == 1)
+                        {
+                            Game.DisplaySubtitle("~b~You~w~: Dispatch, we got an officer down, requesting medic but have them stage a few blocks away from the scene until the scene is secured.");
+                        }
+                        if (counter == 2)
+                        {
+                            LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_OfficerDown_Audio_2");
+                            UltimateBackup.API.Functions.callAmbulance();
+                            UltimateBackup.API.Functions.callCode3Backup();
 
+                        }
+                        if (counter == 3)
+                        {
+                            Game.DisplaySubtitle("~r~Suspect~w~: Time to die, you donut pigs!");
+                            suspect.Tasks.FightAgainst(MainPlayer);
+                            suspect.Inventory.GiveNewWeapon("WEAPON_COMBATPISTOL", 500, true);
+                            suspect.Armor = 1800;
+                        }
+                        if (counter == 4)
+                        {
+                            LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_ShotsFired_Audio_Remastered_01");
+                            UltimateBackup.API.Functions.callPanicButtonBackup(true);
+                        }
                     }
-                    if (counter == 3)
+                    catch (Exception ex)
                     {
-                        Game.DisplaySubtitle("~r~Suspect~w~: Time to die, you donut pigs!");
-                        suspect.Tasks.FightAgainst(MainPlayer);
-                        suspect.Inventory.GiveNewWeapon("WEAPON_COMBATPISTOL", 500, true);
-                        suspect.Armor = 1000;
-                    }
-                    if (counter == 4)
-                    {
-                        LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_ShotsFired_Audio_Remastered_01");
-                        UltimateBackup.API.Functions.callPanicButtonBackup(true);
+                        Game.LogTrivial("Adam69 Callouts [LOG]: " + ex.Message);
                     }
                 }
 
                 if (MainPlayer.IsDead || Game.IsKeyDown(Settings.EndCall))
                 {
-                    BigMessageThread bigMessage = new BigMessageThread();
-                    bigMessage.MessageInstance.ShowColoredShard("MISSION FAILED!", "You'll get 'em next time!", RAGENativeUI.HudColor.Red, RAGENativeUI.HudColor.Black, 5000);
+                    bool missionMessages = Settings.MissionMessages;
+                    if (missionMessages == true)
+                    {
+                        BigMessageThread bigMessage = new BigMessageThread();
+                        bigMessage.MessageInstance.ShowColoredShard("MISSION FAILED!", "You'll get 'em next time!", RAGENativeUI.HudColor.Red, RAGENativeUI.HudColor.Black, 5000);
+                    }
+                    else
+                    {
+                        missionMessages = false;
+                        Game.LogTrivial("Adam69 Callouts [LOG]: Mission messages are disabled in the config file.");
+                        return;
+                    }
+                    
                     End();
                 }
             }
@@ -163,9 +189,19 @@ namespace Adam69Callouts.Callouts
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Officer Down", "~b~You~w~: We are Code 4. Show me back 10-8!");
             base.End();
 
-            BigMessageThread bigMessage = new BigMessageThread();
+            bool missionMessages = Settings.MissionMessages;
+            if (missionMessages == true)
+            {
+                BigMessageThread bigMessage = new BigMessageThread();
 
-            bigMessage.MessageInstance.ShowColoredShard("CODE 4", "The scene is now secure.", RAGENativeUI.HudColor.Green, RAGENativeUI.HudColor.Black, 5000);
+                bigMessage.MessageInstance.ShowColoredShard("CODE 4", "The scene is now secure.", RAGENativeUI.HudColor.Green, RAGENativeUI.HudColor.Black, 5000);
+            }
+            else
+            {
+                missionMessages = false;
+                Game.LogTrivial("Adam69 Callouts [LOG]: Mission messages are disabled in the config file.");
+                return;
+            }
 
             Game.LogTrivial("Adam69 Callouts [LOG]: Officer Down callout is code 4!");
 

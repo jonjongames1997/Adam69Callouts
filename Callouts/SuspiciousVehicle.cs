@@ -16,6 +16,11 @@ namespace Adam69Callouts.Callouts
             {
                 new(-1104.28f, -1509.72f, 4.65f),
                 new(138.39f, -1070.77f, 29.19f),
+                new(),
+                new(),
+                new(),
+                new(),
+                new(),
             };
             spawnpoint = LocationChooser.ChooseNearestLocation(list);
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
@@ -31,11 +36,6 @@ namespace Adam69Callouts.Callouts
         {
             Game.LogTrivial("Adam69 Callouts [LOG]: Suspicious Vehicle callout has been accepted!");
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Suspicious Vehicle", "~b~Dispatch~w~: Vehicle and Suspect has been spotted. Respond ~y~Code 2~w~.");
-
-            if (Settings.HelpMessages)
-            {
-                Game.DisplayHelp("Press ~y~" + Settings.EndCall.ToString() + "~w~ at anytime to end the callout", 5000);
-            }
 
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_2_Audio");
 
@@ -71,7 +71,22 @@ namespace Adam69Callouts.Callouts
                 Game.DisplayHelp("Deal with the situation to your liking.", 5000);
             }
 
-            if (Game.IsKeyDown(Settings.EndCall)) End();
+            if (MainPlayer.IsDead || Game.IsKeyDown(Settings.EndCall))
+            {
+                bool missionMessages = Settings.MissionMessages;
+                if (missionMessages == true)
+                {
+                    BigMessageThread bigMessage = new BigMessageThread();
+                    bigMessage.MessageInstance.ShowColoredShard("Callout Failed!", "You are now ~r~CODE 4~w~.", RAGENativeUI.HudColor.Red, RAGENativeUI.HudColor.Black, 5000);
+                }
+                else
+                {
+                    missionMessages = false;
+                    return;
+                }
+
+                End();
+            }
 
             base.Process();
         }
@@ -85,9 +100,18 @@ namespace Adam69Callouts.Callouts
 
             base.End();
 
-            BigMessageThread bigMessage = new BigMessageThread();
+            bool missionMessages = Settings.MissionMessages;
+            if (missionMessages == true)
+            {
+                BigMessageThread bigMessage = new BigMessageThread();
 
-            bigMessage.MessageInstance.ShowColoredShard("Callout Completed!", "You are now ~g~CODE 4~w~.", RAGENativeUI.HudColor.Green, RAGENativeUI.HudColor.Black, 5000);
+                bigMessage.MessageInstance.ShowColoredShard("Callout Completed!", "You are now ~g~CODE 4~w~.", RAGENativeUI.HudColor.Green, RAGENativeUI.HudColor.Black, 5000);
+            }
+            else
+            {
+                missionMessages = false;
+                return;
+            }
 
             Game.LogTrivial("Adam69 Callouts [LOG]: Suspicious Vehicle callout is Code 4!");
         }

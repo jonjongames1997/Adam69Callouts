@@ -1,9 +1,4 @@
-﻿using System.Reflection;
-using Adam69Callouts.Callouts;
-using Adam69Callouts.VersionChecker;
-using LSPD_First_Response.Mod.Utils;
-
-[assembly: Rage.Attributes.Plugin("Adam69Callouts", Description = "LSPDFR Callout Pack", Author = "JM Modifications")]
+﻿[assembly: Rage.Attributes.Plugin("Adam69Callouts", Description = "LSPDFR Callout Pack", Author = "JM Modifications")]
 namespace Adam69Callouts
 {
     public class Main : Plugin
@@ -11,18 +6,20 @@ namespace Adam69Callouts
         public static bool CalloutInterface;
         public static bool StopThePed;
         public static bool UltimateBackup;
-        public static bool RageNativeUI;
 
         public override void Initialize()
         {
             try
             {
                 Functions.OnOnDutyStateChanged += Functions_OnOnDutyStateChanged;
+                Game.AddConsoleCommands();
                 Settings.LoadSettings();
+                LoggingManager.Logging("Adam69 Callouts [LOG]: Plugin loaded successfully.");
             }
             catch(Exception ex)
             {
                 Game.LogTrivial("Adam69Callouts [ERROR]: Failed to initialize the plugin: " + ex.Message);
+                LoggingManager.Logging("Adam69 Callouts [ERROR]: Failed to initialize the plugin: " + ex.Message);
             }
         }
 
@@ -33,10 +30,10 @@ namespace Adam69Callouts
             {
                 GameFiber.StartNew(delegate
                 {
-                    Localization.SetLanguage(Settings.Language);
+                    Stuff.Localization.SetLanguage(Settings.Language);
                     RegisterCallouts();
                     Game.Console.Print();
-                    Game.Console.Print("=============================================== Adam69 Callouts by OfficerMorrison ================================================");
+                    Game.Console.Print("=============================================== Adam69 Callouts by JM Modifications ================================================");
                     Game.Console.Print();
                     Game.Console.Print("[LOG]: Callouts and settings were loaded successfully.");
                     Game.Console.Print("[LOG]: The config file was loaded successfully.");
@@ -49,14 +46,14 @@ namespace Adam69Callouts
                     Game.Console.Print();
                     Game.Console.Print("If you're banned from the Discord and want to appeal, file an appeal here: https://appeal.gg/N9KgZx4KUn7");
                     Game.Console.Print();
-                    Game.Console.Print("=============================================== Adam69 Callouts by OfficerMorrison ================================================");
+                    Game.Console.Print("=============================================== Adam69 Callouts by JM Modificationsn ================================================");
                     Game.Console.Print();
 
 
-                    Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "Adam69 Callouts", "~g~v" + Assembly.GetExecutingAssembly().GetName().Version.ToString() + " ~g~by ~o~OfficerMorrison", "~b~successfully loaded!");
+                    Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "Adam69 Callouts", "~g~v" + Assembly.GetExecutingAssembly().GetName().Version.ToString() + " ~g~by ~o~JM Modifications", "~b~successfully loaded!");
                     Game.Console.Print();
                     Game.Console.Print();
-                    Game.Console.Print("============================================== Adam69 Callouts by OfficerMorrison ===================================================");
+                    Game.Console.Print("============================================== Adam69 Callouts by JM Modifications ===================================================");
                     Game.Console.Print();
                     Game.Console.Print();
                     Game.Console.Print();
@@ -64,20 +61,36 @@ namespace Adam69Callouts
                     Game.Console.Print();
                     Game.Console.Print("[LOG] Adam69Callouts: Mission notification enabled");
                     Game.Console.Print();
-                    Game.Console.Print("============================================== Adam69 Callouts by OfficerMorrison ===================================================");
+                    Game.Console.Print("============================================== Adam69 Callouts by JM Modifications ===================================================");
                     Game.Console.Print();
                     Game.Console.Print();
 
                     bool helpMessages = Settings.HelpMessages;
                     if (helpMessages)
                     {
-                        Game.DisplayHelp("You can change all ~y~keys~w~ in the ~o~Adam69Callouts.ini~w~. Press ~p~" + Settings.EndCall.ToString() + "~w~ to end a callout.", 5000);
+                        Game.DisplayHelp("You can change all ~y~keys~w~ in the ~o~Adam69Callouts.ini~w~. Press ~p~" + Settings.EndCall.ToString() + "~w~ to end a callout or use console command 'endcurrentadam69calloutscallout' to end the callout." +
+                           "Press ~y~" + Settings.Dialog.ToString() + "~w~ to talk to the suspect/person of interest.", 5000);
+                    }
+                    else
+                    {
+                        helpMessages = false;
+                        Game.LogTrivial("[LOG]: Help messages are disabled in the config file.");
+                        return;
                     }
 
-                    BigMessageThread bigMessage = new BigMessageThread();
+                    bool missionMessages = Settings.MissionMessages;
+                    if (missionMessages == true)
+                    {
+                        BigMessageThread bigMessage = new BigMessageThread();
 
-                    bigMessage.MessageInstance.ShowColoredShard("Mission Started!", "Survive Your Shift!", RAGENativeUI.HudColor.Green, RAGENativeUI.HudColor.Red, 5000);
-
+                        bigMessage.MessageInstance.ShowColoredShard("Mission Started!", "Survive Your Shift!", RAGENativeUI.HudColor.Yellow, RAGENativeUI.HudColor.Black, 5000);
+                    }
+                    else
+                    {
+                        missionMessages = false;
+                        return;
+                    }
+                    
                     VersionChecker.PluginCheck.IsUpdateAvailableAsync().GetAwaiter().GetResult();
 
                     GameFiber.Wait(300);
@@ -117,16 +130,6 @@ namespace Adam69Callouts
                 Game.LogTrivial("User does NOT have Ultimate Backup installed. Stopping integration....");
                 UltimateBackup = false;
             }
-            if (Functions.GetAllUserPlugins().ToList().Any(a => a != null && a.FullName.Contains("RageNativeUI")) == true)
-            {
-                Game.LogTrivial("User has RageNativeUI 1.9.3 by alexguirre INSTALLED. starting integration.......");
-                RageNativeUI = true;
-            }
-            else
-            {
-                Game.LogTrivial("User does NOT have Rage Native UI installed. Stopping integration....");
-                RageNativeUI = false;
-            }
             Game.Console.Print();
             Game.Console.Print();
             Game.Console.Print("================================================== Adam69 Callouts ===================================================");
@@ -143,6 +146,7 @@ namespace Adam69Callouts
             if (Settings.SuspiciousPerson) { Functions.RegisterCallout(typeof(SuspiciousPerson)); }
             if (Settings.OfficerDown) { Functions.RegisterCallout(typeof(OfficerDown)); }
             if (Settings.DerangedDrunkenFeller) { Functions.RegisterCallout(typeof(DerangedDrunkenFeller)); }
+            if (Settings.DeadBirdOnTheRoad) { Functions.RegisterCallout(typeof(DeadBirdOnTheRoad)); }
             Game.Console.Print("[LOG]: All callouts of the Adam69Callouts.ini were loaded successfully.");
             Game.Console.Print();
             Game.Console.Print("================================================== Adam69 Callouts ===================================================");
@@ -154,10 +158,16 @@ namespace Adam69Callouts
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "Adam69 Callouts", "~w~by JM Modifications", "Enjoy your night, Officer.");
             Game.Console.Print("[LOG] Adam69 Callouts: Mission Complete!");
             Game.Console.Print();
+            LoggingManager.Logging("Adam69 Callouts: Mission Complete!");
 
             BigMessageThread bigMessage = new BigMessageThread();
 
             bigMessage.MessageInstance.ShowColoredShard("Mission Passed!", "Survive Your Shift", RAGENativeUI.HudColor.Yellow, RAGENativeUI.HudColor.Black, 5000);
+        }
+
+        private static void LoadConfig()
+        {
+            Settings.LoadSettings();
         }
     }
 }
