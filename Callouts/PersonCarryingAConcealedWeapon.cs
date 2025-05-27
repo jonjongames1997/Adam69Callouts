@@ -16,9 +16,8 @@ namespace Adam69Callouts.Callouts
 
         public override bool OnBeforeCalloutDisplayed()
         {
-            spawnpoint = World.GetNextPositionOnStreet(MainPlayer.Position.Around(500f));
+            spawnpoint = World.GetNextPositionOnStreet(MainPlayer.Position.Around(100f));
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
-            AddMinimumDistanceCheck(100f, spawnpoint);
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("Adam69Callouts_PersonCarryingAConcealedWeapon_Audio", spawnpoint);
             CalloutInterfaceAPI.Functions.SendMessage(this, "Citizen's reporting an individual with a gun.");
             CalloutMessage = "Person carrying a firearm";
@@ -79,10 +78,12 @@ namespace Adam69Callouts.Callouts
                     {
                         if (counter == 1)
                         {
+                            NativeFunction.Natives.TASK_TURN_PED_TO_FACE_ENTITY(suspect, MainPlayer, -1);
                             Game.DisplaySubtitle("~b~You~w~: LSPD, freeze, mothertrucker!");
                         }
                         if (counter == 2)
                         {
+                            suspect.Tasks.PlayAnimation(new AnimationDictionary("rcmjosh1"), "idle", -1f, AnimationFlags.Loop);
                             Game.DisplaySubtitle("~r~Suspect~w~: What's going on, Officer?");
                         }
                         if (counter == 3)
@@ -91,18 +92,22 @@ namespace Adam69Callouts.Callouts
                         }
                         if (counter == 4)
                         {
+                            suspect.Tasks.PlayAnimation(new AnimationDictionary("josh_1_int-11"), "cs_josh_dual-11", -1f, AnimationFlags.UpperBodyOnly);
                             Game.DisplaySubtitle("~r~Suspect~w~: What the f are you talking about? I don't have a weapon on me!");
                         }
                         if (counter == 5)
                         {
+                            suspect.Tasks.PlayAnimation(new AnimationDictionary("rcmjosh1"), "idle", -1f, AnimationFlags.Loop);
                             Game.DisplaySubtitle("~b~You~w~: I said, 'Don't reach for anything'. keep your hands where I can see them.");
                         }
                         if (counter == 6)
                         {
+                            suspect.Tasks.PlayAnimation(new AnimationDictionary("anim@amb@casino@brawl@fights@argue@"), "arguement_loop_mp_m_brawler_02", -1f, AnimationFlags.Loop);
                             Game.DisplaySubtitle("~r~Suspect~w~: And I said, 'I don't have a weapon on me', motherfucker! Are you deaf?");
                         }
                         if (counter == 7)
                         {
+                            suspect.Tasks.PlayAnimation(new AnimationDictionary("rcmjosh1"), "idle", -1f, AnimationFlags.Loop);
                             Game.DisplaySubtitle("~b~You~w~: I will shoot if you reach for anything!");
                         }
                         if (counter == 8)
@@ -110,6 +115,7 @@ namespace Adam69Callouts.Callouts
                             Game.DisplaySubtitle("~r~Suspect~w~: Screw this! Die, motherfucker, you!");
                             suspect.Tasks.FightAgainst(MainPlayer);
                             suspect.Inventory.GiveNewWeapon(wepList[new Random().Next((int)wepList.Length)], 500, true);
+                            suspect.Armor = 1500;
                         }
                     }
                     catch (Exception ex)
