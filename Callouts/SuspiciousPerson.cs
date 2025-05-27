@@ -14,6 +14,14 @@ namespace Adam69Callouts.Callouts
         private static string copGender;
         private static readonly Random random = new Random();
 
+        private enum SuspiciousPersonScenario
+        {
+            Compliant,
+            Flees,
+            Attacks,
+            Innocent
+        }
+        private SuspiciousPersonScenario scenario;
         public override bool OnBeforeCalloutDisplayed()
         {
             spawnpoint = World.GetNextPositionOnStreet(MainPlayer.Position.Around(1000f));
@@ -32,6 +40,8 @@ namespace Adam69Callouts.Callouts
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Suspicious Person", "~b~Dispatch~w~: The suspect has been spotted! Respond ~r~Code 2~w~.");
 
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_2_Audio");
+
+            scenario = (SuspiciousPersonScenario)random.Next(Enum.GetValues(typeof(SuspiciousPersonScenario)).Length);
 
             suspect = new Ped(spawnpoint)
             {
@@ -97,39 +107,106 @@ namespace Adam69Callouts.Callouts
 
         private void HandleInteraction()
         {
-            switch (counter)
+            switch (scenario)
             {
-                case 1:
-                    Game.DisplaySubtitle($"~b~You~w~: Hey there, {malefemale}. What's going on? Why are you in this alleyway?");
+                case SuspiciousPersonScenario.Compliant:
+                    HandleCompliantScenario();
                     break;
-                case 2:
-                    suspect.Tasks.PlayAnimation(new AnimationDictionary("anim@amb@casino@brawl@fights@argue@"), "arguement_loop_mp_m_brawler_01", -1f, AnimationFlags.Loop);
-                    Game.DisplaySubtitle("~r~Suspect~w~: Just chilling out. Why?");
+                case SuspiciousPersonScenario.Flees:
+                    HandleFleesScenario();
                     break;
-                case 3:
-                    suspect.Tasks.PlayAnimation(new AnimationDictionary("rcmjosh1"), "idle", -1f, AnimationFlags.Loop);
-                    Game.DisplaySubtitle("~b~You~w~: I have gotten reports that you were being suspicious. Do you have any weapons on you?");
+                case SuspiciousPersonScenario.Attacks:
+                    HandleAttacksScenario();
                     break;
-                case 4:
-                    suspect.Tasks.PlayAnimation(new AnimationDictionary("anim@amb@casino@brawl@fights@argue@"), "arguement_loop_mp_m_brawler_01", -1f, AnimationFlags.Loop);
-                    Game.DisplaySubtitle("~r~Suspect~w~: *gasps* That's a such accusation. Where did you get that from? How dare you?!");
-                    break;
-                case 5:
-                    suspect.Tasks.PlayAnimation(new AnimationDictionary("rcmjosh1"), "idle", -1f, AnimationFlags.Loop);
-                    Game.DisplaySubtitle("~b~You~w~: That's what I have heard in the report. Let me do a quick pat down and we'll go from there.");
-                    break;
-                case 6:
-                    suspect.Tasks.PlayAnimation(new AnimationDictionary("anim@amb@casino@brawl@fights@argue@"), "arguement_loop_mp_m_brawler_01", -1f, AnimationFlags.Loop);
-                    Game.DisplaySubtitle("~r~Suspect~w~: I DO NOT CONSENT TO A PAT DOWN!");
-                    break;
-                case 7:
-                    Game.DisplaySubtitle("convo ended.");
-                    suspect.Tasks.FightAgainst(MainPlayer);
-                    suspect.Armor = 1500;
-                    suspect.Inventory.GiveNewWeapon(wepList[random.Next(wepList.Length)], 500, true);
+                case SuspiciousPersonScenario.Innocent:
+                    HandleInnocentScenario();
                     break;
             }
         }
+
+        // Add these methods to the class:
+        private void HandleCompliantScenario()
+        {
+            switch (counter)
+            {
+                case 1:
+                    Game.DisplaySubtitle($"~b~You~w~: Hey there, {malefemale}. What's going on?");
+                    break;
+                case 2:
+                    Game.DisplaySubtitle("~r~Suspect~w~: Just waiting for a friend, officer.");
+                    break;
+                case 3:
+                    Game.DisplaySubtitle("~b~You~w~: Got any weapons on you?");
+                    break;
+                case 4:
+                    Game.DisplaySubtitle("~r~Suspect~w~: No, you can check.");
+                    break;
+                case 5:
+                    Game.DisplaySubtitle("~b~You~w~: Thanks for cooperating. You're free to go.");
+                    End();
+                    break;
+            }
+        }
+
+        private void HandleAttacksScenario()
+        {
+            switch (counter)
+            {
+                case 1:
+                    Game.DisplaySubtitle($"~b~You~w~: Excuse me, {malefemale}, what are you doing here?");
+                    break;
+                case 2:
+                    Game.DisplaySubtitle("~r~Suspect~w~: None of your business!");
+                    break;
+                case 3:
+                    Game.DisplaySubtitle("~b~You~w~: I need to check for weapons.");
+                    break;
+                case 4:
+                    Game.DisplaySubtitle("~r~Suspect~w~: Over my dead body!");
+                    suspect.Tasks.FightAgainst(MainPlayer);
+                    suspect.Armor = 1500;
+                    suspect.Inventory.GiveNewWeapon(wepList[random.Next(wepList.Length)], 500, true);
+                    susBlip.Color = System.Drawing.Color.Red;
+                    break;
+            }
+        }
+
+        private void HandleInnocentScenario()
+        {
+            switch (counter)
+            {
+                case 1:
+                    Game.DisplaySubtitle($"~b~You~w~: Hi, {malefemale}, any reason you're here?");
+                    break;
+                case 2:
+                    Game.DisplaySubtitle("~r~Suspect~w~: Just taking a walk, officer.");
+                    break;
+                case 3:
+                    Game.DisplaySubtitle("~b~You~w~: Sorry to bother you. Have a good day.");
+                    End();
+                    break;
+            }
+        }
+
+        private void HandleFleesScenario()
+        {
+            switch (counter)
+            {
+                case 1:
+                    Game.DisplaySubtitle($"~b~You~w~: Hey, {malefemale}, can I talk to you?");
+                    break;
+                case 2:
+                    Game.DisplaySubtitle("~r~Suspect~w~: Uh... I gotta go!");
+                    suspect.Tasks.ReactAndFlee(MainPlayer);
+                    susBlip.Color = System.Drawing.Color.Yellow;
+                    break;
+                case 3:
+                    Game.DisplaySubtitle("~b~You~w~: Stop! Police!");
+                    break;
+            }
+        }
+
+
 
         public override void End()
         {
