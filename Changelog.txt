@@ -1,8 +1,8 @@
 ﻿Changelog:
 
-[May 2025]
+[June 7, 2025]
 
-v0.3.2.3 [Hotfix]:
+v0.3.3.3 [Hotfix]:
 
 - Renamed the call key to 'CallAnimalControlKey' for better clarity
 - Misc changes to "Dead Bird On The Road" callout
