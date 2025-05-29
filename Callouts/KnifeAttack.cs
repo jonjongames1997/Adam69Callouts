@@ -102,9 +102,124 @@ namespace Adam69Callouts.Callouts
 
         public override void Process()
         {
+            if (!suspect.Inventory.Weapons.Contains(WeaponHash.Knife) && suspect.DistanceTo(MainPlayer.GetOffsetPosition(Vector3.RelativeFront)) < 20f)
+            {
+                suspect.Inventory.GiveNewWeapon("WEAPON_KNIFE", 500, true);
+                isArmed = true;
+            }
+            else if (!isArmed && suspect.Inventory.Weapons.Contains(WeaponHash.Knife) && suspect.DistanceTo(MainPlayer.GetOffsetPosition(Vector3.RelativeFront)) < 20f)
+            {
+                suspect.Inventory.EquippedWeapon = WeaponHash.Knife;
+                isArmed = true;
+            }
 
+            if (!hasBegunAttacking && suspect && suspect.DistanceTo(MainPlayer.GetOffsetPosition(Vector3.RelativeFront)) < 20f)
+            {
+                hasBegunAttacking = true;
+                GameFiber.StartNew(() =>
+                {
+                    switch (_scenario)
+                    {
+                        case > 50:
+                            suspect.KeepTasks = true;
+                            suspect.Tasks.FightAgainst(MainPlayer);
+                            switch (Rndm.Next(1, 4))
+                            {
+                                case 1:
+                                    Game.DisplaySubtitle("~r~Suspect~w~: I'm going to stab you!", 5000);
+                                    hasSpoke = true;
+                                    break;
 
+                                case 2:
+                                    Game.DisplaySubtitle("~r~Suspect~w~: You picked the wrong person to mess with!", 5000);
+                                    hasSpoke = true;
+                                    break;
+
+                                case 3:
+                                    Game.DisplaySubtitle("~r~Suspect~w~: I'll cut you!", 5000);
+                                    hasSpoke = true;
+                                    break;
+                            }
+                            GameFiber.Wait(5000);
+                            break;
+
+                        default:
+                            if (!hasPursuitBegun)
+                            {
+                                pursuit = LSPD_First_Response.Mod.API.Functions.CreatePursuit();
+                                LSPD_First_Response.Mod.API.Functions.AddPedToPursuit(pursuit, suspect);
+                                LSPD_First_Response.Mod.API.Functions.SetPursuitIsActiveForPlayer(pursuit, true);
+                                hasPursuitBegun = true;
+                            }
+
+                            break;
+
+                    }
+
+                });
+
+            }
             base.Process();
+
+            if (MainPlayer.IsDead || suspect.IsDead || Game.IsKeyDown(Settings.EndCall))
+            {
+                bool missionMessages = Settings.MissionMessages;
+                if (missionMessages == true)
+                {
+                    BigMessageThread bigMessage = new BigMessageThread();
+                    bigMessage.MessageInstance.ShowColoredShard("Callout Failed!", "You are now ~r~CODE 4~w~.", RAGENativeUI.HudColor.Red, RAGENativeUI.HudColor.Black, 5000);
+                }
+                else
+                {
+                    missionMessages = false;
+                    return;
+                }
+
+                this.End();
+            }
+        }
+
+        public override void End()
+        {
+            if (suspect.Exists())
+            {
+                if (suspect.IsDead)
+                {
+                    isVictimDead = true;
+                }
+                suspect.Delete();
+            }
+            if (victim.Exists())
+            {
+                if (victim.IsDead)
+                {
+                    isVictimDead = true;
+                }
+                victim.Delete();
+            }
+            if (suspectBlip.Exists())
+            {
+                suspectBlip.Delete();
+            }
+            if (victimBlip.Exists())
+            {
+                victimBlip.Delete();
+            }
+
+            bool missionMessages = Settings.MissionMessages;
+            if (missionMessages == true)
+            {
+                BigMessageThread bigMessage = new BigMessageThread();
+                bigMessage.MessageInstance.ShowColoredShard("Callout Complete!", "You are now ~r~CODE 4~w~.", RAGENativeUI.HudColor.Red, RAGENativeUI.HudColor.Black, 5000);
+            }
+            else
+            {
+                missionMessages = false;
+                return;
+            }
+            base.End();
+
+            Game.LogTrivial("Adam69 Callouts [LOG]: Knife Attack callout is CODE 4!");
         }
     }
 }
