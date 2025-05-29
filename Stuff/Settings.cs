@@ -19,6 +19,7 @@ namespace Adam69Callouts
         internal static bool OfficerDown = true;
         internal static bool DerangedDrunkenFeller = true;
         internal static bool DeadBirdOnTheRoad = true;
+        internal static bool KnifeAttack = true;
         internal static bool HelpMessages = true;
         internal static bool MissionMessages = true;
         internal static Keys EndCall = Keys.End;
@@ -47,6 +48,7 @@ namespace Adam69Callouts
             Settings.OfficerDown = initializationFile.ReadBoolean("Callouts", "OfficerDown", true);
             Settings.DerangedDrunkenFeller = initializationFile.ReadBoolean("Callouts", "DerangedDrunkenFeller", true);
             Settings.DeadBirdOnTheRoad = initializationFile.ReadBoolean("Callouts", "DeadBirdOnTheRoad", true);
+            Settings.KnifeAttack = initializationFile.ReadBoolean("Callouts", "KnifeAttack", true);
             HelpMessages = initializationFile.ReadBoolean("Settings", "HelpMessages", true);
             MissionMessages = initializationFile.ReadBoolean("Settings", "MissionMessages", true);
             EndCall = initializationFile.ReadEnum<Keys>("Keys", "EndCall", Keys.End);
@@ -73,6 +75,7 @@ namespace Adam69Callouts
             ini.Write("Callouts", "OfficerDown", OfficerDown);
             ini.Write("Callouts", "DerangedDrunkenFeller", DerangedDrunkenFeller);
             ini.Write("Callouts", "DeadBirdOnTheRoad", DeadBirdOnTheRoad);
+            ini.Write("Callouts", "KnifeAttack", KnifeAttack);
             ini.Write("Settings", "HelpMessages", HelpMessages);
             ini.Write("Settings", "MissionMessages", MissionMessages);
             ini.Write("Keys", "EndCall", EndCall);
