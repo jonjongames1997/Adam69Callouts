@@ -10,17 +10,18 @@ namespace Adam69Callouts.Callouts
         private static Vector3 spawnpoint;
         private static Blip vehBlip;
 
+
         public override bool OnBeforeCalloutDisplayed()
         {
             var list = new List<Vector3>
             {
                 new(-1104.28f, -1509.72f, 4.65f),
                 new(138.39f, -1070.77f, 29.19f),
-                new(),
-                new(),
-                new(),
-                new(),
-                new(),
+                new(-1206.27f, -1444.60f, 4.34f),
+                new(-1154.73f, -1986.52f, 13.16f),
+                new(1075.43f, -791.60f, 58.26f),
+                new(-2289.43f, 409.98f, 174.47f),
+                new(-99.34f, 6374.28f, 31.47f),
             };
             spawnpoint = LocationChooser.ChooseNearestLocation(list);
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
