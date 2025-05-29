@@ -19,9 +19,9 @@ namespace Adam69Callouts.Callouts
                 new(-1146.43f, -1496.17f, 4.37f),
                 new(898.76f, -2458.87f, 28.61f),
                 new(969.30f, -1436.41f, 31.41f),
-                new(),
-                new(),
-                new(),
+                new(-113.87f, 6417.88f, 31.44f),
+                new(1694.77f, 4643.75f, 43.62f),
+                new(1704.11f, 3808.54f, 35.01f),
             };
             spawnpoint = LocationChooser.ChooseNearestLocation(list);
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
