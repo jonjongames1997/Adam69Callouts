@@ -86,6 +86,7 @@
     <Compile Include="Callouts\DeadBirdOnTheRoad.cs" />
     <Compile Include="Callouts\DerangedDrunkenFeller.cs" />
     <Compile Include="Callouts\DrugsFound.cs" />
+    <Compile Include="Callouts\KnifeAttack.cs" />
     <Compile Include="Callouts\Loitering.cs" />
     <Compile Include="Callouts\OfficerDown.cs" />
     <Compile Include="Callouts\PersonCarryingAConcealedWeapon.cs" />

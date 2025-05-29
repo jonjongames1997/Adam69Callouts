@@ -14,3 +14,15 @@ C:\Users\JonJo\Source\Repos\Adam69Callouts\bin\Debug\RagePluginHook.xml
 C:\Users\JonJo\Source\Repos\Adam69Callouts\obj\Debug\Adam69Ca.98F163C7.Up2Date
 C:\Users\JonJo\Source\Repos\Adam69Callouts\obj\Debug\Adam69Callouts.dll
 C:\Users\JonJo\Source\Repos\Adam69Callouts\obj\Debug\Adam69Callouts.pdb
+D:\Adam69Callouts\bin\Debug\Adam69Callouts.dll
+D:\Adam69Callouts\bin\Debug\Adam69Callouts.pdb
+D:\Adam69Callouts\bin\Debug\RAGENativeUI.dll
+D:\Adam69Callouts\bin\Debug\RagePluginHook.dll
+D:\Adam69Callouts\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+D:\Adam69Callouts\bin\Debug\RAGENativeUI.xml
+D:\Adam69Callouts\bin\Debug\RagePluginHook.xml
+D:\Adam69Callouts\obj\Debug\Adam69Callouts.csproj.AssemblyReference.cache
+D:\Adam69Callouts\obj\Debug\Adam69Callouts.csproj.CoreCompileInputs.cache
+D:\Adam69Callouts\obj\Debug\Adam69Ca.98F163C7.Up2Date
+D:\Adam69Callouts\obj\Debug\Adam69Callouts.dll
+D:\Adam69Callouts\obj\Debug\Adam69Callouts.pdb
