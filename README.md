@@ -72,3 +72,12 @@ Adam69Callouts.dll, Adam69Callouts.ini, and Adam69Callouts.pdb
 
 # 🚫 Disclaimer: 🚫
 You are NOT Authorized to redistribute this pack on other websites. Only websites this pack is being distributed on is GitHub and LCPDFR Redistributing this pack will result in a DMCA Takedown Notice. You are not allowed to reverse engineer/modify the .dll.
+
+# Credits
+Khorio
+
+Astro
+
+Sebi3
+
+Superpyromaniac
