@@ -28,10 +28,10 @@ namespace Adam69Callouts.Callouts
 
         public override bool OnBeforeCalloutDisplayed()
         {
-            spawnpoint = new();
-            suspectHeading = 0f;
-            victimSpawn = new();
-            victimHeading = 0f;
+            spawnpoint = new(-315.15f, 2786.42f, 59.56f);
+            suspectHeading = 254.36f;
+            victimSpawn = new(-311.28f, 2789.56f, 59.52f);
+            victimHeading = 284.96f;
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
             CalloutInterfaceAPI.Functions.SendMessage(this, "Reports of a knife attack in progress");
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_KnifeAttack_Audio");
@@ -146,6 +146,7 @@ namespace Adam69Callouts.Callouts
                         default:
                             if (!hasPursuitBegun)
                             {
+                                ispursuitCreated = true;
                                 pursuit = LSPD_First_Response.Mod.API.Functions.CreatePursuit();
                                 LSPD_First_Response.Mod.API.Functions.AddPedToPursuit(pursuit, suspect);
                                 LSPD_First_Response.Mod.API.Functions.SetPursuitIsActiveForPlayer(pursuit, true);
