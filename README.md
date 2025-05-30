@@ -1,3 +1,5 @@
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Q5Q616RY5E)
+
 # Adam69Callouts
 
 After working on this pack for months, I present y'all Adam69 Callouts. 
