@@ -16,7 +16,6 @@ namespace Adam69Callouts.Callouts
         private static Vector3 victimSpawn;
         private static Blip suspectBlip;
         private static Blip victimBlip;
-        private static bool isVictimDead = false;
         private static int _scenario;
         private static bool hasBegunAttacking;
         private static bool isArmed;
@@ -51,7 +50,6 @@ namespace Adam69Callouts.Callouts
             suspect = new Ped(spawnpoint)
             {
                 IsPersistent = true,
-                IsPositionFrozen = true,
                 BlockPermanentEvents = true
             };
             suspect.IsValid();
@@ -59,11 +57,12 @@ namespace Adam69Callouts.Callouts
             victim = new Ped(victimSpawn)
             {
                 IsPersistent = true,
-                IsPositionFrozen = true,
                 BlockPermanentEvents = true
             };
 
             victim.IsValid();
+
+            NativeFunction.Natives.APPLY_PED_DAMAGE_PACK(victim, "HitByVehicle", 1f, 1f);
 
             suspectBlip = suspect.AttachBlip();
             suspectBlip.Color = System.Drawing.Color.Red;
@@ -184,18 +183,10 @@ namespace Adam69Callouts.Callouts
         {
             if (suspect.Exists())
             {
-                if (suspect.IsDead)
-                {
-                    isVictimDead = true;
-                }
                 suspect.Delete();
             }
             if (victim.Exists())
             {
-                if (victim.IsDead)
-                {
-                    isVictimDead = true;
-                }
                 victim.Delete();
             }
             if (suspectBlip.Exists())
