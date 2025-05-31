@@ -12,6 +12,7 @@ v0.3.3.3 [Hotfix]:
 - Added 3 new locations for "Bicycle Blocking Roadway" callout
 - Added 5 new locations for "Suspicious Vehicle" callout
 - Added 3 new locations for "Vehicle Blocking Crosswalk" callout
+- Added 1 new callout "Knife Attack"
 
 [May 6, 2025]
 
