@@ -113,6 +113,8 @@ namespace Adam69Callouts.Callouts
                     {
                         Game.LogTrivial("Adam69 Callouts [LOG]: Exception in Deranged Drunken Feller callout: " + ex.Message);
                         Game.LogTrivial("Adam69 Callouts [LOG]: Exception in Deranged Drunken Feller callout: " + ex.StackTrace);
+                        LoggingManager.Logging("Adam69 Callouts [LOG]: Exception in Deranged Drunken Feller callout: " + ex.Message);
+                        LoggingManager.Logging("Adam69 Callouts [LOG]: Exception in Deranged Drunken Feller callout: " + ex.StackTrace);
                     }
 
                 }
