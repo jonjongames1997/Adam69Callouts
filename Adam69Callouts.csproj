@@ -49,8 +49,8 @@
     <Reference Include="RAGENativeUI, Version=1.9.3.0, Culture=neutral, processorArchitecture=AMD64">
       <HintPath>packages\RAGENativeUI.1.9.3\lib\net472\RAGENativeUI.dll</HintPath>
     </Reference>
-    <Reference Include="RagePluginHook, Version=0.0.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>packages\RagePluginHook.1.109.1\lib\net472\RagePluginHook.dll</HintPath>
+    <Reference Include="RagePluginHookSDK">
+      <HintPath>C:\Users\JonJo\OneDrive\Documentos\references\RagePluginHookSDK.dll</HintPath>
     </Reference>
     <Reference Include="StopThePed, Version=4.9.5.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
