@@ -105,7 +105,7 @@ namespace Adam69Callouts.Callouts
         {
             if (!suspect.Inventory.Weapons.Contains(WeaponHash.Knife) && suspect.DistanceTo(MainPlayer.GetOffsetPosition(Vector3.RelativeFront)) < 20f)
             {
-                suspect.Inventory.GiveNewWeapon("WEAPON_KNIFE", 500, true);
+                suspect.Inventory.GiveNewWeapon(WeaponHash.Knife, 0, true);
                 isArmed = true;
             }
             else if (!isArmed && suspect.Inventory.Weapons.Contains(WeaponHash.Knife) && suspect.DistanceTo(MainPlayer.GetOffsetPosition(Vector3.RelativeFront)) < 20f)
