@@ -1,5 +1,17 @@
 ﻿Changelog:
 
+[June 19, 2025]
+
+v0.4.0:
+
+- Updated RAGE SDK and LSPDFR API to latest version
+- Added 1 new police vehicle in Drugs Found callout (You need the mp2025_01 DLC pack installed)
+- Bug Fixes
+- misc changes
+
+v0.3.3.3 or lower is Deprecated and no longer supported. 
+Please update to the latest version for guaranteed compatibility with the latest LSPDFR version and support.
+
 [June 7, 2025]
 
 v0.3.3.3 [Hotfix]:
