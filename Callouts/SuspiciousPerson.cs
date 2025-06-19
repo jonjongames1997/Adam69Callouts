@@ -194,14 +194,26 @@ namespace Adam69Callouts.Callouts
             {
                 case 1:
                     Game.DisplaySubtitle($"~b~You~w~: Hey, {malefemale}, can I talk to you?");
+                    GameFiber.Wait(1000); // Wait a second before continuing
+                    suspect.Tasks.ReactAndFlee(MainPlayer);
                     break;
                 case 2:
                     Game.DisplaySubtitle("~r~Suspect~w~: Uh... I gotta go!");
+                    GameFiber.Wait(500); // Wait half a second before continuing
                     suspect.Tasks.ReactAndFlee(MainPlayer);
                     susBlip.Color = System.Drawing.Color.Yellow;
                     break;
                 case 3:
                     Game.DisplaySubtitle("~b~You~w~: Stop! Police!");
+                    GameFiber.Wait(1000); // Wait a second before continuing
+                    if (suspect.IsRunning || suspect.IsSprinting || suspect.IsWalking)
+                    {
+                        Game.DisplaySubtitle("~b~Dispatch~w~: Suspect is fleeing! Pursue and apprehend!");
+                    }
+                    else
+                    {
+                        Game.DisplaySubtitle("~b~Dispatch~w~: Suspect is not fleeing. Proceed with caution.");
+                    }
                     break;
             }
         }
