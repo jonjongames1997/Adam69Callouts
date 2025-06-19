@@ -6,7 +6,9 @@ This is a list of Supported/Not Suppported versions for Adam69 Callouts
 
 | API/Build Version    | Supported          |
 | -------------    | ------------------ |
-| 9231.3504        |  ✅               |
+| 9231.3521        |  ✅               	|
+| 9231.3521        |  ❌ (Out of Support)|
+| 9231.3504        |  ❌ (Out of Support)|
 | 9110.3442        |  ❌ (Out of Support)|
 | 9110.3411        |  ❌ (Out of Support)|
 | 9110.3407        |  ❌ (Out of Support)|
