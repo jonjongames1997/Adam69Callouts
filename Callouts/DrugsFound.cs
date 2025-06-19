@@ -10,7 +10,7 @@ namespace Adam69Callouts.Callouts
     public class DrugsFound : Callout
     {
         private const bool V = false;
-        private static readonly string[] drugList = new string[] { "sf_prop_sf_bag_weed_01b", "bkr_prop_weed_bigbag_open_01a", "m24_1_prop_m41_weed_bigbag_01a", "sf_prop_sf_bag_weed_open_01a" };
+        private static readonly string[] drugList = new string[] { "sf_prop_sf_bag_weed_01b", "bkr_prop_weed_bigbag_open_01a", "m24_1_prop_m41_weed_bigbag_01a", "sf_prop_sf_bag_weed_open_01a", "m25_1_prop_m51_box_weed_01a", "m25_1_prop_m51_box_weed_02a", "m25_1_prop_m51_bag_weed_01a" };
         private static Vector3 spawnpoint;
         public Rage.Object theDrugs;
         private static Ped theCaller;
@@ -20,7 +20,7 @@ namespace Adam69Callouts.Callouts
         private static int counter;
         private static string malefemale;
         private static readonly string[] backupList = new string[] { "s_m_y_cop_01", "s_f_y_cop_01", "csb_cop", "s_f_y_sheriff_01", "s_m_y_sheriff_01" };
-        private static readonly string[] backupVehicle = new string[] { "police", "police2", "police3", "police4", "fbi", "fbi2", "sheriff", "sheriff2", "policeb" };
+        private static readonly string[] backupVehicle = new string[] { "police", "police2", "police3", "police4", "fbi", "fbi2", "sheriff", "sheriff2", "policeb", "policeb2" };
         private static Ped theCop;
         private static Vector3 copSpawn;
         private static Vector3 leoVehicleSpawn;
@@ -64,8 +64,10 @@ namespace Adam69Callouts.Callouts
             theCaller.Tasks.PlayAnimation(new AnimationDictionary("rcmjosh1"), "idle", -1f, AnimationFlags.Loop);
 
 
-            theDrugs = new Rage.Object("sf_prop_sf_bag_weed_open_01a", spawnpoint);
-            theDrugs.IsPersistent = true;
+            theDrugs = new Rage.Object("m25_1_prop_m51_bag_weed_01a", spawnpoint)
+            {
+                IsPersistent = true
+            };
             theDrugs.IsValid();
 
             callerBlip = theCaller.AttachBlip();
@@ -88,15 +90,24 @@ namespace Adam69Callouts.Callouts
             policeVehicle.IsPersistent = true;
 
             // Ensure the cop vehicle exists and is valid
-            if (policeVehicle != null && policeVehicle.IsValid())
+            try
             {
-                // Turn on emergency lights
-                policeVehicle.IsSirenOn = true; // Activates the siren and emergency lights
-                policeVehicle.IsSirenSilent = true; // Keeps the siren silent while lights are active (optional)
+                if (policeVehicle != null && policeVehicle.IsValid())
+                {
+                    // Turn on emergency lights
+                    policeVehicle.IsSirenOn = true; // Activates the siren and emergency lights
+                    policeVehicle.IsSirenSilent = true; // Keeps the siren silent while lights are active (optional)
+                }
+                else
+                {
+                    Game.LogTrivial("ERR: copVehicle is null or invalid. Cannot enable emergency lights.");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Game.LogTrivial("copVehicle is null or invalid. Cannot enable emergency lights.");
+                Game.LogTrivial("Adam69 Callouts [LOG]: Exception while setting up police vehicle emergency lights: " + ex.Message);
+                LoggingManager.Logging("Adam69 Callouts [LOG]: " + ex.StackTrace);
+                LoggingManager.Logging("Adam69 Callouts [LOG]: " + ex.Message);
             }
 
             policeCarBlip = policeVehicle.AttachBlip();
