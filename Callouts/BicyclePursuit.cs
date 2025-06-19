@@ -54,6 +54,9 @@ namespace Adam69Callouts.Callouts
             LSPD_First_Response.Mod.API.Functions.AddPedToPursuit(pursuit, suspect);
             LSPD_First_Response.Mod.API.Functions.SetPursuitIsActiveForPlayer(pursuit, true);
             pursuitCreated = true;
+            LSPD_First_Response.Mod.API.Functions.RequestBackup(suspect.Position, LSPD_First_Response.EBackupResponseType.Pursuit, LSPD_First_Response.EBackupUnitType.StateUnit);
+            LSPD_First_Response.Mod.API.Functions.RequestBackup(suspect.Position, LSPD_First_Response.EBackupResponseType.Pursuit, LSPD_First_Response.EBackupUnitType.LocalUnit);
+            LSPD_First_Response.Mod.API.Functions.RequestBackup(suspect.Position, LSPD_First_Response.EBackupResponseType.Pursuit, LSPD_First_Response.EBackupUnitType.LocalUnit);
 
             return base.OnCalloutAccepted();
         }
@@ -70,7 +73,7 @@ namespace Adam69Callouts.Callouts
         public override void Process()
         {
             bool helpMessages = Settings.HelpMessages;
-            if (helpMessages)
+            if (helpMessages == true)
             {
                 Game.DisplayHelp("Chase the bicycle and arrest the suspect.", 5000);
             }
