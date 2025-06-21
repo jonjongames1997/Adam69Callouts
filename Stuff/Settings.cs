@@ -85,6 +85,6 @@ namespace Adam69Callouts
             ini.Write("Keys", "CallAnimalControlKey", CallAnimalControlKey);
         }
 
-        public static readonly string PluginVersion = "0.3.3.3";
+        public static readonly string PluginVersion = "0.4.0";
     }
 }
