@@ -25,3 +25,5 @@ D:\Adam69Callouts\obj\Debug\Adam69Ca.98F163C7.Up2Date
 D:\Adam69Callouts\obj\Debug\Adam69Callouts.dll
 D:\Adam69Callouts\obj\Debug\Adam69Callouts.pdb
 D:\Adam69Callouts\bin\Debug\RagePluginHookSDK.dll
+D:\Adam69Callouts\bin\Debug\Newtonsoft.Json.dll
+D:\Adam69Callouts\bin\Debug\Newtonsoft.Json.xml
