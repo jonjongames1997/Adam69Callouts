@@ -163,6 +163,13 @@ namespace Adam69Callouts.Callouts
             }
             base.Process();
 
+            if (Game.IsKeyDown(Settings.CallAmbulanceKey))
+            {
+                UltimateBackup.API.Functions.callAmbulance();
+                LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Call_Ambulance_Audio");
+                Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Dispatch:", "An Ambulance has been called to the scene.");
+            }
+
             if (MainPlayer.IsDead || suspect.IsDead || Game.IsKeyDown(Settings.EndCall))
             {
                 bool missionMessages = Settings.MissionMessages;
