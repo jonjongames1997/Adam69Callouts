@@ -1,20 +1,68 @@
-﻿using Rage;
+﻿using System;
+using System.IO;
+using Rage;
 using Adam69Callouts.Utilities;
 
 namespace Adam69Callouts.Utilities
 {
     internal static class LoggingManager
     {
-        private const string loggingPrefix = "Adam69 Callouts";
+        private const string LoggingPrefix = "Adam69 Callouts";
 
-        internal static void Logging(string message)
+        private static readonly string LogFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "plugins/LSPDFR/Adam69Callouts/Log/Adam69Callouts.log");
+
+        internal enum LogLevel
         {
-            if (GlobalsManager.TheApplication.DebugLogging)
+            Debug,
+            Info,
+            Warning,
+            Error
+        }
+
+        internal static void Log(string message, LogLevel level = LogLevel.Info)
+        {
+            string logMessage = $"{LoggingPrefix} [{level}]: {message}";
+
+            // Log to file
+            try
             {
-                Game.LogTrivial($"{loggingPrefix}: {message}");
+                File.AppendAllText(LogFilePath, $"{DateTime.Now:yyyy-MM-dd HH:mm:ss} {logMessage}{Environment.NewLine}");
+            }
+            catch (Exception ex)
+            {
+                Game.LogTrivial($"{LoggingPrefix} [Error]: Failed to write to log file: {ex.Message}");
             }
 
-            Game.LogTrivial($"{loggingPrefix}: {message}");
+            // Log based on level
+            switch (level)
+            {
+                case LogLevel.Debug:
+                    if (Globals.theApplication.debugLogging)
+                    {
+                        Game.LogTrivial(logMessage);
+                    }
+                    break;
+
+                case LogLevel.Info:
+                case LogLevel.Warning:
+                case LogLevel.Error:
+                    Game.LogTrivial(logMessage);
+                    break;
+            }
+        }
+
+        internal static void Normal(string msg)
+        {
+            string logMessage = $"[NORMAL] Adam69 Callouts: {msg}";
+            try
+            {
+                File.AppendAllText(LogFilePath, $"{DateTime.Now:yyyy-MM-dd HH:mm:ss} {logMessage}{Environment.NewLine}");
+            }
+            catch (Exception ex)
+            {
+                Game.LogTrivial($"{LoggingPrefix} [Error]: Failed to write to log file: {ex.Message}");
+            }
+            Game.LogTrivial(logMessage);
         }
     }
 }
