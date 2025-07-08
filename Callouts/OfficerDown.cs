@@ -93,9 +93,9 @@ namespace Adam69Callouts.Callouts
             catch (Exception ex)
             {
                 Game.LogTrivial("Adam69 Callouts [LOG]: Error enabling emergency lights: " + ex.Message);
-                LoggingManager.Logging("Adam69 Callouts [LOG]: Error enabling emergency lights: " + ex.Message);
-                LoggingManager.Logging("Adam69 Callouts [LOG]: Error enabling emergency lights: " + ex.StackTrace);
-                LoggingManager.Logging("Adam69 Callouts [LOG]: Please report this issue on the Adam69 Callouts Discord server: https://discord.gg/N9KgZx4KUn");
+                LoggingManager.Log("Adam69 Callouts [LOG]: Error enabling emergency lights: " + ex.Message);
+                LoggingManager.Log("Adam69 Callouts [LOG]: Error enabling emergency lights: " + ex.StackTrace);
+                LoggingManager.Log("Adam69 Callouts [LOG]: Please report this issue on the Adam69 Callouts Discord server: https://discord.gg/N9KgZx4KUn");
             }
 
             officerVehicleBlip = emergencyVehicle.AttachBlip();
@@ -162,8 +162,8 @@ namespace Adam69Callouts.Callouts
                     catch (Exception ex)
                     {
                         Game.LogTrivial("Adam69 Callouts [LOG]: " + ex.Message);
-                        LoggingManager.Logging("Adam69 Callouts [LOG]: " + ex.Message);
-                        LoggingManager.Logging("Adam69 Callouts [LOG]: " + ex.StackTrace);
+                        LoggingManager.Log("Adam69 Callouts [LOG]: " + ex.Message);
+                        LoggingManager.Log("Adam69 Callouts [LOG]: " + ex.StackTrace);
                     }
                 }
 
