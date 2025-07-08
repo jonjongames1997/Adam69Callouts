@@ -53,6 +53,7 @@ namespace Adam69Callouts.Callouts
         {
             Game.LogTrivial("Adam69 Callouts [LOG]: Drugs Found callout has been accepted!");
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~y~Drugs Found", "~b~Dispatch~w~: The caller has been located. Respond ~r~Code 2~w~.");
+            LoggingManager.Log("Adam69 Callouts [LOG]: Drugs Found callout has been accepted!");
 
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_2_Audio");
 
@@ -101,13 +102,14 @@ namespace Adam69Callouts.Callouts
                 else
                 {
                     Game.LogTrivial("ERR: copVehicle is null or invalid. Cannot enable emergency lights.");
+                    LoggingManager.Log("Adam69 Callouts [LOG]: copVehicle is null or invalid. Cannot enable emergency lights.");
                 }
             }
             catch (Exception ex)
             {
                 Game.LogTrivial("Adam69 Callouts [LOG]: Exception while setting up police vehicle emergency lights: " + ex.Message);
-                LoggingManager.Logging("Adam69 Callouts [LOG]: " + ex.StackTrace);
-                LoggingManager.Logging("Adam69 Callouts [LOG]: " + ex.Message);
+                LoggingManager.Log("Adam69 Callouts [LOG]: " + ex.StackTrace);
+                LoggingManager.Log("Adam69 Callouts [LOG]: " + ex.Message);
             }
 
             policeCarBlip = policeVehicle.AttachBlip();
@@ -191,6 +193,8 @@ namespace Adam69Callouts.Callouts
                     catch (Exception ex)
                     {
                         Game.LogTrivial("Adam69 Callouts [LOG]: Error in Drugs Found callout. Error: " + ex.Message);
+                        LoggingManager.Log("Adam69 Callouts [LOG]: ERROR:" + ex.StackTrace);
+                        LoggingManager.Log("Adam69 Callouts [LOG]: ERROR:" + ex.Message);
                     }
                 }
             }
@@ -270,6 +274,7 @@ namespace Adam69Callouts.Callouts
             base.End();
 
             Game.LogTrivial("Adam69 Callouts [LOG]: Drugs Found callout is code 4!");
+            LoggingManager.Log("Adam69 Callouts [LOG]: Drugs Found callout is code 4!");
         }
     }
 }
