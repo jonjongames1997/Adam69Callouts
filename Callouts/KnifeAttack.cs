@@ -44,6 +44,7 @@ namespace Adam69Callouts.Callouts
         {
             Game.LogTrivial("[Adam69 Callouts LOG]: Knife Attack callout accepted!");
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Knife Attack", "~b~Dispatch~w~: The suspect has been located. Respond ~r~Code 3~w~.");
+            LoggingManager.Log("Adam69 Callouts [LOG]: Knife Attack callout accepted!");
 
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_3_Audio");
 
@@ -221,6 +222,8 @@ namespace Adam69Callouts.Callouts
             base.End();
 
             Game.LogTrivial("Adam69 Callouts [LOG]: Knife Attack callout is CODE 4!");
+
+            LoggingManager.Log("Adam69 Callouts [LOG]: Knife Attack callout is CODE 4!");
         }
     }
 }
