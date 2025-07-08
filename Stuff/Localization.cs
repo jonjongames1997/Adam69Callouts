@@ -1,87 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Adam69Callouts.Stuff
 {
     public static class Localization
     {
-        public static string CurrentLanguage = "English"; // Default Language
+        private static Dictionary<string, Dictionary<string, string>> _translations;
+        public static string CurrentLanguage { get; set; }
 
-        public static string GetText(string key)
+        public static void Load(string path)
         {
-            bool flag = Localization.Translations.ContainsKey(Localization.CurrentLanguage) && Localization.Translations[Localization.CurrentLanguage].ContainsKey(key);
-            string result;
-            if (flag)
-            {
-                result = Localization.Translations[Localization.CurrentLanguage][key];
-            }
-            else
-            {
-                result = "[MISSING:" + key + "]";
-            }
-            return result;
+            var json = File.ReadAllText(path);
+            _translations = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(json);
         }
 
-        public static void SetLanguage(string language)
+        public static string Translate(string text)
         {
-            bool flag = Localization.Translations.ContainsKey(language);
-            if (flag)
+            if (_translations != null &&
+                _translations.TryGetValue(CurrentLanguage, out var langDict) &&
+                langDict.TryGetValue(text, out var value))
             {
-                Localization.CurrentLanguage = language;
+                return value;
             }
+            return text; // fallback to key if not found
         }
-
-        private static readonly Dictionary<string, Dictionary<string, string>> Translations = new Dictionary<string, Dictionary<string, string>>
-        {
-            { "English", new Dictionary<string, string>
-                {
-					// Main pack entries
-				    {
-                        "EndCalloutMessage", 
-                        "Press ~y~" + Settings.EndCall.ToString() + "~w~ to end the callout at anytime."
-                    },
-                    {
-                        "AbandonedVehicleCall",
-                        ""
-                    },
-
-                }
-            },
-            { "French", new Dictionary<string, string>
-                {
-					// Main pack entries
-					{"KEY", "Dialogue To Translate"},
-
-                }
-            },
-            { "Italian", new Dictionary<string, string>
-                {
-					// Main pack entries
-					{"KEY", "Dialogue To Translate"},
-
-                }
-            },
-            { "Spanish", new Dictionary<string, string>
-                {
-					// Main pack entries
-					{"KEY", "Dialogue To Translate"},
-
-                }
-            },
-            { "Russian", new Dictionary<string, string>
-                {
-					// Main pack entries
-					{"KEY", "Dialogue To Translate"},
-
-                }
-            },
-            { "Portugese", new Dictionary<string, string>
-                {
-					// Main pack entries
-					{"KEY", "Dialogue To Translate"},
-
-                }
-            },
-        };
     }
 }
