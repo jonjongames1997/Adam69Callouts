@@ -33,7 +33,7 @@ namespace Adam69Callouts
         internal static void LoadSettings()
         {
             Game.Console.Print("[LOG]: Loading config file from Adam69 Callouts");
-            InitializationFile initializationFile = new InitializationFile("Plugins/LSPDFR/Adam69Callouts.ini");
+            InitializationFile initializationFile = new InitializationFile("Plugins/LSPDFR/Adam69Callouts/Adam69Callouts.ini");
             initializationFile.Create();
             Game.LogTrivial("Initializing config for Adam69 Callouts....");
             Settings.VehicleBlockingSidewalk = initializationFile.ReadBoolean("Callouts", "VehicleBlockingSidewalk", true);
