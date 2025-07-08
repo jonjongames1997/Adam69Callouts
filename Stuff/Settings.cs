@@ -27,7 +27,7 @@ namespace Adam69Callouts
         internal static Keys PickUp = Keys.E;
         internal static Keys CallAnimalControlKey = Keys.NumPad1;
         internal static Keys CallAmbulanceKey = Keys.K;
-        internal static string Language { get; set; }
+        internal static string Localization { get; set; }
 
 
         internal static void LoadSettings()
@@ -57,7 +57,7 @@ namespace Adam69Callouts
             PickUp = initializationFile.ReadEnum<Keys>("Keys", "PickUp", Keys.E);
             CallAnimalControlKey = initializationFile.ReadEnum<Keys>("Keys", "CallAnimalControlKey", Keys.NumPad1);
             CallAmbulanceKey = initializationFile.ReadEnum<Keys>("Keys", "CallAmbulanceKey", Keys.K);
-            Language = initializationFile.ReadString("Settings", "Language", Language);
+            Localization = initializationFile.ReadString("Settings", "Language", Localization);
         }
 
         internal static void SaveConfigSettings()
@@ -83,7 +83,7 @@ namespace Adam69Callouts
             ini.Write("Keys", "EndCall", EndCall);
             ini.Write("Keys", "Dialog", Dialog);
             ini.Write("Keys", "PickUp", PickUp);
-            ini.Write("Settings", "Language", Language);
+            ini.Write("Settings", "Language", Localization);
             ini.Write("Keys", "CallAnimalControlKey", CallAnimalControlKey);
             ini.Write("Keys", "CallAmbulanceKey", CallAmbulanceKey);
         }
