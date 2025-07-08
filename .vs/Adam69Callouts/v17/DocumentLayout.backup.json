@@ -3,24 +3,28 @@
   "WorkspaceRootPath": "D:\\Adam69Callouts\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C330EC03-8BB7-467B-A80A-544D0C7839DE}|Adam69Callouts.csproj|d:\\adam69callouts\\stuff\\settings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C330EC03-8BB7-467B-A80A-544D0C7839DE}|Adam69Callouts.csproj|solutionrelative:stuff\\settings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C330EC03-8BB7-467B-A80A-544D0C7839DE}|Adam69Callouts.csproj|d:\\adam69callouts\\properties\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C330EC03-8BB7-467B-A80A-544D0C7839DE}|Adam69Callouts.csproj|solutionrelative:properties\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C330EC03-8BB7-467B-A80A-544D0C7839DE}|Adam69Callouts.csproj|d:\\adam69callouts\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C330EC03-8BB7-467B-A80A-544D0C7839DE}|Adam69Callouts.csproj|solutionrelative:main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{C330EC03-8BB7-467B-A80A-544D0C7839DE}|Adam69Callouts.csproj|D:\\Adam69Callouts\\changelog.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{C330EC03-8BB7-467B-A80A-544D0C7839DE}|Adam69Callouts.csproj|solutionrelative:changelog.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{C330EC03-8BB7-467B-A80A-544D0C7839DE}|Adam69Callouts.csproj|d:\\adam69callouts\\stuff\\settings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C330EC03-8BB7-467B-A80A-544D0C7839DE}|Adam69Callouts.csproj|solutionrelative:stuff\\settings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{C330EC03-8BB7-467B-A80A-544D0C7839DE}|Adam69Callouts.csproj|D:\\Adam69Callouts\\adam69callouts.ini||{3B902123-F8A7-4915-9F01-361F908088D0}",
       "RelativeMoniker": "D:0:0:{C330EC03-8BB7-467B-A80A-544D0C7839DE}|Adam69Callouts.csproj|solutionrelative:adam69callouts.ini||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C330EC03-8BB7-467B-A80A-544D0C7839DE}|Adam69Callouts.csproj|D:\\Adam69Callouts\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C330EC03-8BB7-467B-A80A-544D0C7839DE}|Adam69Callouts.csproj|solutionrelative:main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C330EC03-8BB7-467B-A80A-544D0C7839DE}|Adam69Callouts.csproj|d:\\adam69callouts\\stuff\\localization.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C330EC03-8BB7-467B-A80A-544D0C7839DE}|Adam69Callouts.csproj|solutionrelative:stuff\\localization.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C330EC03-8BB7-467B-A80A-544D0C7839DE}|Adam69Callouts.csproj|d:\\adam69callouts\\stuff\\locationchooser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C330EC03-8BB7-467B-A80A-544D0C7839DE}|Adam69Callouts.csproj|solutionrelative:stuff\\locationchooser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,17 +34,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Main.cs",
               "DocumentMoniker": "D:\\Adam69Callouts\\Main.cs",
               "RelativeDocumentMoniker": "Main.cs",
               "ToolTip": "D:\\Adam69Callouts\\Main.cs",
               "RelativeToolTip": "Main.cs",
-              "ViewState": "AgIAAEsAAAAAAAAAAAAYwJUAAABZAAAAAAAAAA==",
+              "ViewState": "AgIAAJYAAAAAAAAAAAAAAJUAAABZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-10T21:46:28.517Z",
               "IsPinned": true,
@@ -48,59 +52,83 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "Changelog.txt",
               "DocumentMoniker": "D:\\Adam69Callouts\\Changelog.txt",
               "RelativeDocumentMoniker": "Changelog.txt",
               "ToolTip": "D:\\Adam69Callouts\\Changelog.txt",
               "RelativeToolTip": "Changelog.txt",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAABkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
               "WhenOpened": "2025-04-10T21:55:12.692Z",
-              "IsPinned": true
+              "IsPinned": true,
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 2,
               "Title": "Adam69Callouts.ini",
               "DocumentMoniker": "D:\\Adam69Callouts\\Adam69Callouts.ini",
               "RelativeDocumentMoniker": "Adam69Callouts.ini",
               "ToolTip": "D:\\Adam69Callouts\\Adam69Callouts.ini",
               "RelativeToolTip": "Adam69Callouts.ini",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002768|",
               "WhenOpened": "2025-06-05T15:53:41.62Z",
-              "IsPinned": true
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Settings.cs",
-              "DocumentMoniker": "D:\\Adam69Callouts\\Stuff\\Settings.cs",
-              "RelativeDocumentMoniker": "Stuff\\Settings.cs",
-              "ToolTip": "D:\\Adam69Callouts\\Stuff\\Settings.cs",
-              "RelativeToolTip": "Stuff\\Settings.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFkAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-20T14:59:57.053Z",
+              "IsPinned": true,
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "AssemblyInfo.cs",
-              "DocumentMoniker": "D:\\Adam69Callouts\\Properties\\AssemblyInfo.cs",
-              "RelativeDocumentMoniker": "Properties\\AssemblyInfo.cs",
-              "ToolTip": "D:\\Adam69Callouts\\Properties\\AssemblyInfo.cs",
-              "RelativeToolTip": "Properties\\AssemblyInfo.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAjAAAAAAAAAA==",
+              "Title": "Settings.cs",
+              "DocumentMoniker": "D:\\Adam69Callouts\\Stuff\\Settings.cs",
+              "RelativeDocumentMoniker": "Stuff\\Settings.cs",
+              "ToolTip": "D:\\Adam69Callouts\\Stuff\\Settings.cs",
+              "RelativeToolTip": "Stuff\\Settings.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAACMAAABqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-20T14:59:23.964Z",
+              "WhenOpened": "2025-06-20T14:59:57.053Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Localization.cs",
+              "DocumentMoniker": "D:\\Adam69Callouts\\Stuff\\Localization.cs",
+              "RelativeDocumentMoniker": "Stuff\\Localization.cs",
+              "ToolTip": "D:\\Adam69Callouts\\Stuff\\Localization.cs",
+              "RelativeToolTip": "Stuff\\Localization.cs",
+              "ViewState": "AgIAAEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-08T05:14:06.897Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "LocationChooser.cs",
+              "DocumentMoniker": "D:\\Adam69Callouts\\Stuff\\LocationChooser.cs",
+              "RelativeDocumentMoniker": "Stuff\\LocationChooser.cs",
+              "ToolTip": "D:\\Adam69Callouts\\Stuff\\LocationChooser.cs",
+              "RelativeToolTip": "Stuff\\LocationChooser.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-08T05:14:05.686Z",
               "EditorCaption": ""
             },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
             },
             {
               "$type": "Bookmark",
