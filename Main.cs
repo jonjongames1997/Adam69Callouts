@@ -14,12 +14,12 @@ namespace Adam69Callouts
                 Functions.OnOnDutyStateChanged += Functions_OnOnDutyStateChanged;
                 Game.AddConsoleCommands();
                 Settings.LoadSettings();
-                LoggingManager.Logging("Adam69 Callouts [LOG]: Plugin loaded successfully.");
+                LoggingManager.Log("Adam69 Callouts: Plugin initialized successfully.");
             }
             catch(Exception ex)
             {
                 Game.LogTrivial("Adam69Callouts [ERROR]: Failed to initialize the plugin: " + ex.Message);
-                LoggingManager.Logging("Adam69 Callouts [ERROR]: Failed to initialize the plugin: " + ex.Message);
+                LoggingManager.Log("Adam69 Callouts: Failed to initialize the plugin: " + ex.Message);
             }
         }
 
@@ -158,7 +158,7 @@ namespace Adam69Callouts
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "Adam69 Callouts", "~w~by JM Modifications", "Enjoy your night, Officer.");
             Game.Console.Print("[LOG] Adam69 Callouts: Mission Complete!");
             Game.Console.Print();
-            LoggingManager.Logging("Adam69 Callouts: Mission Complete!");
+            LoggingManager.Log("Adam69 Callouts: Plugin initialized successfully.");
 
             BigMessageThread bigMessage = new BigMessageThread();
 
