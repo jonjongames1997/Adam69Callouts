@@ -23,6 +23,7 @@ namespace Adam69Callouts.Callouts
         public override bool OnCalloutAccepted()
         {
             Game.LogTrivial("[Adam69 Callouts LOG]: Abandoned Vehicle callout accepted!");
+            LoggingManager.Log("Adam69 Callouts: Abandoned Vehicle callout accepted!");
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Abandoned Vehicle", "~b~Dispatch~w~: The vehicle has been spotted! Respond ~r~Code 2~w~.");
 
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_1_Audio");
@@ -84,6 +85,8 @@ namespace Adam69Callouts.Callouts
                     return;
                 }
 
+                LoggingManager.Log("Adam69 Callouts: Abandoned Vehicle callout failed!");
+
                 End();
             }
 
@@ -113,6 +116,8 @@ namespace Adam69Callouts.Callouts
             base.End();
 
             Game.LogTrivial("[Adam69 Callouts LOG]: Abandoned Vehicle callout is CODE 4!");
+
+            LoggingManager.Log("Adam69 Callouts: Abandoned Vehicle callout is CODE 4!");
         }
     }
 }
