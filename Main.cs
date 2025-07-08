@@ -30,7 +30,6 @@ namespace Adam69Callouts
             {
                 GameFiber.StartNew(delegate
                 {
-                    Stuff.Localization.SetLanguage(Settings.Language);
                     RegisterCallouts();
                     Game.Console.Print();
                     Game.Console.Print("=============================================== Adam69 Callouts by JM Modifications ================================================");
