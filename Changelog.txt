@@ -1,5 +1,17 @@
 ﻿Changelog:
 
+[July 8, 2025]
+
+- Added CallAmbulanceKey to the config file for certain callouts that require an ambulance.
+
+Replace: Adams69Callouts.ini with the new one in the download folder.
+
+Files need to be updated:
+
+- Adams69Callouts.ini
+- Adams69Callouts.dll
+- Adams69Callouts.pdb
+
 [June 19, 2025]
 
 v0.4.0:
