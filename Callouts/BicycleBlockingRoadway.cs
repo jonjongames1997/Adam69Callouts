@@ -68,13 +68,12 @@ namespace Adam69Callouts.Callouts
             if(MainPlayer.DistanceTo(thebike) <= 10f)
             {
                 bool helpMessages = Settings.HelpMessages;
-                if (helpMessages)
+                if (helpMessages == true)
                 {
                     Game.DisplayHelp("Deal with the situation as you see fit.", 5000);
                 }
                 else
                 {
-                    helpMessages = false;
                     return;
                 }
             }
@@ -90,7 +89,6 @@ namespace Adam69Callouts.Callouts
                 }
                 else
                 {
-                    missionMessages = false;
                     return;
                 }
 
@@ -116,7 +114,6 @@ namespace Adam69Callouts.Callouts
             }
             else
             {
-                missionMessages = false;
                 return;
             }
 
