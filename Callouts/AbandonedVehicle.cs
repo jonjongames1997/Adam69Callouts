@@ -13,8 +13,15 @@ namespace Adam69Callouts.Callouts
         {
             _spawnPoint = World.GetNextPositionOnStreet(MainPlayer.Position.Around(500f));
             CalloutInterfaceAPI.Functions.SendMessage(this, "Reports of an Abandoned Vehicle");
-            LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Abandoned_Vehicle_Callout_Audio");
-            CalloutMessage = "Vehicle left abandoned several weeks ago. No owner to be found on scene.";
+            if (Settings.BluelineDispatchIntegration)
+            {
+                LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("CRIME_SUSPICIOUS_VEHICLE_01", _spawnPoint);
+            }
+            else
+            {
+                LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Abandoned_Vehicle_Callout_Audio");
+            }
+            CalloutMessage = "Abandoned Vehicle Reported";
             CalloutPosition = _spawnPoint;
 
             return base.OnBeforeCalloutDisplayed();
@@ -41,6 +48,9 @@ namespace Adam69Callouts.Callouts
             else
             {
                 Game.LogTrivial("[Adam69 Callouts LOG]: Failed to create vehicle.");
+                LoggingManager.Log("Adam69 Callouts: " + LogLevel.Warning);
+                LoggingManager.Log("Adam69 Callouts: " + LogLevel.Info);
+                LoggingManager.Log("Adam69 Callouts: " + LogLevel.Error);
             }
 
             return base.OnCalloutAccepted();
@@ -59,13 +69,12 @@ namespace Adam69Callouts.Callouts
             if (MainPlayer.DistanceTo(_vehicle) <= 10f)
             {
                 bool helpMessages = Settings.HelpMessages;
-                if (helpMessages)
+                if (helpMessages == true)
                 {
                     Game.DisplayHelp("Deal with the situation as you see fit.", 5000);
                 }
                 else
                 {
-                    helpMessages = false;
                     return;
                 }
             }
@@ -81,7 +90,6 @@ namespace Adam69Callouts.Callouts
                 }
                 else
                 {
-                    missionMessages = false;
                     return;
                 }
 
@@ -109,7 +117,6 @@ namespace Adam69Callouts.Callouts
             }
             else
             {
-                missionMessages = false;
                 return;
             }
 
