@@ -19,7 +19,14 @@ namespace Adam69Callouts.Callouts
             spawnpoint = World.GetNextPositionOnStreet(MainPlayer.Position.Around(1000f));
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
             CalloutInterfaceAPI.Functions.SendMessage(this, "A civilian is evading arrest");
-            LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Bicycle_Pursuit_Audio");
+            if (Settings.BluelineDispatchIntegration)
+            {
+                LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("CRIME_PERSON_IN_A_STOLEN_VEHICLE_01", spawnpoint);
+            }
+            else
+            {
+                LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Bicycle_Pursuit_Audio");
+            }
             CalloutMessage = "An officer reporting a civilian is evading arrest.";
             CalloutPosition = spawnpoint;
 
@@ -30,6 +37,8 @@ namespace Adam69Callouts.Callouts
         {
             Game.LogTrivial("Adam69 Callouts [LOG]: Bicycle Pursuit callout has been accepted!");
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Bicycle Pursuit", "~b~Dispatch~w~: The suspect has been spotted! Respond ~r~Code 3~w~.");
+
+            LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_3_Audio");
 
             bicycle = new Vehicle(bikeList[random.Next(bikeList.Length)], spawnpoint)
             {
