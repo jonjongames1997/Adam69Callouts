@@ -21,7 +21,14 @@ namespace Adam69Callouts.Callouts
             spawnpoint = World.GetNextPositionOnStreet(MainPlayer.Position.Around(500f));
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
             CalloutInterfaceAPI.Functions.SendMessage(this, "A Deranged Drunken Feller has been reported in the area. Respond Code 2.");
-            LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Deranged_Drunken_Feller_Audio");
+            if (Settings.BluelineDispatchIntegration)
+            {
+                LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("SUSPICIOUS_PERSON_02", spawnpoint);
+            }
+            else
+            {
+                LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Deranged_Drunken_Feller_Audio");
+            }
             CalloutMessage = "Deranged Drunken Feller Reported";
             CalloutPosition = spawnpoint;
 
@@ -76,7 +83,6 @@ namespace Adam69Callouts.Callouts
                 }
                 else
                 {
-                    helpMessages = false;
                     return;
                 }
 
@@ -130,7 +136,6 @@ namespace Adam69Callouts.Callouts
                 }
                 else
                 {
-                    missionMessages = false;
                     Game.LogTrivial("[LOG]: Mission messages are disabled in the config file.");
                     return;
                 }
