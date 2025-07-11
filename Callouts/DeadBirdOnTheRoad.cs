@@ -21,7 +21,14 @@ namespace Adam69Callouts.Callouts
             };
             spawnpoint = LocationChooser.ChooseNearestLocation(list);
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
-            LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_DeadBirdOnTheRoad_Audio_01");
+            if (Settings.BluelineDispatchIntegration)
+            {
+                LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("CRIME_ANIMAL_KILLED_02", spawnpoint);
+            }
+            else
+            {
+                LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_DeadBirdOnTheRoad_Audio_01");
+            }
             CalloutInterfaceAPI.Functions.SendMessage(this, "A dead bird is on the road.");
             CalloutMessage = "Dead Bird Reported";
             CalloutPosition = spawnpoint;
