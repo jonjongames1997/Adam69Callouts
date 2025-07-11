@@ -83,7 +83,6 @@ namespace Adam69Callouts.Callouts
                     }
                     else
                     {
-                        missionMessages = false;
                         Game.LogTrivial("[LOG]: Mission messages are disabled in the config file.");
                         return;
                     }
@@ -110,7 +109,6 @@ namespace Adam69Callouts.Callouts
             }
             else
             {
-                missionMessages = false;
                 Game.LogTrivial("[LOG]: Mission messages are disabled in the config file.");
                 return;
             }
