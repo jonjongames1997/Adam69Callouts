@@ -18,7 +18,14 @@ namespace Adam69Callouts.Callouts
         {
             spawnpoint = World.GetNextPositionOnStreet(MainPlayer.Position.Around(100f));
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
-            LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("Adam69Callouts_PersonCarryingAConcealedWeapon_Audio", spawnpoint);
+            if (Settings.BluelineDispatchIntegration)
+            {
+                LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("CRIME_BRANDISHING_WEAPON_03", spawnpoint);
+            }
+            else
+            {
+                LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("Adam69Callouts_PersonCarryingAConcealedWeapon_Audio", spawnpoint);
+            }
             CalloutInterfaceAPI.Functions.SendMessage(this, "Citizen's reporting an individual with a gun.");
             CalloutMessage = "Person carrying a firearm";
             CalloutPosition = spawnpoint;
@@ -122,6 +129,8 @@ namespace Adam69Callouts.Callouts
                     {
                         Game.LogTrivial("Adam69 Callouts [LOG]: Error found in Person Carrying An Explosive Weapon: " + ex.Message);
                         Game.LogTrivial("Adam69 Callouts [LOG]: Error found in Person Carrying An Explosive Weapon: " + ex.StackTrace);
+                        LoggingManager.Log("Adam69 Callouts [LOG] " + LogLevel.Error);
+                        LoggingManager.Log("Adam69 Callouts [LOG] " + LogLevel.Info);
                     }
                 }
             }
@@ -136,7 +145,6 @@ namespace Adam69Callouts.Callouts
                 }
                 else
                 {
-                    missionMessages = false;
                     Game.LogTrivial("Adam69 Callouts [LOG]: Mission messages are disabled in the config file.");
                     return;
                 }
@@ -161,7 +169,6 @@ namespace Adam69Callouts.Callouts
             }
             else
             {
-                missionMessages = false;
                 Game.LogTrivial("Adam69 Callouts [LOG]: Mission messages are disabled in the config file.");
                 return;
             }
