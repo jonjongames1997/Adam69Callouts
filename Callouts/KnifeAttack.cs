@@ -33,7 +33,14 @@ namespace Adam69Callouts.Callouts
             victimHeading = 284.96f;
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
             CalloutInterfaceAPI.Functions.SendMessage(this, "Reports of a knife attack in progress");
-            LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_KnifeAttack_Audio");
+            if (Settings.BluelineDispatchIntegration)
+            {
+                LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("CRIME_ASSAULT_ON_A_CIVILIAN", spawnpoint);
+            }
+            else
+            {
+                LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_KnifeAttack_Audio");
+            }
             CalloutMessage = "Knife attack in progress";
             CalloutPosition = spawnpoint;
 
@@ -181,7 +188,6 @@ namespace Adam69Callouts.Callouts
                 }
                 else
                 {
-                    missionMessages = false;
                     return;
                 }
 
@@ -208,6 +214,9 @@ namespace Adam69Callouts.Callouts
                 victimBlip.Delete();
             }
 
+            LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
+            Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "Person With A Knife", "~w~Dispatch: The scene is now ~r~CODE 4~w~.");
+
             bool missionMessages = Settings.MissionMessages;
             if (missionMessages == true)
             {
@@ -216,7 +225,6 @@ namespace Adam69Callouts.Callouts
             }
             else
             {
-                missionMessages = false;
                 return;
             }
             base.End();
