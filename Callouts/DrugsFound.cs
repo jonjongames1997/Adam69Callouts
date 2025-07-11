@@ -42,7 +42,14 @@ namespace Adam69Callouts.Callouts
             leoVehicleSpawn = new(1000.69f, -1958.26f, 30.86f);
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
             CalloutInterfaceAPI.Functions.SendMessage(this, "Reports of illegal drugs found by a nearby citizen.");
-            LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Drugs_Found_Audio");
+            if (Settings.BluelineDispatchIntegration)
+            {
+                LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("A_CIVILIAN_REQUIRING_ASSISTANCE_01", spawnpoint);
+            }
+            else
+            {
+                LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Drugs_Found_Audio");
+            }
             CalloutMessage = "Illegal drugs found";
             CalloutPosition = spawnpoint;
 
@@ -98,6 +105,7 @@ namespace Adam69Callouts.Callouts
                     // Turn on emergency lights
                     policeVehicle.IsSirenOn = true; // Activates the siren and emergency lights
                     policeVehicle.IsSirenSilent = true; // Keeps the siren silent while lights are active (optional)
+                    LoggingManager.Log("Adam69 Callouts [LOG]: " + LogLevel.Info);
                 }
                 else
                 {
@@ -195,6 +203,8 @@ namespace Adam69Callouts.Callouts
                         Game.LogTrivial("Adam69 Callouts [LOG]: Error in Drugs Found callout. Error: " + ex.Message);
                         LoggingManager.Log("Adam69 Callouts [LOG]: ERROR:" + ex.StackTrace);
                         LoggingManager.Log("Adam69 Callouts [LOG]: ERROR:" + ex.Message);
+                        LoggingManager.Log("Adam69 Callouts [LOG]: " + LogLevel.Error);
+                        LoggingManager.Log("Adam69 Callouts [LOG]: " + LogLevel.Warning);
                     }
                 }
             }
@@ -208,7 +218,6 @@ namespace Adam69Callouts.Callouts
                 }
                 else
                 {
-                    helpMessages = false;
                     Game.LogTrivial("Adam69 Callouts [LOG]: Help messages are disabled in the config file.");
                     return;
                 }
@@ -233,7 +242,6 @@ namespace Adam69Callouts.Callouts
                 }
                 else
                 {
-                    missionMessages = false;
                     Game.LogTrivial("Adam69 Callouts [LOG]: Mission messages are disabled in the config file.");
                     return;
                 }
@@ -266,7 +274,6 @@ namespace Adam69Callouts.Callouts
             }
             else
             {
-                missionMessages = false;
                 Game.LogTrivial("Adam69 Callouts [LOG]: Mission messages are disabled in the config file.");
                 return;
             }
