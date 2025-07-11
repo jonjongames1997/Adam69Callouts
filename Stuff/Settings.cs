@@ -15,7 +15,7 @@ namespace Adam69Callouts
         internal static bool SuspiciousVehicle = true;
         internal static bool AbandonedVehicle = true;
         internal static bool DrugsFound = true;
-        internal static bool SuspiciousPerson = true;
+        internal static bool SuspiciousPerson = false;
         internal static bool OfficerDown = true;
         internal static bool DerangedDrunkenFeller = true;
         internal static bool DeadBirdOnTheRoad = true;
@@ -46,7 +46,7 @@ namespace Adam69Callouts
             Settings.SuspiciousVehicle = initializationFile.ReadBoolean("Callouts", "SuspiciousVehicle", true);
             Settings.AbandonedVehicle = initializationFile.ReadBoolean("Callouts", "AbandonedVehicle", true);
             Settings.DrugsFound = initializationFile.ReadBoolean("Callouts", "DrugsFound", true);
-            Settings.SuspiciousPerson = initializationFile.ReadBoolean("Callouts", "SuspiciousPerson", true);
+            Settings.SuspiciousPerson = initializationFile.ReadBoolean("Callouts", "SuspiciousPerson", false);
             Settings.OfficerDown = initializationFile.ReadBoolean("Callouts", "OfficerDown", true);
             Settings.DerangedDrunkenFeller = initializationFile.ReadBoolean("Callouts", "DerangedDrunkenFeller", true);
             Settings.DeadBirdOnTheRoad = initializationFile.ReadBoolean("Callouts", "DeadBirdOnTheRoad", true);
