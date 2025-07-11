@@ -25,7 +25,14 @@ namespace Adam69Callouts.Callouts
             };
             spawnpoint = LocationChooser.ChooseNearestLocation(list);
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
-            LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_SuspicousVehicle_Audio");
+            if (Settings.BluelineDispatchIntegration)
+            {
+                LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("CRIME_SUSPICIOUS_ACTIVITY_01", spawnpoint);
+            }
+            else
+            {
+                LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_SuspicousVehicle_Audio");
+            }
             CalloutInterfaceAPI.Functions.SendMessage(this, "Reports of a suspicious vehicle");
             CalloutMessage = "suspicious vehicle reported by a citizen.";
             CalloutPosition = spawnpoint;
@@ -82,7 +89,6 @@ namespace Adam69Callouts.Callouts
                 }
                 else
                 {
-                    missionMessages = false;
                     return;
                 }
 
@@ -110,7 +116,6 @@ namespace Adam69Callouts.Callouts
             }
             else
             {
-                missionMessages = false;
                 return;
             }
 
