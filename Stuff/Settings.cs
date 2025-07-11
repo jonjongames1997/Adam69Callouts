@@ -9,7 +9,7 @@ namespace Adam69Callouts
         internal static bool VehicleBlockingSidewalk = true;
         internal static bool BicyclePursuit = true;
         internal static bool PersonCarryingAConcealedWeapon = true;
-        internal static bool Loitering = true;
+        internal static bool Loitering = false;
         internal static bool VehicleBlockingCrosswalk = true;
         internal static bool BicycleBlockingRoadway = true;
         internal static bool SuspiciousVehicle = true;
@@ -40,7 +40,7 @@ namespace Adam69Callouts
             Settings.VehicleBlockingSidewalk = initializationFile.ReadBoolean("Callouts", "VehicleBlockingSidewalk", true);
             Settings.BicyclePursuit = initializationFile.ReadBoolean("Callouts", "BicyclePursuit", true);
             Settings.PersonCarryingAConcealedWeapon = initializationFile.ReadBoolean("Callouts", "PersonCarryingAConcealedWeapon", true);
-            Settings.Loitering = initializationFile.ReadBoolean("Callouts", "Loitering", true);
+            Settings.Loitering = initializationFile.ReadBoolean("Callouts", "Loitering", false);
             Settings.VehicleBlockingCrosswalk = initializationFile.ReadBoolean("Callouts", "VehicleBlockingCrosswalk", true);
             Settings.BicycleBlockingRoadway = initializationFile.ReadBoolean("Callouts", "BicycleBlockingRoadway", true);
             Settings.SuspiciousVehicle = initializationFile.ReadBoolean("Callouts", "SuspiciousVehicle", true);
