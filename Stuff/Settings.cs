@@ -28,6 +28,7 @@ namespace Adam69Callouts
         internal static Keys CallAnimalControlKey = Keys.NumPad1;
         internal static Keys CallAmbulanceKey = Keys.K;
         internal static string Localization { get; set; }
+        internal static bool BluelineDispatchIntegration = true; // Set to false if you don't want to use Blueline Dispatch integration
 
 
         internal static void LoadSettings()
@@ -58,6 +59,7 @@ namespace Adam69Callouts
             CallAnimalControlKey = initializationFile.ReadEnum<Keys>("Keys", "CallAnimalControlKey", Keys.NumPad1);
             CallAmbulanceKey = initializationFile.ReadEnum<Keys>("Keys", "CallAmbulanceKey", Keys.K);
             Localization = initializationFile.ReadString("Settings", "Language", Localization);
+            Settings.BluelineDispatchIntegration = initializationFile.ReadBoolean("Settings", "BluelineDispatchIntegration", true);
         }
 
         internal static void SaveConfigSettings()
@@ -86,6 +88,7 @@ namespace Adam69Callouts
             ini.Write("Settings", "Language", Localization);
             ini.Write("Keys", "CallAnimalControlKey", CallAnimalControlKey);
             ini.Write("Keys", "CallAmbulanceKey", CallAmbulanceKey);
+            ini.Write("Settings", "BluelineDispatchIntegration", BluelineDispatchIntegration);
         }
 
         public static readonly string PluginVersion = "0.4.1";
