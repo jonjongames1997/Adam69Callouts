@@ -26,7 +26,14 @@ namespace Adam69Callouts.Callouts
             spawnpoint = LocationChooser.ChooseNearestLocation(list);
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
             CalloutInterfaceAPI.Functions.SendMessage(this, "Reports of a bicycle blocking traffic");
-            LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Bicycle_Blocking_Roadway_Audio");
+            if (Settings.BluelineDispatchIntegration)
+            {
+                LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("ILLEGALLY_PARKED_VEHICLE", spawnpoint);
+            }
+            else
+            {
+                LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Bicycle_Blocking_Roadway_Audio");
+            }
             CalloutMessage = "Abandoned bicycle left in the street";
             CalloutPosition = spawnpoint;
 
