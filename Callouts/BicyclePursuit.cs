@@ -40,7 +40,7 @@ namespace Adam69Callouts.Callouts
 
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_3_Audio");
 
-            bicycle = new Vehicle(bikeList[random.Next(bikeList.Length)], spawnpoint)
+            bicycle = new Vehicle(bikeList[new Random().Next((int)bikeList.Length)], spawnpoint)
             {
                 IsPersistent = true,
                 IsStolen = true
