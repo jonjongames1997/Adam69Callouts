@@ -86,7 +86,6 @@ namespace Adam69Callouts
                     }
                     else
                     {
-                        missionMessages = false;
                         return;
                     }
                     
