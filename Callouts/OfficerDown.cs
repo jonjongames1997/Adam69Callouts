@@ -25,6 +25,8 @@ namespace Adam69Callouts.Callouts
         private static Blip suspectBlip;
         private static int counter;
         private static string malefemale;
+        private static readonly string[] OfficerDownAudio = new string[] { "CRIME_OFFICER_DOWN_02", "CRIME_OFFICER_DOWN_05", "CRIME_OFFICER_DOWN_04", "CRIME_OFFICER_DOWN_03" };
+        private static readonly int armorCount = 1500; // Set the armor value for the officer and suspect
 
         public override bool OnBeforeCalloutDisplayed()
         {
@@ -35,7 +37,14 @@ namespace Adam69Callouts.Callouts
             vehicleSpawn = new(140.00f, -1308.37f, 29.00f);
             vehicleHeading = 46.70f;
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
-            LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_OfficerDown_Audio");
+            if (Settings.BluelineDispatchIntegration)
+            {
+                LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition(OfficerDownAudio[new Random().Next((int)OfficerDownAudio.Length)], spawnpoint);
+            }
+            else
+            {
+                LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_OfficerDown_Audio");
+            }
             CalloutInterfaceAPI.Functions.SendMessage(this, "Officer Down Reported by an unkown civilian");
             CalloutMessage = "Officer Down Reported";
             CalloutPosition = spawnpoint;
@@ -88,6 +97,8 @@ namespace Adam69Callouts.Callouts
                 else
                 {
                     Game.LogTrivial("Emergency Vehicle is null or invalid. Cannot enable emergency lights.");
+                    LoggingManager.Log("Adam69 Callouts [LOG]: " + LogLevel.Error);
+                    LoggingManager.Log("Adam69 Callouts [LOG]: " + LogLevel.Warning);
                 }
             }
             catch (Exception ex)
@@ -148,10 +159,10 @@ namespace Adam69Callouts.Callouts
                         }
                         if (counter == 3)
                         {
-                            Game.DisplaySubtitle("~r~Suspect~w~: Time to die, you donut pigs!");
                             suspect.Tasks.FightAgainst(MainPlayer);
                             suspect.Inventory.GiveNewWeapon("WEAPON_COMBATPISTOL", 500, true);
-                            suspect.Armor = 1800;
+                            suspect.Armor = armorCount;
+                            MainPlayer.Armor = armorCount;
                         }
                         if (counter == 4)
                         {
@@ -177,7 +188,6 @@ namespace Adam69Callouts.Callouts
                     }
                     else
                     {
-                        missionMessages = false;
                         Game.LogTrivial("Adam69 Callouts [LOG]: Mission messages are disabled in the config file.");
                         return;
                     }
@@ -210,7 +220,6 @@ namespace Adam69Callouts.Callouts
             }
             else
             {
-                missionMessages = false;
                 Game.LogTrivial("Adam69 Callouts [LOG]: Mission messages are disabled in the config file.");
                 return;
             }
