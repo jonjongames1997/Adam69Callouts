@@ -129,6 +129,19 @@ namespace Adam69Callouts
                 Game.LogTrivial("User does NOT have Ultimate Backup installed. Stopping integration....");
                 UltimateBackup = false;
             }
+
+            if (Settings.BluelineDispatchIntegration)
+            {
+                Game.DisplayNotification("3dtextures", "mpgroundlogo_cops", "Adam69 Callouts", "Blueline Dispatch Integration", "~g~ENABLED~w~!");
+                LoggingManager.Log("Adam69 Callouts: Blueline Dispatch Integration enabled.");
+            }
+            else
+            {
+                Game.DisplayNotification("3dtextures", "mpgroundlogo_cops", "Adam69 Callouts", "Blueline Dispatch Integration", "~r~DISABLED~w~!");
+                LoggingManager.Log("Adam69 Callouts: Blueline Dispatch Integration disabled.");
+                return;
+            }
+
             Game.Console.Print();
             Game.Console.Print();
             Game.Console.Print("================================================== Adam69 Callouts ===================================================");
@@ -160,9 +173,19 @@ namespace Adam69Callouts
             Game.Console.Print();
             LoggingManager.Log("Adam69 Callouts: Plugin initialized successfully.");
 
-            BigMessageThread bigMessage = new BigMessageThread();
+            bool missionMessages = Settings.MissionMessages;
+            if (missionMessages == true)
+            {
+                BigMessageThread bigMessage = new BigMessageThread();
 
-            bigMessage.MessageInstance.ShowColoredShard("Mission Passed!", "Survive Your Shift", RAGENativeUI.HudColor.Yellow, RAGENativeUI.HudColor.Black, 5000);
+                bigMessage.MessageInstance.ShowColoredShard("Mission Passed!", "Survive Your Shift", RAGENativeUI.HudColor.Yellow, RAGENativeUI.HudColor.Black, 5000);
+            }
+            else
+            {
+                Game.LogTrivial("[LOG]: Mission messages are disabled in the config file.");
+                LoggingManager.Log("Adam69 Callouts: Mission messages are disabled in the config file.");
+                return;
+            }
         }
 
         private static void LoadConfig()
