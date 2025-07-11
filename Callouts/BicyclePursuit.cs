@@ -79,7 +79,6 @@ namespace Adam69Callouts.Callouts
             }
             else
             {
-                helpMessages = false;
                 Game.LogTrivial("Adam69 Callouts [LOG]: Help messages are disabled in the config file.");
                 return;
             }
@@ -104,9 +103,19 @@ namespace Adam69Callouts.Callouts
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Bicycle Pursuit", "~b~You~w~: Dispatch, we are ~g~CODE 4~w~. Show me back 10-8.");
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
 
-            BigMessageThread bigMessage = new BigMessageThread();
+            bool missionMessages = Settings.MissionMessages;
+            if(missionMessages == true)
+            {
 
-            bigMessage.MessageInstance.ShowColoredShard("Callout Completed!", "You are now ~g~CODE 4~w~.", RAGENativeUI.HudColor.Green, RAGENativeUI.HudColor.Black, 5000);
+                BigMessageThread bigMessage = new BigMessageThread();
+
+                bigMessage.MessageInstance.ShowColoredShard("Callout Completed!", "You are now ~g~CODE 4~w~.", RAGENativeUI.HudColor.Green, RAGENativeUI.HudColor.Black, 5000);
+            }
+            else
+            {
+                Game.LogTrivial("Adam69 Callouts [LOG]: Mission messages are disabled in the config file.");
+                return;
+            }
 
             base.End();
 
