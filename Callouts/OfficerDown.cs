@@ -25,7 +25,6 @@ namespace Adam69Callouts.Callouts
         private static Blip suspectBlip;
         private static int counter;
         private static string malefemale;
-        private static readonly string[] OfficerDownAudio = new string[] { "CRIME_OFFICER_DOWN_02", "CRIME_OFFICER_DOWN_05", "CRIME_OFFICER_DOWN_04", "CRIME_OFFICER_DOWN_03" };
         private static readonly int armorCount = 1500; // Set the armor value for the officer and suspect
 
         public override bool OnBeforeCalloutDisplayed()
@@ -39,7 +38,7 @@ namespace Adam69Callouts.Callouts
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
             if (Settings.BluelineDispatchIntegration == true)
             {
-                LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition(OfficerDownAudio[new Random().Next((int)OfficerDownAudio.Length)], spawnpoint);
+                LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("CRIME_OFFICER_DOWN_02", spawnpoint);
             }
             else
             {
@@ -169,6 +168,8 @@ namespace Adam69Callouts.Callouts
                             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_ShotsFired_Audio_Remastered_01");
                             UltimateBackup.API.Functions.callPanicButtonBackup(true);
                         }
+
+                        LoggingManager.Log("Adam69 Callouts [LOG]: " + LogLevel.Info);
                     }
                     catch (Exception ex)
                     {
@@ -189,6 +190,7 @@ namespace Adam69Callouts.Callouts
                     else
                     {
                         Game.LogTrivial("Adam69 Callouts [LOG]: Mission messages are disabled in the config file.");
+                        LoggingManager.Log("Adam69 Callouts [LOG]: Mission messages are disabled in the config file.");
                         return;
                     }
                     
@@ -221,6 +223,7 @@ namespace Adam69Callouts.Callouts
             else
             {
                 Game.LogTrivial("Adam69 Callouts [LOG]: Mission messages are disabled in the config file.");
+                LoggingManager.Log("Adam69 Callouts [LOG]: Mission messages are disabled in the config file.");
                 return;
             }
 
