@@ -129,7 +129,7 @@ namespace Adam69Callouts
                 UltimateBackup = false;
             }
 
-            if (Settings.BluelineDispatchIntegration)
+            if (Settings.BluelineDispatchIntegration == true)
             {
                 Game.DisplayNotification("3dtextures", "mpgroundlogo_cops", "Adam69 Callouts", "Blueline Dispatch Integration", "~g~ENABLED~w~!");
                 LoggingManager.Log("Adam69 Callouts: Blueline Dispatch Integration enabled.");
