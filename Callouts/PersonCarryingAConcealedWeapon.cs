@@ -18,7 +18,7 @@ namespace Adam69Callouts.Callouts
         {
             spawnpoint = World.GetNextPositionOnStreet(MainPlayer.Position.Around(100f));
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
-            if (Settings.BluelineDispatchIntegration)
+            if (Settings.BluelineDispatchIntegration == true)
             {
                 LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("CRIME_BRANDISHING_WEAPON_03", spawnpoint);
             }
