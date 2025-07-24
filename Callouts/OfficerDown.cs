@@ -37,7 +37,7 @@ namespace Adam69Callouts.Callouts
             vehicleSpawn = new(140.00f, -1308.37f, 29.00f);
             vehicleHeading = 46.70f;
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
-            if (Settings.BluelineDispatchIntegration)
+            if (Settings.BluelineDispatchIntegration == true)
             {
                 LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition(OfficerDownAudio[new Random().Next((int)OfficerDownAudio.Length)], spawnpoint);
             }
