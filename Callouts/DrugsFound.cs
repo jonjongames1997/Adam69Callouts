@@ -42,7 +42,7 @@ namespace Adam69Callouts.Callouts
             leoVehicleSpawn = new(1000.69f, -1958.26f, 30.86f);
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
             CalloutInterfaceAPI.Functions.SendMessage(this, "Reports of illegal drugs found by a nearby citizen.");
-            if (Settings.BluelineDispatchIntegration)
+            if (Settings.BluelineDispatchIntegration == true)
             {
                 LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("A_CIVILIAN_REQUIRING_ASSISTANCE_01", spawnpoint);
             }
