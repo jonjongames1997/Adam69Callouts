@@ -18,14 +18,19 @@ namespace Adam69Callouts.Callouts
                 new(-970.77f, -134.53f, 37.70f),
                 new(295.24f, 180.78f, 103.77f),
                 new(-452.79f, -265.15f, 35.87f),
-                new(),
-                new(),
-                new(),
             };
             spawnpoint = LocationChooser.ChooseNearestLocation(list);
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
             AddMinimumDistanceCheck(50f, spawnpoint);
-            LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_VehicleBlockingSidewalk_Audio");
+            if (Settings.BluelineDispatchIntegration == true)
+            {
+
+                LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("CRIME_ROAD_BLOCKADE_01", spawnpoint);
+            }
+            else
+            {
+                LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_VehicleBlockingSidewalk_Audio");
+            }
             CalloutInterfaceAPI.Functions.SendMessage(this, "A citizen reporting a vehicle blocking sidewalk.");
             CalloutMessage = "Vehicle blocking pedestrian's way.";
             CalloutPosition = spawnpoint;
