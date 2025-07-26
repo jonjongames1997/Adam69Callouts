@@ -20,6 +20,9 @@ namespace Adam69Callouts
             {
                 Game.LogTrivial("Adam69Callouts [ERROR]: Failed to initialize the plugin: " + ex.Message);
                 LoggingManager.Log("Adam69 Callouts: Failed to initialize the plugin: " + ex.Message);
+                LoggingManager.Log("Adam69 Callouts: Stack Trace: " + LogLevel.Error);
+                LoggingManager.Log("Adam69 Callouts: Stack Trace: " + LogLevel.Debug);
+                LoggingManager.Log("Adam69 Callouts: Stack Trace: " + LogLevel.Warning);
             }
         }
 
@@ -65,14 +68,13 @@ namespace Adam69Callouts
                     Game.Console.Print();
 
                     bool helpMessages = Settings.HelpMessages;
-                    if (helpMessages)
+                    if (helpMessages == true)
                     {
                         Game.DisplayHelp("You can change all ~y~keys~w~ in the ~o~Adam69Callouts.ini~w~. Press ~p~" + Settings.EndCall.ToString() + "~w~ to end a callout or use console command 'endcurrentadam69calloutscallout' to end the callout." +
                            "Press ~y~" + Settings.Dialog.ToString() + "~w~ to talk to the suspect/person of interest.", 5000);
                     }
                     else
                     {
-                        helpMessages = false;
                         Game.LogTrivial("[LOG]: Help messages are disabled in the config file.");
                         return;
                     }
