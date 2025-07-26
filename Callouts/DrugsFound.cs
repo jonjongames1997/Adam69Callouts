@@ -77,6 +77,7 @@ namespace Adam69Callouts.Callouts
                 IsPersistent = true
             };
             theDrugs.IsValid();
+            NativeFunction.Natives.ADD_BLIP_FOR_PICKUP(theDrugs);
 
             callerBlip = theCaller.AttachBlip();
             callerBlip.Color = System.Drawing.Color.Orange;
@@ -219,6 +220,7 @@ namespace Adam69Callouts.Callouts
                 else
                 {
                     Game.LogTrivial("Adam69 Callouts [LOG]: Help messages are disabled in the config file.");
+                    LoggingManager.Log("Adam69 Callouts [LOG]: Help messages are disabled in the config file.");
                     return;
                 }
 
