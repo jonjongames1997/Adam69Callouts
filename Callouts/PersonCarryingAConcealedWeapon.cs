@@ -47,8 +47,6 @@ namespace Adam69Callouts.Callouts
 
             suspect.Tasks.StandStill(6000);
 
-            suspect.Armor = 1000;
-
             susBlip = suspect.AttachBlip();
             susBlip.Color = System.Drawing.Color.Red;
             susBlip.IsRouteEnabled = true;
@@ -122,7 +120,7 @@ namespace Adam69Callouts.Callouts
                             Game.DisplaySubtitle("~r~Suspect~w~: Screw this! Die, motherfucker, you!");
                             suspect.Tasks.FightAgainst(MainPlayer);
                             suspect.Inventory.GiveNewWeapon(wepList[new Random().Next((int)wepList.Length)], 500, true);
-                            suspect.Armor = 1500;
+                            suspect.Armor = 2500;
                         }
                     }
                     catch (Exception ex)
