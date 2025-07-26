@@ -1,6 +1,6 @@
 ﻿Changelog:
 
-[July 24, 2025]
+[July 26, 2025]
 
 - Added CallAmbulanceKey to the config file for certain callouts that require an ambulance.
 - Ini has been moved from Plugins\LSPDFR to Plugins\LSPDFR\Adams69Callouts\ for better organization.
