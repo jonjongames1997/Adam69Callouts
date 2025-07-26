@@ -138,6 +138,7 @@ namespace Adam69Callouts.Callouts
         {
             if (MainPlayer.DistanceTo(officer) <= 10f)
             {
+                Game.DisplayHelp("Press ~y~" + Settings.Dialog.ToString() + "~w~ to Call in a officer down to ~b~dispatch~w~.", 5000);
 
                 if (Game.IsKeyDown(Settings.Dialog))
                 {
