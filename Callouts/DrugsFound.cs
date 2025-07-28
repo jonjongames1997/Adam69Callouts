@@ -42,13 +42,13 @@ namespace Adam69Callouts.Callouts
             leoVehicleSpawn = new(1000.69f, -1958.26f, 30.86f);
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
             CalloutInterfaceAPI.Functions.SendMessage(this, "Reports of illegal drugs found by a nearby citizen.");
-            if (Settings.BluelineDispatchIntegration == true)
+            if (Settings.DisableBluelineDispatch == true)
             {
-                LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("A_CIVILIAN_REQUIRING_ASSISTANCE_01", spawnpoint);
+                LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Drugs_Found_Audio");
             }
             else
             {
-                LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Drugs_Found_Audio");
+                LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("A_CIVILIAN_REQUIRING_ASSISTANCE_01", spawnpoint);
             }
             CalloutMessage = "Illegal drugs found";
             CalloutPosition = spawnpoint;
@@ -219,8 +219,6 @@ namespace Adam69Callouts.Callouts
                 }
                 else
                 {
-                    Game.LogTrivial("Adam69 Callouts [LOG]: Help messages are disabled in the config file.");
-                    LoggingManager.Log("Adam69 Callouts [LOG]: Help messages are disabled in the config file.");
                     return;
                 }
 
@@ -244,7 +242,6 @@ namespace Adam69Callouts.Callouts
                 }
                 else
                 {
-                    Game.LogTrivial("Adam69 Callouts [LOG]: Mission messages are disabled in the config file.");
                     return;
                 }
 
@@ -276,7 +273,6 @@ namespace Adam69Callouts.Callouts
             }
             else
             {
-                Game.LogTrivial("Adam69 Callouts [LOG]: Mission messages are disabled in the config file.");
                 return;
             }
 
