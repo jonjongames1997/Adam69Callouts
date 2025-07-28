@@ -13,40 +13,34 @@ namespace Adam69Callouts.Callouts
         private static int counter;
         private static string malefemale;
 
-        private const string CalloutMessageText = "An individual loitering";
-        private const string DispatchMessage = "~b~Dispatch~w~: Suspect has been spotted. Respond ~y~Code 2~w~.";
-        private const string ScannerAudio = "Adam69Callouts_Loitering_Audio";
-        private const string RespondAudio = "Adam69Callouts_Respond_Code_2_Audio";
-        private const string Code4Audio = "Adam69Callouts_Code_4_Audio";
-
         public override bool OnBeforeCalloutDisplayed()
         {
-            try
             {
                 spawnpoint = World.GetNextPositionOnStreet(MainPlayer.Position.Around(100f));
                 ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
-                LSPD_First_Response.Mod.API.Functions.PlayScannerAudio(ScannerAudio);
+                if (DisableBluelineDispatch == true)
+                {
+                    LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Loitering_Audio");
+                }
+                else
+                {
+                    LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("SUSPICIOUS_PERSON", spawnpoint);
+                }
                 CalloutInterfaceAPI.Functions.SendMessage(this, "Reports of loitering");
-                CalloutMessage = CalloutMessageText;
+                CalloutMessage = "Person Loitering Reported";
                 CalloutPosition = spawnpoint;
 
                 return base.OnBeforeCalloutDisplayed();
-            }
-            catch (Exception ex)
-            {
-                Game.LogTrivial($"Error in {nameof(OnBeforeCalloutDisplayed)}: {ex.Message}");
-                return false;
             }
         }
 
         public override bool OnCalloutAccepted()
         {
-            try
             {
                 Game.LogTrivial("Adam69 Callouts [LOG]: Loitering callout has been accepted!");
-                Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Loitering", DispatchMessage);
+                Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Loitering", "~b~Dispatch~w~: Suspect located. Respond code 2.");
 
-                LSPD_First_Response.Mod.API.Functions.PlayScannerAudio(RespondAudio);
+                LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_2_Audio");
 
                 suspect = new Ped(spawnpoint)
                 {
@@ -54,11 +48,7 @@ namespace Adam69Callouts.Callouts
                     BlockPermanentEvents = true
                 };
 
-                if (!suspect.IsValid())
-                {
-                    End();
-                    return false;
-                }
+                suspect.IsValid();
 
                 suspect.Tasks.PlayAnimation(new AnimationDictionary("timetable@tracy@ig_5@idle_a"), "idle_a", -1f, AnimationFlags.Loop);
                 suspect.KeepTasks = true;
@@ -67,23 +57,21 @@ namespace Adam69Callouts.Callouts
                 susBlip.Color = System.Drawing.Color.Pink;
                 susBlip.IsRouteEnabled = true;
 
-                malefemale = suspect.IsMale ? "Sir" : "Ma'am";
+                if (suspect.IsMale)
+                    malefemale = "sir";
+                else
+                    malefemale = "ma'am";
+
                 counter = 0;
 
                 return base.OnCalloutAccepted();
-            }
-            catch (Exception ex)
-            {
-                Game.LogTrivial($"Error in {nameof(OnCalloutAccepted)}: {ex.Message}");
-                End();
-                return false;
             }
         }
 
         public override void OnCalloutNotAccepted()
         {
-            susBlip?.Delete();
-            suspect?.Delete();
+            if (suspect) suspect.Delete();
+            if (susBlip) susBlip.Delete();
 
             base.OnCalloutNotAccepted();
         }
@@ -152,6 +140,7 @@ namespace Adam69Callouts.Callouts
                             catch (Exception ex)
                             {
                                 Game.LogTrivial($"Error in {nameof(Process)}: {ex.Message}");
+                                LoggingManager.Log("Adam69 Callouts [ERROR]: " + LogLevel.Error);
                             }
                         }
                     }
@@ -167,8 +156,6 @@ namespace Adam69Callouts.Callouts
                     }
                     else
                     {
-                        missionMessages = false;
-                        Game.LogTrivial("Adam69 Callouts [LOG]: Mission messages are disabled in the config file.");
                         return;
                     }
                     
@@ -177,18 +164,12 @@ namespace Adam69Callouts.Callouts
             }
         }
 
-
-        private void PlayAnimation(string dictionary, string animation)
-        {
-            suspect.Tasks.PlayAnimation(new AnimationDictionary(dictionary), animation, -1f, AnimationFlags.Loop);
-        }
-
         public override void End()
         {
-            suspect?.Dismiss();
-            susBlip?.Delete();
+            if (suspect) suspect.Dismiss();
+            if (susBlip) susBlip.Delete();
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Loitering", "~b~You~w~: Dispatch, we are ~g~CODE 4~w~. Show me back 10-8.");
-            LSPD_First_Response.Mod.API.Functions.PlayScannerAudio(Code4Audio);
+            LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
 
             bool missionMessages = Settings.MissionMessages;
             if (missionMessages == true)
@@ -199,8 +180,6 @@ namespace Adam69Callouts.Callouts
             }
             else
             {
-                missionMessages = false;
-                Game.LogTrivial("Adam69 Callouts [LOG]: Mission messages are disabled in the config file.");
                 return;
             }
 
