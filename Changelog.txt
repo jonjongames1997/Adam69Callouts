@@ -6,6 +6,7 @@ v0.4.2:
 
 - Fixed an issue with the Blueline Dispatch Integration displaying always Disabled.
 - Misc fixes to existing callouts.
+- Loitering callout has been fixed.
 
 
 [July 26, 2025]
