@@ -1,6 +1,14 @@
 ﻿Changelog:
 
+v0.4.2:
+
+- Fixed an issue with the Blueline Dispatch Integration displaying always Disabled.
+- Misc fixes to existing callouts.
+
+
 [July 26, 2025]
+
+v0.4.1:
 
 - Added CallAmbulanceKey to the config file for certain callouts that require an ambulance.
 - Ini has been moved from Plugins\LSPDFR to Plugins\LSPDFR\Adams69Callouts\ for better organization.
