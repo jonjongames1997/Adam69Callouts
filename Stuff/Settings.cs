@@ -15,7 +15,7 @@ namespace Adam69Callouts
         internal static bool SuspiciousVehicle { get; set; }
         internal static bool AbandonedVehicle { get; set; }
         internal static bool DrugsFound { get; set; }
-        internal static bool SuspiciousPerson { get; set; }
+        internal static bool SuspiciousPerson { get; set; } = false; // Default to false for complete rewrite of the callout
         internal static bool OfficerDown { get; set; }
         internal static bool DerangedDrunkenFeller { get; set; }
         internal static bool DeadBirdOnTheRoad { get; set; }
