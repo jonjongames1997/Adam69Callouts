@@ -64,7 +64,7 @@ namespace Adam69Callouts
 
         internal static void SaveConfigSettings()
         {
-            var ini = new InitializationFile("Plugins/LSPDFR/Adam69Callouts.ini");
+            var ini = new InitializationFile("Plugins/LSPDFR/Adam69Callouts/Adam69Callouts.ini");
             ini.Create();
             ini.Write("Callouts", "VehicleBlockingSidewalk", VehicleBlockingSidewalk);
             ini.Write("Callouts", "BicyclePursuit", BicyclePursuit);
