@@ -1,5 +1,7 @@
 ﻿Changelog:
 
+[July 28, 2025]
+
 v0.4.2:
 
 - Fixed an issue with the Blueline Dispatch Integration displaying always Disabled.
