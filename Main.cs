@@ -131,14 +131,14 @@ namespace Adam69Callouts
                 UltimateBackup = false;
             }
 
-            if (Settings.BluelineDispatchIntegration == true)
+            if (Settings.DisableBluelineDispatch == true)
             {
-                Game.DisplayNotification("3dtextures", "mpgroundlogo_cops", "Adam69 Callouts", "Blueline Dispatch Integration", "~g~ENABLED~w~!");
+                Game.DisplayNotification("3dtextures", "mpgroundlogo_cops", "Adam69 Callouts", "Blueline Dispatch Integration", "~r~DISABLED~w~!");
                 LoggingManager.Log("Adam69 Callouts: Blueline Dispatch Integration enabled.");
             }
             else
             {
-                Game.DisplayNotification("3dtextures", "mpgroundlogo_cops", "Adam69 Callouts", "Blueline Dispatch Integration", "~r~DISABLED~w~!");
+                Game.DisplayNotification("3dtextures", "mpgroundlogo_cops", "Adam69 Callouts", "Blueline Dispatch Integration", "~g~ENABLED~w~!");
                 LoggingManager.Log("Adam69 Callouts: Blueline Dispatch Integration disabled.");
                 return;
             }
