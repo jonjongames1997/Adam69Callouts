@@ -33,13 +33,13 @@ namespace Adam69Callouts.Callouts
             victimHeading = 284.96f;
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
             CalloutInterfaceAPI.Functions.SendMessage(this, "Reports of a knife attack in progress");
-            if (Settings.BluelineDispatchIntegration == true)
+            if (Settings.DisableBluelineDispatch == true)
             {
-                LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("CRIME_ASSAULT_ON_A_CIVILIAN", spawnpoint);
+                LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_KnifeAttack_Audio");
             }
             else
             {
-                LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_KnifeAttack_Audio");
+                LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("CRIME_ASSAULT_ON_A_CIVILIAN", spawnpoint);
             }
             CalloutMessage = "Knife attack in progress";
             CalloutPosition = spawnpoint;
@@ -178,13 +178,13 @@ namespace Adam69Callouts.Callouts
                 Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Dispatch:", "An Ambulance has been called to the scene.");
             }
 
-            if (MainPlayer.IsDead || suspect.IsDead || Game.IsKeyDown(Settings.EndCall))
+            if (suspect.IsDead || Game.IsKeyDown(Settings.EndCall))
             {
                 bool missionMessages = Settings.MissionMessages;
                 if (missionMessages == true)
                 {
                     BigMessageThread bigMessage = new BigMessageThread();
-                    bigMessage.MessageInstance.ShowColoredShard("Callout Failed!", "You are now ~r~CODE 4~w~.", RAGENativeUI.HudColor.Red, RAGENativeUI.HudColor.Black, 5000);
+                    bigMessage.MessageInstance.ShowColoredShard("Suspect Neutralized!", "You are now ~r~CODE 4~w~.", RAGENativeUI.HudColor.Red, RAGENativeUI.HudColor.Black, 5000);
                 }
                 else
                 {
