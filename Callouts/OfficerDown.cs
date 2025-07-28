@@ -36,13 +36,13 @@ namespace Adam69Callouts.Callouts
             vehicleSpawn = new(140.00f, -1308.37f, 29.00f);
             vehicleHeading = 46.70f;
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
-            if (Settings.BluelineDispatchIntegration == true)
+            if (Settings.DisableBluelineDispatch == true)
             {
-                LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("CRIME_OFFICER_DOWN_02", spawnpoint);
+                LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_OfficerDown_Audio");
             }
             else
             {
-                LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_OfficerDown_Audio");
+                LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("CRIME_OFFICER_DOWN_02", spawnpoint);
             }
             CalloutInterfaceAPI.Functions.SendMessage(this, "Officer Down Reported by an unkown civilian");
             CalloutMessage = "Officer Down Reported";
@@ -190,8 +190,6 @@ namespace Adam69Callouts.Callouts
                     }
                     else
                     {
-                        Game.LogTrivial("Adam69 Callouts [LOG]: Mission messages are disabled in the config file.");
-                        LoggingManager.Log("Adam69 Callouts [LOG]: Mission messages are disabled in the config file.");
                         return;
                     }
                     
@@ -223,8 +221,6 @@ namespace Adam69Callouts.Callouts
             }
             else
             {
-                Game.LogTrivial("Adam69 Callouts [LOG]: Mission messages are disabled in the config file.");
-                LoggingManager.Log("Adam69 Callouts [LOG]: Mission messages are disabled in the config file.");
                 return;
             }
 
