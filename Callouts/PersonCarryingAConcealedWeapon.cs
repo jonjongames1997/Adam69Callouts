@@ -18,13 +18,13 @@ namespace Adam69Callouts.Callouts
         {
             spawnpoint = World.GetNextPositionOnStreet(MainPlayer.Position.Around(100f));
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
-            if (Settings.BluelineDispatchIntegration == true)
+            if (Settings.DisableBluelineDispatch == true)
             {
-                LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("CRIME_BRANDISHING_WEAPON_03", spawnpoint);
+                LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("Adam69Callouts_PersonCarryingAConcealedWeapon_Audio", spawnpoint);
             }
             else
             {
-                LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("Adam69Callouts_PersonCarryingAConcealedWeapon_Audio", spawnpoint);
+                LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("CRIME_BRANDISHING_WEAPON_03", spawnpoint);
             }
             CalloutInterfaceAPI.Functions.SendMessage(this, "Citizen's reporting an individual with a gun.");
             CalloutMessage = "Person carrying a firearm";
@@ -143,7 +143,6 @@ namespace Adam69Callouts.Callouts
                 }
                 else
                 {
-                    Game.LogTrivial("Adam69 Callouts [LOG]: Mission messages are disabled in the config file.");
                     return;
                 }
 
@@ -167,7 +166,6 @@ namespace Adam69Callouts.Callouts
             }
             else
             {
-                Game.LogTrivial("Adam69 Callouts [LOG]: Mission messages are disabled in the config file.");
                 return;
             }
 
