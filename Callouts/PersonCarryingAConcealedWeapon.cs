@@ -18,7 +18,7 @@ namespace Adam69Callouts.Callouts
         {
             spawnpoint = World.GetNextPositionOnStreet(MainPlayer.Position.Around(100f));
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
-            if (Settings.DisableBluelineDispatch == true)
+            if (Settings.BluelineDispatch == true)
             {
                 LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("Adam69Callouts_PersonCarryingAConcealedWeapon_Audio", spawnpoint);
             }
