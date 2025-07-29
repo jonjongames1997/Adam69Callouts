@@ -21,7 +21,7 @@ namespace Adam69Callouts.Callouts
             };
             spawnpoint = LocationChooser.ChooseNearestLocation(list);
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
-            if (Settings.DisableBluelineDispatch == true)
+            if (Settings.BluelineDispatch == true)
             {
                 LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_DeadBirdOnTheRoad_Audio_01");
             }
