@@ -6,29 +6,29 @@ namespace Adam69Callouts
 {
     internal static class Settings
     {
-        internal static bool VehicleBlockingSidewalk { get; set; }
-        internal static bool BicyclePursuit { get; set; }
-        internal static bool PersonCarryingAConcealedWeapon { get; set; }
-        internal static bool Loitering { get; set; }
-        internal static bool VehicleBlockingCrosswalk { get; set; }
-        internal static bool BicycleBlockingRoadway { get; set; }
-        internal static bool SuspiciousVehicle { get; set; }
-        internal static bool AbandonedVehicle { get; set; }
-        internal static bool DrugsFound { get; set; }
+        internal static bool VehicleBlockingSidewalk = true;
+        internal static bool BicyclePursuit = true;
+        internal static bool PersonCarryingAConcealedWeapon = true;
+        internal static bool Loitering = true;
+        internal static bool VehicleBlockingCrosswalk = true;
+        internal static bool BicycleBlockingRoadway = true;
+        internal static bool SuspiciousVehicle = true;
+        internal static bool AbandonedVehicle = true;
+        internal static bool DrugsFound = true;
         internal static bool SuspiciousPerson { get; set; } = false; // Default to false for complete rewrite of the callout
-        internal static bool OfficerDown { get; set; }
-        internal static bool DerangedDrunkenFeller { get; set; }
-        internal static bool DeadBirdOnTheRoad { get; set; }
-        internal static bool KnifeAttack { get; set; }
-        internal static bool HelpMessages  { get; set; }
-        internal static bool MissionMessages { get; set; }
+        internal static bool OfficerDown = true;
+        internal static bool DerangedDrunkenFeller = true;
+        internal static bool DeadBirdOnTheRoad = true;
+        internal static bool KnifeAttack = true;
+        internal static bool HelpMessages = true;
+        internal static bool MissionMessages = true;
         internal static Keys EndCall = Keys.End;
         internal static Keys Dialog { get; set; }
         internal static Keys PickUp { get; set; }
         internal static Keys CallAnimalControlKey { get; set; }
         internal static Keys CallAmbulanceKey { get; set; }
         internal static string Localization { get; set; }
-        internal static bool DisableBluelineDispatch { get; set; }
+        internal static bool BluelineDispatch { get; set; }
 
 
         internal static void LoadSettings()
@@ -54,12 +54,12 @@ namespace Adam69Callouts
             HelpMessages = initializationFile.ReadBoolean("Settings", "HelpMessages", true);
             MissionMessages = initializationFile.ReadBoolean("Settings", "MissionMessages", true);
             EndCall = initializationFile.ReadEnum<Keys>("Keys", "EndCall", Keys.End);
-            Dialog = initializationFile.ReadEnum<Keys>("Keys", "Dialog", Keys.Y);
-            PickUp = initializationFile.ReadEnum<Keys>("Keys", "PickUp", Keys.E);
-            CallAnimalControlKey = initializationFile.ReadEnum<Keys>("Keys", "CallAnimalControlKey", Keys.NumPad1);
-            CallAmbulanceKey = initializationFile.ReadEnum<Keys>("Keys", "CallAmbulanceKey", Keys.K);
+            Dialog = initializationFile.ReadEnum<Keys>("Keys", "Dialog", Dialog);
+            PickUp = initializationFile.ReadEnum<Keys>("Keys", "PickUp", PickUp);
+            CallAnimalControlKey = initializationFile.ReadEnum<Keys>("Keys", "CallAnimalControlKey", CallAnimalControlKey);
+            CallAmbulanceKey = initializationFile.ReadEnum<Keys>("Keys", "CallAmbulanceKey", CallAmbulanceKey);
             Localization = initializationFile.ReadString("Settings", "Language", Localization);
-            Settings.DisableBluelineDispatch = initializationFile.ReadBoolean("Settings", "DisableBluelineDispatch", true);
+            Settings.BluelineDispatch = initializationFile.ReadBoolean("Settings", "DisableBluelineDispatch", false);
         }
 
         internal static void SaveConfigSettings()
@@ -88,7 +88,7 @@ namespace Adam69Callouts
             ini.Write("Settings", "Language", Localization);
             ini.Write("Keys", "CallAnimalControlKey", CallAnimalControlKey);
             ini.Write("Keys", "CallAmbulanceKey", CallAmbulanceKey);
-            ini.Write("Settings", "DisableBluelineDispatch", DisableBluelineDispatch);
+            ini.Write("Settings", "DisableBluelineDispatch", BluelineDispatch);
         }
 
         public static readonly string PluginVersion = "0.4.2";
