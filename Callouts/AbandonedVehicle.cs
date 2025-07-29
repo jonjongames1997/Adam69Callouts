@@ -13,7 +13,7 @@ namespace Adam69Callouts.Callouts
         {
             _spawnPoint = World.GetNextPositionOnStreet(MainPlayer.Position.Around(500f));
             CalloutInterfaceAPI.Functions.SendMessage(this, "Reports of an Abandoned Vehicle");
-            if (Settings.DisableBluelineDispatch == true)
+            if (Settings.BluelineDispatch == true)
             {
                 LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Abandoned_Vehicle_Callout_Audio");
             }
