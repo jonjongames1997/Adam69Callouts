@@ -19,7 +19,7 @@ namespace Adam69Callouts.Callouts
             spawnpoint = World.GetNextPositionOnStreet(MainPlayer.Position.Around(1000f));
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
             CalloutInterfaceAPI.Functions.SendMessage(this, "A civilian is evading arrest");
-            if (Settings.DisableBluelineDispatch == true)
+            if (Settings.BluelineDispatch == true)
             {
                 LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Bicycle_Pursuit_Audio");
             }
