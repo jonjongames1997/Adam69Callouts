@@ -42,7 +42,7 @@ namespace Adam69Callouts.Callouts
             leoVehicleSpawn = new(1000.69f, -1958.26f, 30.86f);
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
             CalloutInterfaceAPI.Functions.SendMessage(this, "Reports of illegal drugs found by a nearby citizen.");
-            if (Settings.BluelineDispatch == true)
+            if (Settings.BluelineDispatch)
             {
                 LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Drugs_Found_Audio");
             }
@@ -155,14 +155,14 @@ namespace Adam69Callouts.Callouts
 
         public override void Process()
         {
-            if (MainPlayer.DistanceTo(theCaller) <= 5f)
-            {
-                if (Game.IsKeyDown(Settings.Dialog))
-                {
-                    counter++;
+            try {
 
-                    try
+                if (MainPlayer.DistanceTo(theCaller) <= 5f)
+                {
+                    if (Game.IsKeyDown(Settings.Dialog))
                     {
+                        counter++;
+
                         if (counter == 1)
                         {
                             theCop.Tasks.PlayAnimation(new AnimationDictionary("amb@world_human_cop_idles@male@idle_b"), "idle_e", -1f, AnimationFlags.Loop);
@@ -199,15 +199,15 @@ namespace Adam69Callouts.Callouts
                             theCaller.Tasks.PlayAnimation(new AnimationDictionary("rcmjosh1"), "idle", -1f, AnimationFlags.Loop);
                         }
                     }
-                    catch (Exception ex)
-                    {
-                        Game.LogTrivial("Adam69 Callouts [LOG]: Error in Drugs Found callout. Error: " + ex.Message);
-                        LoggingManager.Log("Adam69 Callouts [LOG]: ERROR:" + ex.StackTrace);
-                        LoggingManager.Log("Adam69 Callouts [LOG]: ERROR:" + ex.Message);
-                        LoggingManager.Log("Adam69 Callouts [LOG]: " + LogLevel.Error);
-                        LoggingManager.Log("Adam69 Callouts [LOG]: " + LogLevel.Warning);
-                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                Game.LogTrivial("Adam69 Callouts [LOG]: Error in Drugs Found callout. Error: " + ex.Message);
+                LoggingManager.Log("Adam69 Callouts [LOG]: ERROR:" + ex.StackTrace);
+                LoggingManager.Log("Adam69 Callouts [LOG]: ERROR:" + ex.Message);
+                LoggingManager.Log("Adam69 Callouts [LOG]: " + LogLevel.Error);
+                LoggingManager.Log("Adam69 Callouts [LOG]: " + LogLevel.Warning);
             }
 
             if (MainPlayer.DistanceTo(theDrugs) <= 10f)
