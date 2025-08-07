@@ -22,7 +22,7 @@ namespace Adam69Callouts.Callouts
             spawnpoint = LocationChooser.ChooseNearestLocation(list);
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
             AddMinimumDistanceCheck(50f, spawnpoint);
-            if (Settings.BluelineDispatch == true)
+            if (Settings.BluelineDispatch)
             {
                 LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_VehicleBlockingSidewalk_Audio");
             }
