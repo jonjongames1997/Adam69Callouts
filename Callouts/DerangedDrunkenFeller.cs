@@ -21,7 +21,7 @@ namespace Adam69Callouts.Callouts
             spawnpoint = World.GetNextPositionOnStreet(MainPlayer.Position.Around(500f));
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
             CalloutInterfaceAPI.Functions.SendMessage(this, "A Deranged Drunken Feller has been reported in the area. Respond Code 2.");
-            if (Settings.BluelineDispatch == true)
+            if (Settings.BluelineDispatch)
             {
                 LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Deranged_Drunken_Feller_Audio");
             }
@@ -76,15 +76,6 @@ namespace Adam69Callouts.Callouts
         {
             if (MainPlayer.DistanceTo(suspect) <= 10f)
             {
-                bool helpMessages = Settings.HelpMessages;
-                if (helpMessages == true)
-                {
-                    Game.DisplayHelp("Press ~y~" + Settings.Dialog.ToString() + "~w~ to interact with the suspect.", 5000);
-                }
-                else
-                {
-                    return;
-                }
 
                 if (Game.IsKeyDown(Settings.Dialog))
                 {
