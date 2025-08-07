@@ -33,7 +33,7 @@ namespace Adam69Callouts.Callouts
             victimHeading = 284.96f;
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
             CalloutInterfaceAPI.Functions.SendMessage(this, "Reports of a knife attack in progress");
-            if (Settings.BluelineDispatch == true)
+            if (Settings.BluelineDispatch)
             {
                 LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_KnifeAttack_Audio");
             }
