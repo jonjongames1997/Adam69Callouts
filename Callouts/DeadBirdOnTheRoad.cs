@@ -21,7 +21,7 @@ namespace Adam69Callouts.Callouts
             };
             spawnpoint = LocationChooser.ChooseNearestLocation(list);
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
-            if (Settings.BluelineDispatch == true)
+            if (Settings.BluelineDispatch)
             {
                 LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_DeadBirdOnTheRoad_Audio_01");
             }
@@ -69,33 +69,33 @@ namespace Adam69Callouts.Callouts
         public override void Process()
         {
 
-            if(MainPlayer.DistanceTo(deadBird) <= 5f)
+            if (Game.IsKeyDown(Settings.CallAnimalControlKey))
+            {
+                StopThePed.API.Functions.callAnimalControl();
+                Game.DisplaySubtitle("~b~You~w~: Dispatch, requesting Animal Control to my 20.", 5000);
+                LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_AnimalControl_Audio_01");
+            }
+
+            if (MainPlayer.DistanceTo(deadBird) <= 5f)
             {
                 Game.DisplayHelp("Press ~y~" + Settings.CallAnimalControlKey.ToString() + "~w~ to call animal control");
+            }
 
-                if (Game.IsKeyDown(Settings.CallAnimalControlKey))
+            if (MainPlayer.IsDead || Game.IsKeyDown(Settings.EndCall))
+            {
+                bool missionMessages = Settings.MissionMessages;
+                if (missionMessages == true)
                 {
-                    StopThePed.API.Functions.callAnimalControl();
-                    Game.DisplaySubtitle("~b~You~w~: Dispatch, requesting Animal Control to my 20.", 5000);
-                    LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_AnimalControl_Audio_01");
+                    BigMessageThread bigMessage = new BigMessageThread();
+                    bigMessage.MessageInstance.ShowColoredShard("MISSION FAILED!", "You'll get 'em next time!", RAGENativeUI.HudColor.Red, RAGENativeUI.HudColor.Black, 5000);
+                }
+                else
+                {
+                    Game.LogTrivial("[LOG]: Mission messages are disabled in the config file.");
+                    return;
                 }
 
-                if (MainPlayer.IsDead || Game.IsKeyDown(Settings.EndCall))
-                {
-                    bool missionMessages = Settings.MissionMessages;
-                    if (missionMessages == true)
-                    {
-                        BigMessageThread bigMessage = new BigMessageThread();
-                        bigMessage.MessageInstance.ShowColoredShard("MISSION FAILED!", "You'll get 'em next time!", RAGENativeUI.HudColor.Red, RAGENativeUI.HudColor.Black, 5000);
-                    }
-                    else
-                    {
-                        Game.LogTrivial("[LOG]: Mission messages are disabled in the config file.");
-                        return;
-                    }
-
-                    End();
-                }
+                End();
             }
 
             base.Process();
