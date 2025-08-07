@@ -15,10 +15,10 @@ namespace Adam69Callouts.Callouts
 
         public override bool OnBeforeCalloutDisplayed()
         {
-            {
+
                 spawnpoint = World.GetNextPositionOnStreet(MainPlayer.Position.Around(100f));
                 ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
-                if (BluelineDispatch == true)
+                if (Settings.BluelineDispatch)
                 {
                     LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Loitering_Audio");
                 }
@@ -31,12 +31,10 @@ namespace Adam69Callouts.Callouts
                 CalloutPosition = spawnpoint;
 
                 return base.OnBeforeCalloutDisplayed();
-            }
         }
 
         public override bool OnCalloutAccepted()
         {
-            {
                 Game.LogTrivial("Adam69 Callouts [LOG]: Loitering callout has been accepted!");
                 Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Loitering", "~b~Dispatch~w~: Suspect located. Respond code 2.");
 
@@ -65,7 +63,6 @@ namespace Adam69Callouts.Callouts
                 counter = 0;
 
                 return base.OnCalloutAccepted();
-            }
         }
 
         public override void OnCalloutNotAccepted()
@@ -80,22 +77,22 @@ namespace Adam69Callouts.Callouts
         {
             base.Process();
 
-            if (MainPlayer.DistanceTo(suspect) <= 10f)
+            try 
             {
-
-                if (Game.IsKeyDown(Settings.Dialog))
+                if (MainPlayer.DistanceTo(suspect) <= 10f)
                 {
-                    if (MainPlayer.DistanceTo(suspect) <= 10f)
+
+                    if (Game.IsKeyDown(Settings.Dialog))
                     {
-                        Game.DisplayHelp("Press ~y~" + Settings.Dialog.ToString() + "~w~ to interact with suspect.");
-
-
-                        if (Game.IsKeyDown(Settings.Dialog))
+                        if (MainPlayer.DistanceTo(suspect) <= 10f)
                         {
-                            counter++;
+                            Game.DisplayHelp("Press ~y~" + Settings.Dialog.ToString() + "~w~ to interact with suspect.");
 
-                            try
+
+                            if (Game.IsKeyDown(Settings.Dialog))
                             {
+                                counter++;
+
                                 if (counter == 1)
                                 {
                                     suspect.Tasks.PlayAnimation(new AnimationDictionary("rcmjosh1"), "idle", -1f, AnimationFlags.Loop);
@@ -137,30 +134,30 @@ namespace Adam69Callouts.Callouts
                                     Game.DisplaySubtitle("Conversation Ended. Deal with the situation you may see fit.");
                                 }
                             }
-                            catch (Exception ex)
-                            {
-                                Game.LogTrivial($"Error in {nameof(Process)}: {ex.Message}");
-                                LoggingManager.Log("Adam69 Callouts [ERROR]: " + LogLevel.Error);
-                            }
                         }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                Game.LogTrivial($"Error in {nameof(Process)}: {ex.Message}");
+                LoggingManager.Log("Adam69 Callouts [ERROR]: " + LogLevel.Error);
+            }
 
-                if (MainPlayer.IsDead || Game.IsKeyDown(Settings.EndCall))
+            if (MainPlayer.IsDead || Game.IsKeyDown(Settings.EndCall))
+            {
+                bool missionMessages = Settings.MissionMessages;
+                if (missionMessages == true)
                 {
-                    bool missionMessages = Settings.MissionMessages;
-                    if (missionMessages == true)
-                    {
-                        BigMessageThread bigMessage = new BigMessageThread();
-                        bigMessage.MessageInstance.ShowColoredShard("MISSION FAILED!", "You'll get 'em next time!", RAGENativeUI.HudColor.Red, RAGENativeUI.HudColor.Black, 5000);
-                    }
-                    else
-                    {
-                        return;
-                    }
-                    
-                    End();
+                    BigMessageThread bigMessage = new BigMessageThread();
+                    bigMessage.MessageInstance.ShowColoredShard("MISSION FAILED!", "You'll get 'em next time!", RAGENativeUI.HudColor.Red, RAGENativeUI.HudColor.Black, 5000);
                 }
+                else
+                {
+                    return;
+                }
+
+                End();
             }
         }
 
