@@ -4,7 +4,7 @@
 
 v0.4.2:
 
-- Fixed an issue with the Blueline Dispatch Integration displaying always Disabled.
+- Temporarily Removed Blueline dispatch support.
 - Misc fixes to existing callouts.
 - Loitering callout has been fixed.
 
