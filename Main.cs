@@ -68,7 +68,7 @@ namespace Adam69Callouts
                     Game.Console.Print();
 
                     bool helpMessages = Settings.HelpMessages;
-                    if (helpMessages == true)
+                    if (helpMessages)
                     {
                         Game.DisplayHelp("You can change all ~y~keys~w~ in the ~o~Adam69Callouts.ini~w~. Press ~p~" + Settings.EndCall.ToString() + "~w~ to end a callout or use console command 'endcurrentadam69calloutscallout' to end the callout." +
                            "Press ~y~" + Settings.Dialog.ToString() + "~w~ to talk to the suspect/person of interest.", 5000);
@@ -80,7 +80,7 @@ namespace Adam69Callouts
                     }
 
                     bool missionMessages = Settings.MissionMessages;
-                    if (missionMessages == true)
+                    if (missionMessages)
                     {
                         BigMessageThread bigMessage = new BigMessageThread();
 
