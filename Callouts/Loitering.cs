@@ -16,21 +16,14 @@ namespace Adam69Callouts.Callouts
         public override bool OnBeforeCalloutDisplayed()
         {
 
-                spawnpoint = World.GetNextPositionOnStreet(MainPlayer.Position.Around(100f));
-                ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
-                if (Settings.BluelineDispatch)
-                {
-                    LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Loitering_Audio");
-                }
-                else
-                {
-                    LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("SUSPICIOUS_PERSON", spawnpoint);
-                }
-                CalloutInterfaceAPI.Functions.SendMessage(this, "Reports of loitering");
-                CalloutMessage = "Person Loitering Reported";
-                CalloutPosition = spawnpoint;
+            spawnpoint = World.GetNextPositionOnStreet(MainPlayer.Position.Around(100f));
+            ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
+            LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("SUSPICIOUS_PERSON", spawnpoint);
+            CalloutInterfaceAPI.Functions.SendMessage(this, "Reports of loitering");
+            CalloutMessage = "Person Loitering Reported";
+            CalloutPosition = spawnpoint;
 
-                return base.OnBeforeCalloutDisplayed();
+            return base.OnBeforeCalloutDisplayed();
         }
 
         public override bool OnCalloutAccepted()
