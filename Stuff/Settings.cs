@@ -27,8 +27,6 @@ namespace Adam69Callouts
         internal static Keys PickUp { get; set; }
         internal static Keys CallAnimalControlKey { get; set; }
         internal static Keys CallAmbulanceKey { get; set; }
-        internal static string Localization { get; set; }
-        internal static bool BluelineDispatch { get; set; }
 
 
         internal static void LoadSettings()
@@ -58,37 +56,33 @@ namespace Adam69Callouts
             PickUp = initializationFile.ReadEnum<Keys>("Keys", "PickUp", PickUp);
             CallAnimalControlKey = initializationFile.ReadEnum<Keys>("Keys", "CallAnimalControlKey", CallAnimalControlKey);
             CallAmbulanceKey = initializationFile.ReadEnum<Keys>("Keys", "CallAmbulanceKey", CallAmbulanceKey);
-            Localization = initializationFile.ReadString("Settings", "Language", Localization);
-            Settings.BluelineDispatch = initializationFile.ReadBoolean("Settings", "DisableBluelineDispatch", false);
         }
 
         internal static void SaveConfigSettings()
         {
             var ini = new InitializationFile("Plugins/LSPDFR/Adam69Callouts/Adam69Callouts.ini");
             ini.Create();
-            ini.Write("Callouts", "VehicleBlockingSidewalk", VehicleBlockingSidewalk);
-            ini.Write("Callouts", "BicyclePursuit", BicyclePursuit);
-            ini.Write("Callouts", "PersonCarryingAConcealedWeapon", PersonCarryingAConcealedWeapon);
-            ini.Write("Callouts", "Loitering", Loitering);
-            ini.Write("Callouts", "VehicleBlockingCrosswalk", VehicleBlockingCrosswalk);
-            ini.Write("Callouts", "BicycleBlockingRoadway", BicycleBlockingRoadway);
-            ini.Write("Callouts", "SuspiciousVehicle", SuspiciousVehicle);
-            ini.Write("Callouts", "AbandonedVehicle", AbandonedVehicle);
-            ini.Write("Callouts", "DrugsFound", DrugsFound);
-            ini.Write("Callouts", "SuspiciousPerson", SuspiciousPerson);
-            ini.Write("Callouts", "OfficerDown", OfficerDown);
-            ini.Write("Callouts", "DerangedDrunkenFeller", DerangedDrunkenFeller);
-            ini.Write("Callouts", "DeadBirdOnTheRoad", DeadBirdOnTheRoad);
-            ini.Write("Callouts", "KnifeAttack", KnifeAttack);
-            ini.Write("Settings", "HelpMessages", HelpMessages);
-            ini.Write("Settings", "MissionMessages", MissionMessages);
-            ini.Write("Keys", "EndCall", EndCall);
-            ini.Write("Keys", "Dialog", Dialog);
-            ini.Write("Keys", "PickUp", PickUp);
-            ini.Write("Settings", "Language", Localization);
-            ini.Write("Keys", "CallAnimalControlKey", CallAnimalControlKey);
-            ini.Write("Keys", "CallAmbulanceKey", CallAmbulanceKey);
-            ini.Write("Settings", "DisableBluelineDispatch", BluelineDispatch);
+            ini.Write("Callouts", "VehicleBlockingSidewalk", true);
+            ini.Write("Callouts", "BicyclePursuit", true);
+            ini.Write("Callouts", "PersonCarryingAConcealedWeapon", true);
+            ini.Write("Callouts", "Loitering", true);
+            ini.Write("Callouts", "VehicleBlockingCrosswalk", true);
+            ini.Write("Callouts", "BicycleBlockingRoadway", true);
+            ini.Write("Callouts", "SuspiciousVehicle", true);
+            ini.Write("Callouts", "AbandonedVehicle", true);
+            ini.Write("Callouts", "DrugsFound", true);
+            ini.Write("Callouts", "SuspiciousPerson", false);
+            ini.Write("Callouts", "OfficerDown", true);
+            ini.Write("Callouts", "DerangedDrunkenFeller", true);
+            ini.Write("Callouts", "DeadBirdOnTheRoad", true);
+            ini.Write("Callouts", "KnifeAttack", true);
+            ini.Write("Settings", "HelpMessages", true);
+            ini.Write("Settings", "MissionMessages", true);
+            ini.Write("Keys", "EndCall", Keys.End);
+            ini.Write("Keys", "Dialog", Keys.Y);
+            ini.Write("Keys", "PickUp", Keys.E);
+            ini.Write("Keys", "CallAnimalControlKey", Keys.K);
+            ini.Write("Keys", "CallAmbulanceKey", Keys.NumPad1);
         }
 
         public static readonly string PluginVersion = "0.4.2";
