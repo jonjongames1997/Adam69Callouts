@@ -1,12 +1,13 @@
 ﻿Changelog:
 
-[July 28, 2025]
+[August 2025]
 
 v0.4.2:
 
 - Temporarily Removed Blueline dispatch support.
 - Misc fixes to existing callouts.
 - Loitering callout has been fixed.
+- Fixed the "An error occurred while initializing the plugin: String was not recognized as a valid Boolean." error message.
 
 
 [July 26, 2025]
