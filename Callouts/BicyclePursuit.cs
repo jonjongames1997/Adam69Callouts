@@ -19,14 +19,7 @@ namespace Adam69Callouts.Callouts
             spawnpoint = World.GetNextPositionOnStreet(MainPlayer.Position.Around(1000f));
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
             CalloutInterfaceAPI.Functions.SendMessage(this, "A civilian is evading arrest");
-            if (Settings.BluelineDispatch)
-            {
-                LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Bicycle_Pursuit_Audio");
-            }
-            else
-            {
-                LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("CRIME_PERSON_IN_A_STOLEN_VEHICLE_01", spawnpoint);
-            }
+            LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("CRIME_PERSON_IN_A_STOLEN_VEHICLE_01", spawnpoint);
             CalloutMessage = "An officer reporting a civilian is evading arrest.";
             CalloutPosition = spawnpoint;
 
