@@ -18,14 +18,7 @@ namespace Adam69Callouts.Callouts
         {
             spawnpoint = World.GetNextPositionOnStreet(MainPlayer.Position.Around(100f));
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
-            if (Settings.BluelineDispatch)
-            {
-                LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("Adam69Callouts_PersonCarryingAConcealedWeapon_Audio", spawnpoint);
-            }
-            else
-            {
-                LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("CRIME_BRANDISHING_WEAPON_03", spawnpoint);
-            }
+            LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("CRIME_BRANDISHING_WEAPON_03", spawnpoint);
             CalloutInterfaceAPI.Functions.SendMessage(this, "Citizen's reporting an individual with a gun.");
             CalloutMessage = "Person carrying a firearm";
             CalloutPosition = spawnpoint;
