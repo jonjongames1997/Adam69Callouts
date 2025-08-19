@@ -20,9 +20,6 @@ namespace Adam69Callouts
             {
                 Game.LogTrivial("Adam69Callouts [ERROR]: Failed to initialize the plugin: " + ex.Message);
                 LoggingManager.Log("Adam69 Callouts: Failed to initialize the plugin: " + ex.Message);
-                LoggingManager.Log("Adam69 Callouts: Stack Trace: " + LogLevel.Error);
-                LoggingManager.Log("Adam69 Callouts: Stack Trace: " + LogLevel.Debug);
-                LoggingManager.Log("Adam69 Callouts: Stack Trace: " + LogLevel.Warning);
             }
         }
 
@@ -88,6 +85,7 @@ namespace Adam69Callouts
                     }
                     else
                     {
+                        missionMessages = false;
                         return;
                     }
                     
@@ -173,6 +171,7 @@ namespace Adam69Callouts
             {
                 Game.LogTrivial("[LOG]: Mission messages are disabled in the config file.");
                 LoggingManager.Log("Adam69 Callouts: Mission messages are disabled in the config file.");
+                missionMessages = false;
                 return;
             }
         }
