@@ -52,10 +52,10 @@ namespace Adam69Callouts
             HelpMessages = initializationFile.ReadBoolean("Settings", "HelpMessages", true);
             MissionMessages = initializationFile.ReadBoolean("Settings", "MissionMessages", true);
             EndCall = initializationFile.ReadEnum<Keys>("Keys", "EndCall", Keys.End);
-            Dialog = initializationFile.ReadEnum<Keys>("Keys", "Dialog", Dialog);
-            PickUp = initializationFile.ReadEnum<Keys>("Keys", "PickUp", PickUp);
-            CallAnimalControlKey = initializationFile.ReadEnum<Keys>("Keys", "CallAnimalControlKey", CallAnimalControlKey);
-            CallAmbulanceKey = initializationFile.ReadEnum<Keys>("Keys", "CallAmbulanceKey", CallAmbulanceKey);
+            Dialog = initializationFile.ReadEnum<Keys>("Keys", "Dialog", Keys.Y);
+            PickUp = initializationFile.ReadEnum<Keys>("Keys", "PickUp", Keys.E);
+            CallAnimalControlKey = initializationFile.ReadEnum<Keys>("Keys", "CallAnimalControlKey", Keys.NumPad1);
+            CallAmbulanceKey = initializationFile.ReadEnum<Keys>("Keys", "CallAmbulanceKey", Keys.K);
         }
 
         internal static void SaveConfigSettings()
