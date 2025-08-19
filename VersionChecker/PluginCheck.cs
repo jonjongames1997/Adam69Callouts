@@ -52,7 +52,7 @@ namespace Adam69Callouts.VersionChecker
         private static void NotifyUpdateAvailable(string curVersion, string newVersion)
         {
             Game.DisplayNotification("commonmenu", "mp_alerttriangle", "~w~Adam69 Callouts Warning", "~y~A new update is available!", $"Current Version: ~r~{curVersion}~w~<br>New Version: ~y~{newVersion}<br>~w~Please Update to the latest build for new ~p~callouts~w~ and ~g~improvements~w~!:-)");
-            Game.DisplayNotification("commonmenu", "mp_alerttriangle", "~w~Adam69 Callouts Deprecation Warning", "~y~Adam69Callouts Deprecation Info:", "v0.2.9.1 or lower is ~r~NO LONGER supported~w~ and ~r~deprecated~w~. Update to latest build for guaranteed support.");
+            Game.DisplayNotification("commonmenu", "mp_alerttriangle", "~w~Adam69 Callouts Deprecation Warning", "~y~Adam69Callouts Deprecation Info:", "v0.3.3.3 or lower is ~r~NO LONGER supported~w~ and ~r~deprecated~w~. Update to latest build for guaranteed support.");
             Game.Console.Print();
             Game.Console.Print("===================================================== Adam69 Callouts ===========================================");
             Game.Console.Print();
