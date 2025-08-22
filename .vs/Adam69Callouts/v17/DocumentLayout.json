@@ -11,7 +11,7 @@
       "RelativeMoniker": "D:0:0:{C330EC03-8BB7-467B-A80A-544D0C7839DE}|Adam69Callouts.csproj|solutionrelative:stuff\\settings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C330EC03-8BB7-467B-A80A-544D0C7839DE}|Adam69Callouts.csproj|d:\\adam69callouts\\adam69callouts.ini||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "AbsoluteMoniker": "D:0:0:{C330EC03-8BB7-467B-A80A-544D0C7839DE}|Adam69Callouts.csproj|D:\\Adam69Callouts\\adam69callouts.ini||{3B902123-F8A7-4915-9F01-361F908088D0}",
       "RelativeMoniker": "D:0:0:{C330EC03-8BB7-467B-A80A-544D0C7839DE}|Adam69Callouts.csproj|solutionrelative:adam69callouts.ini||{3B902123-F8A7-4915-9F01-361F908088D0}"
     },
     {
@@ -30,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Document",
@@ -69,21 +69,7 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAADkAAABlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-08-19T14:21:39.628Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "PluginCheck.cs",
-              "DocumentMoniker": "D:\\Adam69Callouts\\VersionChecker\\PluginCheck.cs",
-              "RelativeDocumentMoniker": "VersionChecker\\PluginCheck.cs",
-              "ToolTip": "D:\\Adam69Callouts\\VersionChecker\\PluginCheck.cs",
-              "RelativeToolTip": "VersionChecker\\PluginCheck.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAADYAAAChAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-19T14:58:23.968Z",
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Bookmark",
@@ -103,6 +89,19 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "PluginCheck.cs",
+              "DocumentMoniker": "D:\\Adam69Callouts\\VersionChecker\\PluginCheck.cs",
+              "RelativeDocumentMoniker": "VersionChecker\\PluginCheck.cs",
+              "ToolTip": "D:\\Adam69Callouts\\VersionChecker\\PluginCheck.cs",
+              "RelativeToolTip": "VersionChecker\\PluginCheck.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-19T14:58:23.968Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 2,
               "Title": "Adam69Callouts.ini",
               "DocumentMoniker": "D:\\Adam69Callouts\\Adam69Callouts.ini",
@@ -111,8 +110,7 @@
               "RelativeToolTip": "Adam69Callouts.ini",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002768|",
-              "WhenOpened": "2025-08-19T14:51:16.154Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-19T14:51:16.154Z"
             }
           ]
         }
