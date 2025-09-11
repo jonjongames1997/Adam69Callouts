@@ -65,7 +65,7 @@ namespace Adam69Callouts.Callouts
 
         public override void Process()
         {
-            if(MainPlayer.DistanceTo(thebike) <= 10f)
+            if (MainPlayer.DistanceTo(thebike) <= 10f)
             {
                 bool helpMessages = Settings.HelpMessages;
                 if (helpMessages == true)
