@@ -185,7 +185,7 @@ namespace Adam69Callouts.Callouts
                     {
                         return;
                     }
-                    
+
                     End();
                 }
             }
