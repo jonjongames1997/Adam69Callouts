@@ -1,5 +1,4 @@
 ﻿using CalloutInterfaceAPI;
-using StopThePed.API;
 
 namespace Adam69Callouts.Callouts
 {
