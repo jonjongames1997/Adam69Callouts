@@ -1,6 +1,4 @@
 ﻿using CalloutInterfaceAPI;
-using StopThePed.API;
-using StopThePed;
 
 namespace Adam69Callouts.Callouts
 {
@@ -28,34 +26,34 @@ namespace Adam69Callouts.Callouts
 
         public override bool OnCalloutAccepted()
         {
-                Game.LogTrivial("Adam69 Callouts [LOG]: Loitering callout has been accepted!");
-                Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Loitering", "~b~Dispatch~w~: Suspect located. Respond code 2.");
+            Game.LogTrivial("Adam69 Callouts [LOG]: Loitering callout has been accepted!");
+            Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Loitering", "~b~Dispatch~w~: Suspect located. Respond code 2.");
 
-                LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_2_Audio");
+            LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_2_Audio");
 
-                suspect = new Ped(spawnpoint)
-                {
-                    IsPersistent = true,
-                    BlockPermanentEvents = true
-                };
+            suspect = new Ped(spawnpoint)
+            {
+                IsPersistent = true,
+                BlockPermanentEvents = true
+            };
 
-                suspect.IsValid();
+            suspect.IsValid();
 
-                suspect.Tasks.PlayAnimation(new AnimationDictionary("timetable@tracy@ig_5@idle_a"), "idle_a", -1f, AnimationFlags.Loop);
-                suspect.KeepTasks = true;
+            suspect.Tasks.PlayAnimation(new AnimationDictionary("timetable@tracy@ig_5@idle_a"), "idle_a", -1f, AnimationFlags.Loop);
+            suspect.KeepTasks = true;
 
-                susBlip = suspect.AttachBlip();
-                susBlip.Color = System.Drawing.Color.Pink;
-                susBlip.IsRouteEnabled = true;
+            susBlip = suspect.AttachBlip();
+            susBlip.Color = System.Drawing.Color.Pink;
+            susBlip.IsRouteEnabled = true;
 
-                if (suspect.IsMale)
-                    malefemale = "sir";
-                else
-                    malefemale = "ma'am";
+            if (suspect.IsMale)
+                malefemale = "sir";
+            else
+                malefemale = "ma'am";
 
-                counter = 0;
+            counter = 0;
 
-                return base.OnCalloutAccepted();
+            return base.OnCalloutAccepted();
         }
 
         public override void OnCalloutNotAccepted()
@@ -70,7 +68,7 @@ namespace Adam69Callouts.Callouts
         {
             base.Process();
 
-            try 
+            try
             {
                 if (MainPlayer.DistanceTo(suspect) <= 10f)
                 {
