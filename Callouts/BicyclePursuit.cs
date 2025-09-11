@@ -114,7 +114,7 @@ namespace Adam69Callouts.Callouts
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
 
             bool missionMessages = Settings.MissionMessages;
-            if(missionMessages == true)
+            if (missionMessages == true)
             {
 
                 BigMessageThread bigMessage = new BigMessageThread();
