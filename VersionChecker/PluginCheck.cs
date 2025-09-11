@@ -1,5 +1,4 @@
 ﻿using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace Adam69Callouts.VersionChecker
 {
@@ -12,7 +11,7 @@ namespace Adam69Callouts.VersionChecker
             string curVersion = Settings.PluginVersion;
             Uri latestVersionUri = new("https://www.lcpdfr.com/applications/downloadsng/interface/api.php?do=checkForUpdates&fileId=49465&textOnly=1");
             string receiveData;
-            
+
             try
             {
                 receiveData = await httpClient.GetStringAsync(latestVersionUri);
