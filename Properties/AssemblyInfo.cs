@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Adam69Callouts")]
 [assembly: AssemblyDescription("LSPDFR Callout Plugin for LSPDFR  0.4.9")]
