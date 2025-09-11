@@ -1,8 +1,4 @@
-﻿using System.Windows.Forms;
-using System.Xml;
-using Rage;
-
-namespace Adam69Callouts
+﻿namespace Adam69Callouts
 {
     internal static class Settings
     {
