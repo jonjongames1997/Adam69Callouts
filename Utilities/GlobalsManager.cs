@@ -1,6 +1,4 @@
-﻿using System.Windows.Forms;
-
-namespace Adam69Callouts.Utilities
+﻿namespace Adam69Callouts.Utilities
 {
     internal static class GlobalsManager
     {
