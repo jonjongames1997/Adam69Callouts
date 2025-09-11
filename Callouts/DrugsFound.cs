@@ -1,6 +1,4 @@
-﻿using Adam69Callouts.Utilities;
-using CalloutInterfaceAPI;
-using LSPD_First_Response.Engine;
+﻿using CalloutInterfaceAPI;
 
 namespace Adam69Callouts.Callouts
 {
@@ -148,7 +146,8 @@ namespace Adam69Callouts.Callouts
 
         public override void Process()
         {
-            try {
+            try
+            {
 
                 if (MainPlayer.DistanceTo(theCaller) <= 5f)
                 {
