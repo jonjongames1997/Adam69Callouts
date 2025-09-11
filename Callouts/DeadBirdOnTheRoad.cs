@@ -100,7 +100,7 @@ namespace Adam69Callouts.Callouts
             if (deadBirdBlip) deadBirdBlip.Delete();
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Dead Bird On The Road", "~b~You~w~: We are Code 4. Show me back 10-8!");
-            
+
             bool missionMessages = Settings.MissionMessages;
             if (missionMessages == true)
             {
