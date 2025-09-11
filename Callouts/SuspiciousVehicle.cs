@@ -1,5 +1,4 @@
 ﻿using CalloutInterfaceAPI;
-using System.Net.Configuration;
 
 namespace Adam69Callouts.Callouts
 {
