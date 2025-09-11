@@ -34,7 +34,7 @@ namespace Adam69Callouts.Callouts
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "Deranged Drunken Feller", "~b~Dispatch~w~: Suspect has been located. Respond ~r~Code 2~w~.");
 
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_2_Audio");
-           
+
             try
             {
                 blip = suspect.AttachBlip();
