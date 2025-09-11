@@ -1,5 +1,4 @@
-﻿using Rage;
-using Rage.Attributes;
+﻿using Rage.Attributes;
 using Rage.ConsoleCommands.AutoCompleters;
 
 namespace Adam69Callouts.Stuff
