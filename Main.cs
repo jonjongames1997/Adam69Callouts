@@ -171,7 +171,7 @@ namespace Adam69Callouts
             {
                 Game.LogTrivial("[LOG]: Mission messages are disabled in the config file.");
                 LoggingManager.Log("Adam69 Callouts: Mission messages are disabled in the config file.");
-                missionMessages = false;
+                Settings.MissionMessages = false;
                 return;
             }
         }
