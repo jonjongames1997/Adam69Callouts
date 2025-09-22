@@ -57,7 +57,7 @@ namespace Adam69Callouts
                     Game.Console.Print();
                     Game.Console.Print();
                     Game.Console.Print();
-                    Game.Console.Print("[LOG] Adam69Callouts: Mission notification enabled");
+                    Game.Console.Print("");
                     Game.Console.Print();
                     Game.Console.Print("============================================== Adam69 Callouts by JM Modifications ===================================================");
                     Game.Console.Print();
