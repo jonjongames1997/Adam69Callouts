@@ -79,6 +79,8 @@ namespace Adam69Callouts.Callouts
             {
                 PolicingRedefined.API.VehicleAPI.RunVehicleThroughDispatch(motorVehicle, true, true, true);
                 LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69_Callouts_Request_Vehicle_Info_Audio");
+                LoggingManager.Log("Adam69 Callouts [LOG]: Player has requested vehicle information.");
+                Game.LogTrivial("Adam69 Callouts [LOG]: Player has requested vehicle information.");
             }
 
             if (MainPlayer.DistanceTo(motorVehicle) <= 10f)
@@ -88,14 +90,14 @@ namespace Adam69Callouts.Callouts
 
             if (MainPlayer.IsDead || Game.IsKeyDown(Settings.EndCall))
             {
-                bool missionMessages = Settings.MissionMessages;
-                if (missionMessages == true)
+                if (Settings.MissionMessages)
                 {
                     BigMessageThread bigMessage = new BigMessageThread();
                     bigMessage.MessageInstance.ShowColoredShard("Callout Failed!", "You are now ~r~CODE 4~w~.", RAGENativeUI.HudColor.Red, RAGENativeUI.HudColor.Black, 5000);
                 }
                 else
                 {
+                    Settings.MissionMessages = false;
                     return;
                 }
 
@@ -115,8 +117,7 @@ namespace Adam69Callouts.Callouts
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Vehicle Blocking Crosswalk", "~b~You~w~: Dispatch, we are ~g~CODE 4~w~. Show me back 10-8.");
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
 
-            bool missionMessages = Settings.MissionMessages;
-            if (missionMessages == true)
+            if (Settings.MissionMessages)
             {
                 BigMessageThread bigMessage = new BigMessageThread();
 
@@ -124,6 +125,7 @@ namespace Adam69Callouts.Callouts
             }
             else
             {
+                Settings.MissionMessages = false;
                 return;
             }
 
