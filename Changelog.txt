@@ -1,6 +1,6 @@
 ﻿Changelog:
 
-[September 2025]
+[September 22, 2025]
 
 v0.4.2:
 
