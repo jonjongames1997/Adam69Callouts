@@ -77,6 +77,7 @@ namespace Adam69Callouts.Callouts
                     {
                         if (counter == 1)
                         {
+                            NativeFunction.Natives.TASK_TURN_PED_TO_FACE_ENTITY(suspect, MainPlayer, -1);
                             Game.DisplaySubtitle("~b~You~w~: What goin' on, feller? Have anything to drink today?");
                         }
                         if (counter == 2)
@@ -97,6 +98,7 @@ namespace Adam69Callouts.Callouts
                             suspect.Tasks.FightAgainst(MainPlayer);
                             suspect.Armor = 500;
                             suspect.Inventory.GiveNewWeapon(wepList[new Random().Next((int)wepList.Length)], 500, true);
+                            PolicingRedefined.API.BackupDispatchAPI.RequestPanicBackup();
                         }
                     }
                     catch (Exception ex)
