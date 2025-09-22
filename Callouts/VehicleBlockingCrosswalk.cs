@@ -75,6 +75,12 @@ namespace Adam69Callouts.Callouts
         /// </summary>
         public override void Process()
         {
+            if (Game.IsKeyDown(Settings.RequestVehicleInfo))
+            {
+                PolicingRedefined.API.VehicleAPI.RunVehicleThroughDispatch(motorVehicle, true, true, true);
+                LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69_Callouts_Request_Vehicle_Info_Audio");
+            }
+
             if (MainPlayer.DistanceTo(motorVehicle) <= 10f)
             {
                 Game.DisplaySubtitle("Check the vehicle record, search the vehicle (If you have probable cause), then tow the vehicle.", 5000);
