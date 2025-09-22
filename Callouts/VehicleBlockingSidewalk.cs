@@ -61,6 +61,14 @@ namespace Adam69Callouts.Callouts
         {
             base.Process();
 
+            if (Game.IsKeyDown(Settings.RequestVehicleInfo))
+            {
+                PolicingRedefined.API.VehicleAPI.RunVehicleThroughDispatch(motorVehicle, true, true, true);
+                LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69_Callouts_Request_Vehicle_Info_Audio");
+                LoggingManager.Log("Adam69 Callouts - Vehicle Blocking Sidewalk [LOG]: Player has requested vehicle information.");
+                Game.LogTrivial("Adam69 Callouts - Vehicle Blocking Sidewalk [LOG]: Player has requested vehicle information.");
+            }
+
             if (MainPlayer.DistanceTo(motorVehicle) <= 10f)
             {
                 Game.DisplaySubtitle("Investigate the Vehicle, check vehicle record, then call tow truck", 5000);
