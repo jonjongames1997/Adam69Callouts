@@ -20,6 +20,7 @@ global using System.Threading.Tasks;
 global using System.Windows.Forms;
 global using static Adam69Callouts.Stuff.Helper;
 global using static Adam69Callouts.Utilities.LoggingManager;
-
+global using PolicingRedefined.API;
+global using PolicingRedefined;
 
 #endregion
