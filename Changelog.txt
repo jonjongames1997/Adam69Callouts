@@ -7,8 +7,9 @@ v0.4.2:
 - Temporarily Removed Blueline dispatch support.
 - Misc fixes to existing callouts.
 - Loitering callout has been fixed.
-- Fixed the "An error occurred while initializing the plugin: String was not recognized as a valid Boolean." error message.
-
+- Fixed the "An error occurred while initializing the plugin: String was not recognized as a valid Boolean." error message. (hopefully)
+- Added Policing Redefined Support
+- Deprecated support for Stop The Ped and Ultimate Backup. These plugins are no longer being updated and may cause compatibility issues with future versions of LSPDFR.
 
 [July 26, 2025]
 
