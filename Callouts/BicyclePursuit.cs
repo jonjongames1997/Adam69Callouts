@@ -56,9 +56,7 @@ namespace Adam69Callouts.Callouts
             LSPD_First_Response.Mod.API.Functions.AddPedToPursuit(pursuit, suspect);
             LSPD_First_Response.Mod.API.Functions.SetPursuitIsActiveForPlayer(pursuit, true);
             pursuitCreated = true;
-            LSPD_First_Response.Mod.API.Functions.RequestBackup(suspect.Position, LSPD_First_Response.EBackupResponseType.Pursuit, LSPD_First_Response.EBackupUnitType.StateUnit);
-            LSPD_First_Response.Mod.API.Functions.RequestBackup(suspect.Position, LSPD_First_Response.EBackupResponseType.Pursuit, LSPD_First_Response.EBackupUnitType.LocalUnit);
-            LSPD_First_Response.Mod.API.Functions.RequestBackup(suspect.Position, LSPD_First_Response.EBackupResponseType.Pursuit, LSPD_First_Response.EBackupUnitType.LocalUnit);
+            PolicingRedefined.API.BackupDispatchAPI.RequestPursuitBackup();
 
             return base.OnCalloutAccepted();
         }
