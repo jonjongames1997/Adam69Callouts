@@ -64,7 +64,7 @@ namespace Adam69Callouts.Callouts
 
             if (Game.IsKeyDown(Settings.CallAnimalControlKey))
             {
-                StopThePed.API.Functions.callAnimalControl();
+                PolicingRedefined.API.BackupDispatchAPI.RequestAnimalControlBackup();
                 Game.DisplaySubtitle("~b~You~w~: Dispatch, requesting Animal Control to my 20.", 5000);
                 LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_AnimalControl_Audio_01");
             }
@@ -76,14 +76,15 @@ namespace Adam69Callouts.Callouts
 
             if (MainPlayer.IsDead || Game.IsKeyDown(Settings.EndCall))
             {
-                bool missionMessages = Settings.MissionMessages;
-                if (missionMessages == true)
+                
+                if (Settings.MissionMessages)
                 {
                     BigMessageThread bigMessage = new BigMessageThread();
                     bigMessage.MessageInstance.ShowColoredShard("MISSION FAILED!", "You'll get 'em next time!", RAGENativeUI.HudColor.Red, RAGENativeUI.HudColor.Black, 5000);
                 }
                 else
                 {
+                    Settings.MissionMessages = false;
                     Game.LogTrivial("[LOG]: Mission messages are disabled in the config file.");
                     return;
                 }
@@ -101,14 +102,14 @@ namespace Adam69Callouts.Callouts
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Dead Bird On The Road", "~b~You~w~: We are Code 4. Show me back 10-8!");
 
-            bool missionMessages = Settings.MissionMessages;
-            if (missionMessages == true)
+            if (Settings.MissionMessages)
             {
                 BigMessageThread bigMessage = new();
                 bigMessage.MessageInstance.ShowColoredShard("MISSION SUCCESS!", "You have successfully cleared the dead bird from the road.", RAGENativeUI.HudColor.Green, RAGENativeUI.HudColor.Black, 5000);
             }
             else
             {
+                Settings.MissionMessages = false;
                 Game.LogTrivial("[LOG]: Mission messages are disabled in the config file.");
                 return;
             }
