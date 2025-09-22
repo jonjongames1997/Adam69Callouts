@@ -59,23 +59,37 @@ namespace Adam69Callouts.Callouts
 
         public override void Process()
         {
+
+            if (Game.IsKeyDown(Settings.RequestVehicleInfo))
+            {
+                PolicingRedefined.API.TrafficControlAPI.Slow(true);
+                PolicingRedefined.API.TrafficControlAPI.IsActive();
+                PolicingRedefined.API.VehicleAPI.RunVehicleThroughDispatch(_vehicle, true, true, true);
+                LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Dispatch_Audio");
+            }
+
+            if (Game.IsKeyDown(Settings.RequestTowTruck))
+            {
+                PolicingRedefined.API.BackupDispatchAPI.RequestTowServiceBackup();
+                LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Tow_Truck_Audio");
+            }
+
             if (MainPlayer.DistanceTo(_vehicle) <= 10f)
             {
-                bool helpMessages = Settings.HelpMessages;
-                if (helpMessages == true)
+                if (Settings.HelpMessages)
                 {
                     Game.DisplayHelp("Deal with the situation as you see fit.", 5000);
                 }
                 else
                 {
+                    Settings.HelpMessages = false;
                     return;
                 }
             }
 
             if (MainPlayer.IsDead || Game.IsKeyDown(Settings.EndCall))
             {
-                bool missionMessages = Settings.MissionMessages;
-                if (missionMessages == true)
+                if (Settings.MissionMessages)
                 {
                     BigMessageThread bigMessage = new BigMessageThread();
 
@@ -83,6 +97,7 @@ namespace Adam69Callouts.Callouts
                 }
                 else
                 {
+                    Settings.MissionMessages = false;
                     return;
                 }
 
@@ -101,8 +116,9 @@ namespace Adam69Callouts.Callouts
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Abandoned Vehicle", "~b~You~w~: Dispatch, we are ~g~CODE 4~w~. Show me back 10-8.");
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
 
-            bool missionMessages = Settings.MissionMessages;
-            if (missionMessages == true)
+            PolicingRedefined.API.TrafficControlAPI.Clear();
+
+            if (Settings.MissionMessages)
             {
                 BigMessageThread bigMessage = new BigMessageThread();
 
@@ -110,6 +126,7 @@ namespace Adam69Callouts.Callouts
             }
             else
             {
+                Settings.MissionMessages = false;
                 return;
             }
 
