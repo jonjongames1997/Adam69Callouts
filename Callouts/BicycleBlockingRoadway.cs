@@ -65,6 +65,12 @@ namespace Adam69Callouts.Callouts
 
         public override void Process()
         {
+            if (Game.IsKeyDown(Settings.RequestTowTruck))
+            {
+                PolicingRedefined.API.BackupDispatchAPI.RequestTowServiceBackup();
+                LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Tow_Truck_Audio");
+            }
+
             if (MainPlayer.DistanceTo(thebike) <= 10f)
             {
                 bool helpMessages = Settings.HelpMessages;
