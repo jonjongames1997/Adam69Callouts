@@ -27,3 +27,4 @@ D:\Adam69Callouts\obj\Debug\Adam69Callouts.pdb
 D:\Adam69Callouts\bin\Debug\RagePluginHookSDK.dll
 D:\Adam69Callouts\bin\Debug\Newtonsoft.Json.dll
 D:\Adam69Callouts\bin\Debug\Newtonsoft.Json.xml
+D:\Adam69Callouts\bin\Debug\PolicingRedefined.dll
