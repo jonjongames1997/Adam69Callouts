@@ -66,6 +66,12 @@ namespace Adam69Callouts.Callouts
 
         public override void Process()
         {
+            if (Game.IsKeyDown(Settings.RequestVehicleInfo))
+            {
+                PolicingRedefined.API.VehicleAPI.RunVehicleThroughDispatch(motorVehicle, true, true, true);
+                LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Dispatch_Audio");
+            }
+
             if (MainPlayer.DistanceTo(motorVehicle) <= 10f)
             {
                 Game.DisplayHelp("Deal with the situation to your liking.", 5000);
@@ -73,14 +79,14 @@ namespace Adam69Callouts.Callouts
 
             if (MainPlayer.IsDead || Game.IsKeyDown(Settings.EndCall))
             {
-                bool missionMessages = Settings.MissionMessages;
-                if (missionMessages == true)
+                if (Settings.MissionMessages)
                 {
                     BigMessageThread bigMessage = new BigMessageThread();
                     bigMessage.MessageInstance.ShowColoredShard("Callout Failed!", "You are now ~r~CODE 4~w~.", RAGENativeUI.HudColor.Red, RAGENativeUI.HudColor.Black, 5000);
                 }
                 else
                 {
+                    Settings.MissionMessages = false;
                     return;
                 }
 
