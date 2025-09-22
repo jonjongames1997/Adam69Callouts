@@ -146,9 +146,8 @@ namespace Adam69Callouts.Callouts
                         if (counter == 2)
                         {
                             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_OfficerDown_Audio_2");
-                            UltimateBackup.API.Functions.callAmbulance();
-                            UltimateBackup.API.Functions.callCode3Backup();
-
+                            PolicingRedefined.API.BackupDispatchAPI.RequestOfficerDownBackup();
+                            PolicingRedefined.API.BackupDispatchAPI.RequestEMSCode3Backup();
                         }
                         if (counter == 3)
                         {
@@ -160,7 +159,7 @@ namespace Adam69Callouts.Callouts
                         if (counter == 4)
                         {
                             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_ShotsFired_Audio_Remastered_01");
-                            UltimateBackup.API.Functions.callPanicButtonBackup(true);
+                            PolicingRedefined.API.BackupDispatchAPI.RequestPanicBackup();
                         }
 
                         LoggingManager.Log("Adam69 Callouts [LOG]: " + LogLevel.Info);
@@ -175,14 +174,14 @@ namespace Adam69Callouts.Callouts
 
                 if (MainPlayer.IsDead || Game.IsKeyDown(Settings.EndCall))
                 {
-                    bool missionMessages = Settings.MissionMessages;
-                    if (missionMessages == true)
+                    if (Settings.MissionMessages)
                     {
                         BigMessageThread bigMessage = new BigMessageThread();
                         bigMessage.MessageInstance.ShowColoredShard("MISSION FAILED!", "You'll get 'em next time!", RAGENativeUI.HudColor.Red, RAGENativeUI.HudColor.Black, 5000);
                     }
                     else
                     {
+                        Settings.MissionMessages = false;
                         return;
                     }
 
@@ -205,8 +204,8 @@ namespace Adam69Callouts.Callouts
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Officer Down", "~b~You~w~: We are Code 4. Show me back 10-8!");
             base.End();
 
-            bool missionMessages = Settings.MissionMessages;
-            if (missionMessages == true)
+            
+            if (Settings.MissionMessages)
             {
                 BigMessageThread bigMessage = new BigMessageThread();
 
@@ -214,6 +213,7 @@ namespace Adam69Callouts.Callouts
             }
             else
             {
+                Settings.MissionMessages = false;
                 return;
             }
 
