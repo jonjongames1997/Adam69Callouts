@@ -4,8 +4,7 @@ namespace Adam69Callouts
     public class Main : Plugin
     {
         public static bool CalloutInterface;
-        public static bool StopThePed;
-        public static bool UltimateBackup;
+        public static bool PolicingRedefined;
 
         public override void Initialize()
         {
@@ -64,20 +63,19 @@ namespace Adam69Callouts
                     Game.Console.Print();
                     Game.Console.Print();
 
-                    bool helpMessages = Settings.HelpMessages;
-                    if (helpMessages)
+                    if (Settings.HelpMessages)
                     {
                         Game.DisplayHelp("You can change all ~y~keys~w~ in the ~o~Adam69Callouts.ini~w~. Press ~p~" + Settings.EndCall.ToString() + "~w~ to end a callout or use console command 'endcurrentadam69calloutscallout' to end the callout." +
                            "Press ~y~" + Settings.Dialog.ToString() + "~w~ to talk to the suspect/person of interest.", 5000);
                     }
                     else
                     {
+                        Settings.HelpMessages = false;
                         Game.LogTrivial("[LOG]: Help messages are disabled in the config file.");
                         return;
                     }
 
-                    bool missionMessages = Settings.MissionMessages;
-                    if (missionMessages)
+                    if (Settings.MissionMessages)
                     {
                         BigMessageThread bigMessage = new BigMessageThread();
 
@@ -85,7 +83,7 @@ namespace Adam69Callouts
                     }
                     else
                     {
-                        missionMessages = false;
+                        Settings.MissionMessages = false;
                         return;
                     }
 
@@ -108,25 +106,15 @@ namespace Adam69Callouts
                 Game.LogTrivial("User does NOT have CalloutInterface installed. Stopping integration....");
                 CalloutInterface = false;
             }
-            if (Functions.GetAllUserPlugins().ToList().Any(a => a != null && a.FullName.Contains("StopThePed")) == true)
+            if (Functions.GetAllUserPlugins().ToList().Any(a => a != null && a.FullName.Contains("PolicingRedefined")) == true)
             {
-                Game.LogTrivial("User has Stop The Ped 4.9.5.2 by Bejoijo INSTALLED. starting integration.......");
-                StopThePed = true;
+                Game.LogTrivial("User has Policing Redefined 1.0.0.0 by MarcelWRLD INSTALLED. starting integration.......");
+                PolicingRedefined = true;
             }
             else
             {
-                Game.LogTrivial("User does NOT have Stop The Ped installed. Stopping integration....");
-                StopThePed = false;
-            }
-            if (Functions.GetAllUserPlugins().ToList().Any(a => a != null && a.FullName.Contains("UltimateBackup")) == true)
-            {
-                Game.LogTrivial("User has Ultimate Backup 1.8.7.0 by Bejoijo INSTALLED. starting integration.......");
-                UltimateBackup = true;
-            }
-            else
-            {
-                Game.LogTrivial("User does NOT have Ultimate Backup installed. Stopping integration....");
-                UltimateBackup = false;
+                Game.LogTrivial("User does NOT have Policing Redefined 1.0.0.0 by MarcelWRLD installed. Stopping integration....");
+                PolicingRedefined = false;
             }
 
             Game.Console.Print();
