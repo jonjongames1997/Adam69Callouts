@@ -129,16 +129,20 @@ namespace Adam69Callouts.Callouts
                             {
                                 case 1:
                                     Game.DisplaySubtitle("~r~Suspect~w~: I'm going to stab you!", 5000);
+                                    PolicingRedefined.API.PedAPI.IsPedResistingRightNow(suspect);
                                     hasSpoke = true;
                                     break;
 
                                 case 2:
                                     Game.DisplaySubtitle("~r~Suspect~w~: You picked the wrong person to mess with!", 5000);
+                                    PolicingRedefined.API.PedAPI.IsPedResistingRightNow(suspect);
                                     hasSpoke = true;
                                     break;
 
                                 case 3:
                                     Game.DisplaySubtitle("~r~Suspect~w~: I'll cut you!", 5000);
+                                    PolicingRedefined.API.PedAPI.GetPedResistanceAction(suspect);
+                                    PolicingRedefined.API.BackupDispatchAPI.RequestPanicBackup();
                                     hasSpoke = true;
                                     break;
                             }
@@ -152,6 +156,7 @@ namespace Adam69Callouts.Callouts
                                 pursuit = LSPD_First_Response.Mod.API.Functions.CreatePursuit();
                                 LSPD_First_Response.Mod.API.Functions.AddPedToPursuit(pursuit, suspect);
                                 LSPD_First_Response.Mod.API.Functions.SetPursuitIsActiveForPlayer(pursuit, true);
+                                PolicingRedefined.API.BackupDispatchAPI.RequestPursuitBackup();
                                 hasPursuitBegun = true;
                             }
 
