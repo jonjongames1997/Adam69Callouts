@@ -23,6 +23,7 @@
         internal static Keys PickUp { get; set; }
         internal static Keys CallAnimalControlKey { get; set; }
         internal static Keys CallAmbulanceKey { get; set; }
+        internal static Keys RequestVehicleInfo { get; set; }
 
 
         internal static void LoadSettings()
@@ -50,6 +51,7 @@
             EndCall = initializationFile.ReadEnum<Keys>("Keys", "EndCall", Keys.End);
             Dialog = initializationFile.ReadEnum<Keys>("Keys", "Dialog", Keys.Y);
             PickUp = initializationFile.ReadEnum<Keys>("Keys", "PickUp", Keys.E);
+            RequestVehicleInfo = initializationFile.ReadEnum<Keys>("Keys", "RequestVehicleInfo", Keys.P);
             CallAnimalControlKey = initializationFile.ReadEnum<Keys>("Keys", "CallAnimalControlKey", Keys.NumPad1);
             CallAmbulanceKey = initializationFile.ReadEnum<Keys>("Keys", "CallAmbulanceKey", Keys.K);
         }
@@ -79,6 +81,7 @@
             ini.Write("Keys", "PickUp", Keys.E);
             ini.Write("Keys", "CallAnimalControlKey", Keys.K);
             ini.Write("Keys", "CallAmbulanceKey", Keys.NumPad1);
+            ini.Write("Keys", "RequestVehicleInfo", Keys.P);
         }
 
         public static readonly string PluginVersion = "0.4.2";
