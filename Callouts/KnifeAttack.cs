@@ -166,21 +166,21 @@ namespace Adam69Callouts.Callouts
 
             if (Game.IsKeyDown(Settings.CallAmbulanceKey))
             {
-                UltimateBackup.API.Functions.callAmbulance();
+                PolicingRedefined.API.BackupDispatchAPI.RequestEMSCode3Backup();
                 LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Call_Ambulance_Audio");
                 Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Dispatch:", "An Ambulance has been called to the scene.");
             }
 
             if (suspect.IsDead || Game.IsKeyDown(Settings.EndCall))
             {
-                bool missionMessages = Settings.MissionMessages;
-                if (missionMessages == true)
+                if (Settings.MissionMessages)
                 {
                     BigMessageThread bigMessage = new BigMessageThread();
                     bigMessage.MessageInstance.ShowColoredShard("Suspect Neutralized!", "You are now ~r~CODE 4~w~.", RAGENativeUI.HudColor.Red, RAGENativeUI.HudColor.Black, 5000);
                 }
                 else
                 {
+                    Settings.MissionMessages = false;
                     return;
                 }
 
@@ -210,14 +210,14 @@ namespace Adam69Callouts.Callouts
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "Person With A Knife", "~w~Dispatch: The scene is now ~r~CODE 4~w~.");
 
-            bool missionMessages = Settings.MissionMessages;
-            if (missionMessages == true)
+            if (Settings.MissionMessages)
             {
                 BigMessageThread bigMessage = new BigMessageThread();
                 bigMessage.MessageInstance.ShowColoredShard("Callout Complete!", "You are now ~r~CODE 4~w~.", RAGENativeUI.HudColor.Red, RAGENativeUI.HudColor.Black, 5000);
             }
             else
             {
+                Settings.MissionMessages = false;
                 return;
             }
             base.End();
