@@ -146,12 +146,13 @@ namespace Adam69Callouts.Callouts
 
         public override void Process()
         {
+
             try
             {
 
                 if (MainPlayer.DistanceTo(theCaller) <= 5f)
                 {
-                    if (Game.IsKeyDown(Settings.Dialog))
+                    if (Game.IsKeyDown(System.Windows.Forms.Keys.Y))
                     {
                         counter++;
 
@@ -204,13 +205,13 @@ namespace Adam69Callouts.Callouts
 
             if (MainPlayer.DistanceTo(theDrugs) <= 10f)
             {
-                bool helpMessages = Settings.HelpMessages;
-                if (helpMessages)
+                if (Settings.HelpMessages)
                 {
-                    Game.DisplayHelp("Press ~y~" + Settings.PickUp.ToString() + "~w~ to pick up the drugs.", 5000);
+                    Game.DisplayHelp("Press ~y~" + Settings.PickUp + "~w~ to pick up the drugs.");
                 }
                 else
                 {
+                    Settings.HelpMessages = false;
                     return;
                 }
 
@@ -224,20 +225,34 @@ namespace Adam69Callouts.Callouts
                 }
             }
 
-            if (MainPlayer.IsDead || Game.IsKeyDown(Settings.EndCall))
+            if (MainPlayer.IsDead)
             {
-                bool missionMessages = Settings.MissionMessages;
-                if (missionMessages == true)
+                if (Settings.MissionMessages)
                 {
                     BigMessageThread bigMessage = new BigMessageThread();
                     bigMessage.MessageInstance.ShowColoredShard("Callout Failed!", "You are now ~r~CODE 4~w~.", RAGENativeUI.HudColor.Red, RAGENativeUI.HudColor.Black, 5000);
                 }
                 else
                 {
+                    Settings.MissionMessages = false;
                     return;
                 }
 
                 End();
+            }
+
+            if (Game.IsKeyDown(Settings.EndCall))
+            {
+                if (Settings.MissionMessages)
+                {
+                    BigMessageThread bigMessage = new BigMessageThread();
+                    bigMessage.MessageInstance.ShowColoredShard("Callout Complete!", "You are now ~r~CODE 4~w~.", RAGENativeUI.HudColor.Red, RAGENativeUI.HudColor.Black, 5000);
+                }
+                else
+                {
+                    Settings.MissionMessages = false;
+                    return;
+                }
             }
 
             base.Process();
@@ -256,8 +271,7 @@ namespace Adam69Callouts.Callouts
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~y~Drugs Found", "~b~You~w~: Dispatch, we are ~g~Code 4~w~. Show me back 10-8.");
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
 
-            bool missionMessages = Settings.MissionMessages;
-            if (missionMessages == true)
+            if (Settings.MissionMessages)
             {
                 BigMessageThread bigMessage = new BigMessageThread();
 
@@ -265,6 +279,7 @@ namespace Adam69Callouts.Callouts
             }
             else
             {
+                Settings.MissionMessages = false;
                 return;
             }
 
