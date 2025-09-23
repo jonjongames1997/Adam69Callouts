@@ -19,12 +19,12 @@
         internal static bool HelpMessages = true;
         internal static bool MissionMessages = true;
         internal static Keys EndCall = Keys.End;
-        internal static Keys Dialog { get; set; }
-        internal static Keys PickUp { get; set; }
-        internal static Keys CallAnimalControlKey { get; set; }
-        internal static Keys CallAmbulanceKey { get; set; }
-        internal static Keys RequestVehicleInfo { get; set; }
-        internal static Keys RequestTowTruck { get; set; }
+        internal static Keys Dialog { get; set; } = Keys.Y;
+        internal static Keys PickUp { get; set; } = Keys.E;
+        internal static Keys CallAnimalControlKey { get; set; } = Keys.K;
+        internal static Keys CallAmbulanceKey { get; set; } = Keys.NumPad1;
+        internal static Keys RequestVehicleInfo { get; set; } = Keys.P;
+        internal static Keys RequestTowTruck { get; set; } = Keys.L;
 
 
         internal static void LoadSettings()
@@ -55,7 +55,7 @@
             RequestVehicleInfo = initializationFile.ReadEnum<Keys>("Keys", "RequestVehicleInfo", Keys.P);
             CallAnimalControlKey = initializationFile.ReadEnum<Keys>("Keys", "CallAnimalControlKey", Keys.NumPad1);
             CallAmbulanceKey = initializationFile.ReadEnum<Keys>("Keys", "CallAmbulanceKey", Keys.K);
-            RequestTowTruck = initializationFile.ReadEnum<Keys>("Keys", "RequestTowTruck", Keys.D9);
+            RequestTowTruck = initializationFile.ReadEnum<Keys>("Keys", "RequestTowTruck", Keys.L);
         }
 
         internal static void SaveConfigSettings()
@@ -84,7 +84,7 @@
             ini.Write("Keys", "CallAnimalControlKey", Keys.K);
             ini.Write("Keys", "CallAmbulanceKey", Keys.NumPad1);
             ini.Write("Keys", "RequestVehicleInfo", Keys.P);
-            ini.Write("Keys", "RequestTowTruck", Keys.D9);
+            ini.Write("Keys", "RequestTowTruck", Keys.L);
 
             ini.ReCreate();
         }
