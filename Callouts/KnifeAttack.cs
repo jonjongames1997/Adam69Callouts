@@ -176,7 +176,7 @@ namespace Adam69Callouts.Callouts
                 Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Dispatch:", "An Ambulance has been called to the scene.");
             }
 
-            if (suspect.IsDead || Game.IsKeyDown(Settings.EndCall))
+            if (Game.IsKeyDown(Settings.EndCall))
             {
                 if (Settings.MissionMessages)
                 {
