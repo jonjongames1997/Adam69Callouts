@@ -70,7 +70,7 @@ namespace Adam69Callouts.Callouts
             if (MainPlayer.DistanceTo(suspect) <= 10f)
             {
 
-                if (Game.IsKeyDown(Settings.Dialog))
+                if (Game.IsKeyDown(System.Windows.Forms.Keys.Y))
                 {
                     counter++;
                     try
@@ -82,14 +82,17 @@ namespace Adam69Callouts.Callouts
                         }
                         if (counter == 2)
                         {
+                            suspect.Tasks.PlayAnimation(new AnimationDictionary("random@drunk_driver_1"), "drunk_driver_stand_loop_dd2", -1f, AnimationFlags.Loop);
                             Game.DisplaySubtitle("~r~Suspect~w~: *slurring* What you want, officer pigfucker?");
                         }
                         if (counter == 3)
                         {
+                            suspect.Tasks.PlayAnimation(new AnimationDictionary("amb@world_human_stand_impatient@female@no_sign@base"), "base", -1f, AnimationFlags.Loop);
                             Game.DisplaySubtitle("~b~You~w~: Ok, we'll do a few tests to see if you're drunk.");
                         }
                         if (counter == 4)
                         {
+                            suspect.Tasks.PlayAnimation(new AnimationDictionary("random@drunk_driver_1"), "drunk_driver_stand_loop_dd2", -1f, AnimationFlags.Loop);
                             Game.DisplaySubtitle("~r~Suspect~w~: *slurring* You got to catch me first, donut eater.");
                         }
                         if (counter == 5)
@@ -112,17 +115,35 @@ namespace Adam69Callouts.Callouts
                 }
             }
 
-            if (MainPlayer.IsDead || Game.IsKeyDown(Settings.EndCall))
+            if (MainPlayer.IsDead)
             {
-                bool missionMessages = Settings.MissionMessages;
-                if (missionMessages == true)
+                if (Settings.MissionMessages)
                 {
                     BigMessageThread bigMessage = new BigMessageThread();
                     bigMessage.MessageInstance.ShowColoredShard("MISSION FAILED!", "You'll get 'em next time!", RAGENativeUI.HudColor.Red, RAGENativeUI.HudColor.Black, 5000);
                 }
                 else
                 {
+                    Settings.MissionMessages = false;
                     Game.LogTrivial("[LOG]: Mission messages are disabled in the config file.");
+                    return;
+                }
+
+                End();
+            }
+
+            if (Game.IsKeyDown(Settings.EndCall))
+            {
+                if (Settings.MissionMessages)
+                {
+                    BigMessageThread bigMessage = new BigMessageThread();
+                    bigMessage.MessageInstance.ShowColoredShard("Callout Complete!", "Get back out there and protect the citizens, officer", RAGENativeUI.HudColor.Green, RAGENativeUI.HudColor.Black, 5000);
+                }
+                else
+                {
+                    Settings.MissionMessages = false;
+                    Game.LogTrivial("[LOG]: Mission messages are disabled in the config file.");
+                    LoggingManager.Log("Adam69 Callouts [LOG]: Mission messages are disabled in the config file.");
                     return;
                 }
 
@@ -139,8 +160,7 @@ namespace Adam69Callouts.Callouts
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Deranged Drunken Feller", "~b~You~w~: Dispatch, we are ~g~Code 4~w~. Show me back 10-8.");
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
 
-            bool missionMessages = Settings.MissionMessages;
-            if (missionMessages == true)
+            if (Settings.MissionMessages)
             {
                 BigMessageThread bigMessage = new BigMessageThread();
 
@@ -148,6 +168,7 @@ namespace Adam69Callouts.Callouts
             }
             else
             {
+                Settings.MissionMessages = false;
                 Game.LogTrivial("[LOG]: Mission messages are disabled in the config file.");
                 return;
             }
