@@ -65,7 +65,7 @@ namespace Adam69Callouts.Callouts
 
         public override void Process()
         {
-            if (Game.IsKeyDown(Settings.RequestTowTruck))
+            if (Game.IsKeyDown(System.Windows.Forms.Keys.L))
             {
                 PolicingRedefined.API.BackupDispatchAPI.RequestTowServiceBackup();
                 LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Tow_Truck_Audio");
@@ -111,8 +111,7 @@ namespace Adam69Callouts.Callouts
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Vehicle Blocking Crosswalk", "~b~You~w~: Dispatch, we are ~g~CODE 4~w~. Show me back 10-8.");
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
 
-            bool missionMessages = Settings.MissionMessages;
-            if (missionMessages == true)
+            if (Settings.MissionMessages)
             {
                 BigMessageThread bigMessage = new BigMessageThread();
 
@@ -120,6 +119,7 @@ namespace Adam69Callouts.Callouts
             }
             else
             {
+                Settings.MissionMessages = false;
                 return;
             }
 
