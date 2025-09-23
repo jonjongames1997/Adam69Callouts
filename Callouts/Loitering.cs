@@ -73,12 +73,19 @@ namespace Adam69Callouts.Callouts
                 if (MainPlayer.DistanceTo(suspect) <= 10f)
                 {
 
-                    if (Game.IsKeyDown(Settings.Dialog))
+                    if (Game.IsKeyDown(System.Windows.Forms.Keys.Y))
                     {
                         if (MainPlayer.DistanceTo(suspect) <= 10f)
                         {
-                            Game.DisplayHelp("Press ~y~" + Settings.Dialog.ToString() + "~w~ to interact with suspect.");
-
+                            if (Settings.HelpMessages)
+                            {
+                                Game.DisplayHelp("Press ~y~" + Settings.Dialog.ToString() + "~w~ to interact with suspect.");
+                            }
+                            else
+                            {
+                                Settings.HelpMessages = false;
+                                return;
+                            }
 
                             if (Game.IsKeyDown(Settings.Dialog))
                             {
