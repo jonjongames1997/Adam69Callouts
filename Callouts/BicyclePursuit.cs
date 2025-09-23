@@ -72,10 +72,9 @@ namespace Adam69Callouts.Callouts
 
         public override void Process()
         {
-            bool helpMessages = Settings.HelpMessages;
-            if (helpMessages == true)
+            if (Settings.HelpMessages)
             {
-                Game.DisplayHelp("Chase the bicycle and arrest the suspect.", 5000);
+                Game.DisplayHelp("Chase the bicycle and arrest the suspect.");
             }
             else
             {
@@ -83,10 +82,9 @@ namespace Adam69Callouts.Callouts
                 return;
             }
 
-            if (MainPlayer.IsDead || Game.IsKeyDown(Settings.EndCall))
+            if (MainPlayer.IsDead)
             {
-                bool missionMessages = Settings.MissionMessages;
-                if (missionMessages == true)
+                if (Settings.MissionMessages)
                 {
                     BigMessageThread bigMessage = new BigMessageThread();
 
@@ -94,9 +92,25 @@ namespace Adam69Callouts.Callouts
                 }
                 else
                 {
+                    Settings.MissionMessages = false;
                     return;
                 }
 
+                End();
+            }
+
+            if (Game.IsKeyDown(Settings.EndCall))
+            {
+                if (Settings.MissionMessages)
+                {
+                    BigMessageThread bigMessage = new BigMessageThread();
+                    bigMessage.MessageInstance.ShowColoredShard("Callout Complete!", "Return back to patrol", RAGENativeUI.HudColor.Yellow, RAGENativeUI.HudColor.Black, 5000);
+                }
+                else
+                {
+                    Settings.MissionMessages = false;
+                    return;
+                }
                 End();
             }
 
@@ -111,8 +125,7 @@ namespace Adam69Callouts.Callouts
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Bicycle Pursuit", "~b~You~w~: Dispatch, we are ~g~CODE 4~w~. Show me back 10-8.");
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
 
-            bool missionMessages = Settings.MissionMessages;
-            if (missionMessages == true)
+            if (Settings.MissionMessages)
             {
 
                 BigMessageThread bigMessage = new BigMessageThread();
@@ -121,6 +134,7 @@ namespace Adam69Callouts.Callouts
             }
             else
             {
+                Settings.MissionMessages = false;
                 return;
             }
 
