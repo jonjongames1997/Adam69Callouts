@@ -148,8 +148,7 @@ namespace Adam69Callouts
             Game.Console.Print();
             LoggingManager.Log("Adam69 Callouts: Plugin initialized successfully.");
 
-            bool missionMessages = Settings.MissionMessages;
-            if (missionMessages == true)
+            if (Settings.MissionMessages)
             {
                 BigMessageThread bigMessage = new BigMessageThread();
 
