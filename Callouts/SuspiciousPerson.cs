@@ -22,6 +22,7 @@ namespace Adam69Callouts.Callouts
             Innocent
         }
         private SuspiciousPersonScenario scenario;
+
         public override bool OnBeforeCalloutDisplayed()
         {
             spawnpoint = World.GetNextPositionOnStreet(MainPlayer.Position.Around(1000f));
@@ -78,28 +79,43 @@ namespace Adam69Callouts.Callouts
             if (MainPlayer.DistanceTo(suspect) <= 10f)
             {
 
-                if (Game.IsKeyDown(Settings.Dialog))
+                if (Game.IsKeyDown(System.Windows.Forms.Keys.Y))
                 {
                     counter++;
                     HandleInteraction();
                 }
             }
 
-            if (MainPlayer.IsDead || Game.IsKeyDown(Settings.EndCall))
+            if (MainPlayer.IsDead)
             {
-                bool missionMessages = Settings.MissionMessages;
-                if (missionMessages == true)
+                if (Settings.MissionMessages)
                 {
                     BigMessageThread bigMessage = new BigMessageThread();
                     bigMessage.MessageInstance.ShowColoredShard("Callout Failed!", "You are now ~r~CODE 4~w~.", RAGENativeUI.HudColor.Red, RAGENativeUI.HudColor.Black, 5000);
                 }
                 else
                 {
-                    missionMessages = false;
+                    Settings.MissionMessages = false;
                     return;
                 }
 
                 End();
+            }
+
+            if (Game.IsKeyDown(Settings.EndCall))
+            {
+                if (Settings.MissionMessages)
+                {
+                    BigMessageThread bigMessage = new BigMessageThread();
+                    bigMessage.MessageInstance.ShowColoredShard("Callout Complete!", "You are now ~r~CODE 4~w~.", RAGENativeUI.HudColor.Green, RAGENativeUI.HudColor.Black, 5000);
+                }
+                else
+                {
+                    Settings.MissionMessages = false;
+                    return;
+                }
+                End();
+
             }
 
             base.Process();
@@ -227,8 +243,7 @@ namespace Adam69Callouts.Callouts
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Suspicious Person", "~b~You~w~: Dispatch, we are ~g~Code 4~w~. Show me back 10-8..");
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
 
-            bool missionMessages = Settings.MissionMessages;
-            if (missionMessages == true)
+            if (Settings.MissionMessages)
             {
                 BigMessageThread bigMessage = new BigMessageThread();
 
@@ -236,7 +251,7 @@ namespace Adam69Callouts.Callouts
             }
             else
             {
-                missionMessages = false;
+                Settings.MissionMessages = false;
                 return;
             }
 
