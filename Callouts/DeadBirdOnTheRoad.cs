@@ -62,7 +62,7 @@ namespace Adam69Callouts.Callouts
         public override void Process()
         {
 
-            if (Game.IsKeyDown(Settings.CallAnimalControlKey))
+            if (Game.IsKeyDown(System.Windows.Forms.Keys.NumPad1))
             {
                 PolicingRedefined.API.BackupDispatchAPI.RequestAnimalControlBackup();
                 Game.DisplaySubtitle("~b~You~w~: Dispatch, requesting Animal Control to my 20.", 5000);
@@ -74,7 +74,7 @@ namespace Adam69Callouts.Callouts
                 Game.DisplayHelp("Press ~y~" + Settings.CallAnimalControlKey.ToString() + "~w~ to call animal control");
             }
 
-            if (MainPlayer.IsDead || Game.IsKeyDown(Settings.EndCall))
+            if (MainPlayer.IsDead)
             {
                 
                 if (Settings.MissionMessages)
@@ -88,6 +88,17 @@ namespace Adam69Callouts.Callouts
                     Game.LogTrivial("[LOG]: Mission messages are disabled in the config file.");
                     return;
                 }
+
+                End();
+            }
+
+            if (Game.IsKeyDown(Settings.EndCall))
+            {
+                
+                BigMessageThread bigMessage = new BigMessageThread();
+                bigMessage.MessageInstance.ShowColoredShard("Callout Complete!", "Return Back to patrol!", RAGENativeUI.HudColor.Red, RAGENativeUI.HudColor.Black, 5000);
+                
+                LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
 
                 End();
             }
