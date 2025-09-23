@@ -60,7 +60,7 @@ namespace Adam69Callouts.Callouts
         public override void Process()
         {
 
-            if (Game.IsKeyDown(Settings.RequestVehicleInfo))
+            if (Game.IsKeyDown(System.Windows.Forms.Keys.P))
             {
                 PolicingRedefined.API.TrafficControlAPI.Slow(true);
                 PolicingRedefined.API.TrafficControlAPI.IsActive();
@@ -68,7 +68,7 @@ namespace Adam69Callouts.Callouts
                 LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Dispatch_Audio");
             }
 
-            if (Game.IsKeyDown(Settings.RequestTowTruck))
+            if (Game.IsKeyDown(System.Windows.Forms.Keys.K))
             {
                 PolicingRedefined.API.BackupDispatchAPI.RequestTowServiceBackup();
                 LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Tow_Truck_Audio");
@@ -78,7 +78,7 @@ namespace Adam69Callouts.Callouts
             {
                 if (Settings.HelpMessages)
                 {
-                    Game.DisplayHelp("Deal with the situation as you see fit.", 5000);
+                    Game.DisplayHelp("Deal with the situation as you see fit.");
                 }
                 else
                 {
