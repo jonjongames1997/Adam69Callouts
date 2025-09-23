@@ -88,12 +88,28 @@ namespace Adam69Callouts.Callouts
                 Game.DisplaySubtitle("Check the vehicle record, search the vehicle (If you have probable cause), then tow the vehicle.", 5000);
             }
 
-            if (MainPlayer.IsDead || Game.IsKeyDown(Settings.EndCall))
+            if (MainPlayer.IsDead)
             {
                 if (Settings.MissionMessages)
                 {
                     BigMessageThread bigMessage = new BigMessageThread();
                     bigMessage.MessageInstance.ShowColoredShard("Callout Failed!", "You are now ~r~CODE 4~w~.", RAGENativeUI.HudColor.Red, RAGENativeUI.HudColor.Black, 5000);
+                }
+                else
+                {
+                    Settings.MissionMessages = false;
+                    return;
+                }
+
+                End();
+            }
+
+            if (Game.IsKeyDown(Settings.EndCall))
+            {
+                if (Settings.MissionMessages)
+                {
+                    BigMessageThread bigMessage = new BigMessageThread();
+                    bigMessage.MessageInstance.ShowColoredShard("Callout Complete!", "You are now ~r~CODE 4~w~.", RAGENativeUI.HudColor.Green, RAGENativeUI.HudColor.Black, 5000);
                 }
                 else
                 {
