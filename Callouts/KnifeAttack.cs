@@ -63,9 +63,8 @@ namespace Adam69Callouts.Callouts
 
             victim.IsValid();
 
+            victim.Kill();
             NativeFunction.Natives.APPLY_PED_DAMAGE_PACK(victim, "TD_KNIFE_FRONT", 1f, 1f);
-            NativeFunction.Natives.IS_PED_INJURED(victim);
-            NativeFunction.Natives.IS_PED_HURT(victim);
 
             suspectBlip = suspect.AttachBlip();
             suspectBlip.Color = System.Drawing.Color.Red;
