@@ -35,17 +35,9 @@ namespace Adam69Callouts.Callouts
 
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_2_Audio");
 
-            try
-            {
-                blip = suspect.AttachBlip();
-                blip.Color = System.Drawing.Color.Red;
-                blip.IsRouteEnabled = true;
-            }
-            catch (Exception ex)
-            {
-                Game.LogTrivial("Adam69 Callouts [LOG]: Blip not found. " + ex.Message);
-                Game.LogTrivial("Adam69 Callouts [LOG]: Blip not found. " + ex.StackTrace);
-            }
+            blip = suspect.AttachBlip();
+            blip.Color = System.Drawing.Color.Red;
+            blip.IsRouteEnabled = true;
 
             if (suspect.IsMale)
                 malefemale = "Sir";
@@ -101,7 +93,6 @@ namespace Adam69Callouts.Callouts
                             suspect.Tasks.FightAgainst(MainPlayer);
                             suspect.Armor = 500;
                             suspect.Inventory.GiveNewWeapon(wepList[new Random().Next((int)wepList.Length)], 500, true);
-                            PolicingRedefined.API.BackupDispatchAPI.RequestPanicBackup();
                         }
                     }
                     catch (Exception ex)
@@ -155,7 +146,7 @@ namespace Adam69Callouts.Callouts
 
         public override void End()
         {
-            if (suspect.Exists()) suspect.Dismiss();
+            if (suspect) suspect.Dismiss();
             if (blip) blip.Delete();
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Deranged Drunken Feller", "~b~You~w~: Dispatch, we are ~g~Code 4~w~. Show me back 10-8.");
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
