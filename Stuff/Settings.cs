@@ -13,7 +13,7 @@
         internal static bool DrugsFound = true;
         internal static bool SuspiciousPerson { get; set; } = false; // Default to false for complete rewrite of the callout
         internal static bool OfficerDown = true;
-        internal static bool DerangedDrunkenFeller = true;
+        internal static bool DerangedDrunkenFeller = false; // Disabled for a complete rewrite
         internal static bool DeadBirdOnTheRoad = true;
         internal static bool KnifeAttack = true;
         internal static bool HelpMessages = true;
@@ -44,7 +44,7 @@
             Settings.DrugsFound = initializationFile.ReadBoolean("Callouts", "DrugsFound", true);
             Settings.SuspiciousPerson = initializationFile.ReadBoolean("Callouts", "SuspiciousPerson", false);
             Settings.OfficerDown = initializationFile.ReadBoolean("Callouts", "OfficerDown", true);
-            Settings.DerangedDrunkenFeller = initializationFile.ReadBoolean("Callouts", "DerangedDrunkenFeller", true);
+            Settings.DerangedDrunkenFeller = initializationFile.ReadBoolean("Callouts", "DerangedDrunkenFeller", false);
             Settings.DeadBirdOnTheRoad = initializationFile.ReadBoolean("Callouts", "DeadBirdOnTheRoad", true);
             Settings.KnifeAttack = initializationFile.ReadBoolean("Callouts", "KnifeAttack", true);
             HelpMessages = initializationFile.ReadBoolean("Settings", "HelpMessages", true);
@@ -73,7 +73,7 @@
             ini.Write("Callouts", "DrugsFound", true);
             ini.Write("Callouts", "SuspiciousPerson", false);
             ini.Write("Callouts", "OfficerDown", true);
-            ini.Write("Callouts", "DerangedDrunkenFeller", true);
+            ini.Write("Callouts", "DerangedDrunkenFeller", false);
             ini.Write("Callouts", "DeadBirdOnTheRoad", true);
             ini.Write("Callouts", "KnifeAttack", true);
             ini.Write("Settings", "HelpMessages", true);
