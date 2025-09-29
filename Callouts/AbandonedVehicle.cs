@@ -23,7 +23,15 @@ namespace Adam69Callouts.Callouts
         public override bool OnCalloutAccepted()
         {
             Game.LogTrivial("[Adam69 Callouts LOG]: Abandoned Vehicle callout accepted!");
-            LoggingManager.Log("Adam69 Callouts: Abandoned Vehicle callout accepted!");
+            if (Settings.DebugMode)
+            {
+                LoggingManager.Log("Adam69 Callouts: Abandoned Vehicle callout accepted!");
+            }
+            else
+            {
+                Settings.DebugMode = false;
+            }
+
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Abandoned Vehicle", "~b~Dispatch~w~: The vehicle has been spotted! Respond ~r~Code 2~w~.");
 
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_1_Audio");
@@ -40,10 +48,16 @@ namespace Adam69Callouts.Callouts
             }
             else
             {
-                Game.LogTrivial("[Adam69 Callouts LOG]: Failed to create vehicle.");
-                LoggingManager.Log("Adam69 Callouts: " + LogLevel.Warning);
-                LoggingManager.Log("Adam69 Callouts: " + LogLevel.Info);
-                LoggingManager.Log("Adam69 Callouts: " + LogLevel.Error);
+                // Only logs to file if debug mode is enabled to avoid spamming the log with useless info
+                if (Settings.DebugMode)
+                {
+                    Game.LogTrivial("[Adam69 Callouts LOG]: Failed to create vehicle.");
+                    LoggingManager.Log("Adam69 Callouts: Failed to create vehicle");
+                }
+                else
+                {
+                    Settings.DebugMode = false;
+                }
             }
 
             return base.OnCalloutAccepted();
@@ -51,8 +65,8 @@ namespace Adam69Callouts.Callouts
 
         public override void OnCalloutNotAccepted()
         {
-            _vehicle?.Delete();
-            _vehicleBlip?.Delete();
+            if (_vehicle) _vehicle.Delete();
+            if (_vehicleBlip) _vehicleBlip.Delete();
 
             base.OnCalloutNotAccepted();
         }
@@ -101,7 +115,14 @@ namespace Adam69Callouts.Callouts
                     return;
                 }
 
-                LoggingManager.Log("Adam69 Callouts: Abandoned Vehicle callout failed!");
+                if (Settings.DebugMode)
+                {
+                    LoggingManager.Log("Adam69 Callouts: Abandoned Vehicle callout failed!");
+                }
+                else
+                {
+                    Settings.DebugMode = false;
+                }
 
                 End();
             }
@@ -132,9 +153,16 @@ namespace Adam69Callouts.Callouts
 
             base.End();
 
-            Game.LogTrivial("[Adam69 Callouts LOG]: Abandoned Vehicle callout is CODE 4!");
+            if (Settings.DebugMode)
+            {
+                Game.LogTrivial("[Adam69 Callouts LOG]: Abandoned Vehicle callout is CODE 4!");
 
-            LoggingManager.Log("Adam69 Callouts: Abandoned Vehicle callout is CODE 4!");
+                LoggingManager.Log("Adam69 Callouts: Abandoned Vehicle callout is CODE 4!");
+            }
+            else
+            {
+                Settings.DebugMode = false;
+            }
         }
     }
 }
