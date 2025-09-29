@@ -16,9 +16,9 @@
         internal static bool DerangedDrunkenFeller = false; // Disabled for a complete rewrite
         internal static bool DeadBirdOnTheRoad = true;
         internal static bool KnifeAttack = true;
-        internal static bool HelpMessages = true;
-        internal static bool MissionMessages = true;
-        internal static Keys EndCall = Keys.End;
+        internal static bool HelpMessages { get; set; }
+        internal static bool MissionMessages { get; set; }
+        internal static Keys EndCall { get; set; } = Keys.End;
         internal static Keys Dialog { get; set; } = Keys.Y;
         internal static Keys PickUp { get; set; } = Keys.E;
         internal static Keys CallAnimalControlKey { get; set; } = Keys.K;
@@ -26,6 +26,21 @@
         internal static Keys RequestVehicleInfo { get; set; } = Keys.P;
         internal static Keys RequestTowTruck { get; set; } = Keys.L;
         internal static bool DebugMode { get; set; }
+
+        private static readonly string configPath = "plugis\\LSPDFR\\Adam69Callouts\\Adam69Callouts.ini";
+        private static readonly string configVersion = "0.4.1";
+
+        public static void EnsureConfigCreated()
+        {
+            if (!File.Exists(configPath))
+            {
+                var sb = new StringBuilder();
+                sb.AppendLine("[General]");
+                sb.AppendLine($"ConfigVersion={configVersion}");
+                // Add other default settings here
+                File.WriteAllText(configPath, sb.ToString());
+            }
+        }
 
         internal static void LoadSettings()
         {
@@ -57,11 +72,13 @@
             CallAmbulanceKey = initializationFile.ReadEnum<Keys>("Keys", "CallAmbulanceKey", Keys.K);
             RequestTowTruck = initializationFile.ReadEnum<Keys>("Keys", "RequestTowTruck", Keys.L);
             Settings.DebugMode = initializationFile.ReadBoolean("Settings", "DebugMode", false);
+
+
         }
 
         internal static void SaveConfigSettings()
         {
-            var ini = new InitializationFile("Plugins/LSPDFR/Adam69Callouts/Adam69Callouts.ini");
+            var ini = new InitializationFile("Plugins\\LSPDFR\\Adam69Callouts\\Adam69Callouts.ini");
             ini.Create();
             ini.Write("Callouts", "VehicleBlockingSidewalk", true);
             ini.Write("Callouts", "BicyclePursuit", true);
