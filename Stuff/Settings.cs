@@ -25,7 +25,7 @@
         internal static Keys CallAmbulanceKey { get; set; } = Keys.NumPad1;
         internal static Keys RequestVehicleInfo { get; set; } = Keys.P;
         internal static Keys RequestTowTruck { get; set; } = Keys.L;
-
+        internal static bool DebugMode { get; set; }
 
         internal static void LoadSettings()
         {
@@ -56,6 +56,7 @@
             CallAnimalControlKey = initializationFile.ReadEnum<Keys>("Keys", "CallAnimalControlKey", Keys.NumPad1);
             CallAmbulanceKey = initializationFile.ReadEnum<Keys>("Keys", "CallAmbulanceKey", Keys.K);
             RequestTowTruck = initializationFile.ReadEnum<Keys>("Keys", "RequestTowTruck", Keys.L);
+            Settings.DebugMode = initializationFile.ReadBoolean("Settings", "DebugMode", false);
         }
 
         internal static void SaveConfigSettings()
@@ -85,10 +86,11 @@
             ini.Write("Keys", "CallAmbulanceKey", Keys.NumPad1);
             ini.Write("Keys", "RequestVehicleInfo", Keys.P);
             ini.Write("Keys", "RequestTowTruck", Keys.L);
+            ini.Write("Settings", "DebugMode", false);
 
             ini.ReCreate();
         }
 
-        public static readonly string PluginVersion = "0.4.2";
+        public static readonly string PluginVersion = "0.4.3";
     }
 }
