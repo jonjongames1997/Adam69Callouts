@@ -58,8 +58,8 @@ namespace Adam69Callouts.Callouts
 
         public override void OnCalloutNotAccepted()
         {
-            motorVehicle?.Delete();
-            vehBlip?.Delete();
+            motorVehicle.Delete();
+            vehBlip.Delete();
 
             base.OnCalloutNotAccepted();
         }
