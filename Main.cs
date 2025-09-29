@@ -195,7 +195,14 @@ namespace Adam69Callouts
         private static void LoadConfig()
         {
             Settings.LoadSettings();
-            LoggingManager.Log("Adam69 Callouts: Config file loaded successfully.");
+            if (Settings.DebugMode)
+            {
+                LoggingManager.Log("Adam69 Callouts: Config file loaded successfully.");
+            }
+            else
+            {
+                Settings.DebugMode = false;
+            }
         }
     }
 }
