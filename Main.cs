@@ -168,7 +168,14 @@ namespace Adam69Callouts
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "Adam69 Callouts", "~w~by JM Modifications", "Enjoy your night, Officer.");
             Game.Console.Print("[LOG] Adam69 Callouts: Mission Complete!");
             Game.Console.Print();
-            LoggingManager.Log("Adam69 Callouts: Plugin initialized successfully.");
+            if (Settings.DebugMode)
+            {
+                LoggingManager.Log("Adam69 Callouts: Plugin unloaded successfully.");
+            }
+            else
+            {
+                Settings.DebugMode = false;
+            }
 
             if (Settings.MissionMessages)
             {
