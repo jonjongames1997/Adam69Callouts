@@ -11,6 +11,7 @@ namespace Adam69Callouts
             try
             {
                 Functions.OnOnDutyStateChanged += Functions_OnOnDutyStateChanged;
+                Settings.EnsureConfigCreated();
                 Game.AddConsoleCommands();
                 Settings.LoadSettings();
                 if (Settings.DebugMode)
