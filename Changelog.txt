@@ -1,5 +1,10 @@
 ﻿Changelog:
 
+[October 2025]
+
+- Remmoved a null exception error in Suspicious Vehicle callout that was never meant to be there.
+- 
+
 [September 23, 2025]
 
 v0.4.2:
