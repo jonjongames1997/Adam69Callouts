@@ -35,7 +35,15 @@ namespace Adam69Callouts.Callouts
 
         public override bool OnCalloutAccepted()
         {
-            Game.LogTrivial("[Adam69 Callouts LOG]: Bicycle Blocking Roadway callout accepted!");
+            if (Settings.DebugMode)
+            {
+                Game.LogTrivial("[Adam69 Callouts LOG]: Bicycle Blocking Roadway callout accepted!");
+            }
+            else
+            {
+                Settings.DebugMode = false;
+            }
+
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Bicycle Blocking Roadway", "~b~Dispatch~w~: The vehicle has been spotted! Respond ~r~Code 2~w~.");
 
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_2_Audio");
@@ -73,8 +81,7 @@ namespace Adam69Callouts.Callouts
 
             if (MainPlayer.DistanceTo(thebike) <= 10f)
             {
-                bool helpMessages = Settings.HelpMessages;
-                if (helpMessages == true)
+                if (Settings.HelpMessages)
                 {
                     Game.DisplayHelp("Deal with the situation as you see fit.", 5000);
                 }
@@ -84,10 +91,9 @@ namespace Adam69Callouts.Callouts
                 }
             }
 
-            if (MainPlayer.IsDead || Game.IsKeyDown(Settings.EndCall))
+            if (MainPlayer.IsDead)
             {
-                bool missionMessages = Settings.MissionMessages;
-                if (missionMessages == true)
+                if (Settings.MissionMessages)
                 {
                     BigMessageThread bigMessage = new BigMessageThread();
 
@@ -99,6 +105,18 @@ namespace Adam69Callouts.Callouts
                 }
 
                 End();
+
+                if (Game.IsKeyDown(Settings.EndCall))
+                {
+                    if (Settings.MissionMessages)
+                    {
+                        BigMessageThread bigMessage = new BigMessageThread();
+
+                        bigMessage.MessageInstance.ShowColoredShard("Callout Complete!", "You are now ~g~CODE 4~w~.", RAGENativeUI.HudColor.Green, RAGENativeUI.HudColor.Black, 5000);
+                    }
+
+                    End();
+                }
             }
 
             base.Process();
