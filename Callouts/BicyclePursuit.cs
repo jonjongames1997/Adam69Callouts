@@ -119,9 +119,9 @@ namespace Adam69Callouts.Callouts
 
         public override void End()
         {
-            suspect?.Dismiss();
-            bicycle?.Delete();
-            blip?.Delete();
+            suspect.Dismiss();
+            bicycle.Delete();
+            blip.Delete();
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Bicycle Pursuit", "~b~You~w~: Dispatch, we are ~g~CODE 4~w~. Show me back 10-8.");
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
 
