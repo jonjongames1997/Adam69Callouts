@@ -20,7 +20,7 @@ namespace Adam69Callouts.Callouts
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
             CalloutInterfaceAPI.Functions.SendMessage(this, "A civilian is evading arrest");
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("CRIME_PERSON_IN_A_STOLEN_VEHICLE_01", spawnpoint);
-            CalloutMessage = "An officer reporting a civilian is evading arrest.";
+            CalloutMessage = "Bicycle Pursuit Reported";
             CalloutPosition = spawnpoint;
 
             return base.OnBeforeCalloutDisplayed();
