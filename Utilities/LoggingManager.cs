@@ -32,7 +32,7 @@
             switch (level)
             {
                 case LogLevel.Debug:
-                    if (Globals.theApplication.debugLogging)
+                    if (GlobalsManager.TheApplication.DebugLogging)
                     {
                         Game.LogTrivial(logMessage);
                     }
