@@ -1,4 +1,6 @@
-﻿[assembly: Rage.Attributes.Plugin("Adam69Callouts", Description = "LSPDFR Callout Pack", Author = "JM Modifications")]
+﻿using Adam69Callouts.Utilities;
+
+[assembly: Rage.Attributes.Plugin("Adam69Callouts", Description = "LSPDFR Callout Pack", Author = "JM Modifications")]
 namespace Adam69Callouts
 {
     public class Main : Plugin
@@ -20,6 +22,7 @@ namespace Adam69Callouts
                     Functions.OnOnDutyStateChanged += Functions_OnOnDutyStateChanged;
                     Game.AddConsoleCommands();
                     Settings.LoadSettings();
+                    Settings.SaveConfigSettings();
                     if (Settings.EnableLogs)
                     {
                         LoggingManager.Log("Adam69 Callouts: Plugin initialized successfully.");
