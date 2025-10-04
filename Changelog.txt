@@ -7,7 +7,6 @@
 - Added a DLCChecker for the Drugs Found callout to check if you have the required DLC installed. (Requires the Money Fronts DLC installed) // DLC: mp2025_01 
 - Added an option in the config for debug logging. You only enable this if you encounter an issue with the plugin/Asked by my support team.
 - Working on a new callout for Blaine County and Paleto Bay area. (No ETA yet)
-- The config will now be generated when going on duty if it doesn't exist. Delete the old config file to generate a new one.
 
 [September 23, 2025]
 
