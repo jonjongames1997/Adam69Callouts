@@ -63,9 +63,9 @@ namespace Adam69Callouts.Callouts
 
         public override void OnCalloutNotAccepted()
         {
-            bicycle?.Delete();
-            blip?.Delete();
-            suspect?.Delete();
+            bicycle.Delete();
+            blip.Delete();
+            suspect.Delete();
 
             base.OnCalloutNotAccepted();
         }
