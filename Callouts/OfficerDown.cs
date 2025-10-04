@@ -27,8 +27,18 @@ namespace Adam69Callouts.Callouts
         private static string malefemale;
         private static readonly int armorCount = 1500; // Set the armor value for the officer and suspect
 
+        public static bool IsDlcInstalled(string dlcName)
+        {
+            uint dlcHash = Game.GetHashKey(dlcName);
+            return NativeFunction.CallByName<bool>("IS_DLC_PRESENT", dlcHash);
+        }
+
         public override bool OnBeforeCalloutDisplayed()
         {
+            if (!DLCManager.IsDLCInstalled("mp2025_01"))
+            {
+                return false;
+            }
             spawnpoint = new(132.69f, -1308.34f, 29.03f);
             officerheading = 318.26f;
             susSpawn = new(116.04f, -1291.59f, 28.26f);
