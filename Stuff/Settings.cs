@@ -25,27 +25,12 @@
         internal static Keys CallAmbulanceKey { get; set; } = Keys.NumPad1;
         internal static Keys RequestVehicleInfo { get; set; } = Keys.P;
         internal static Keys RequestTowTruck { get; set; } = Keys.L;
-        internal static bool DebugMode { get; set; }
-
-        private static readonly string configPath = "plugis\\LSPDFR\\Adam69Callouts\\Adam69Callouts.ini";
-        private static readonly string configVersion = "0.4.1";
-
-        public static void EnsureConfigCreated()
-        {
-            if (!File.Exists(configPath))
-            {
-                var sb = new StringBuilder();
-                sb.AppendLine("[General]");
-                sb.AppendLine($"ConfigVersion={configVersion}");
-                // Add other default settings here
-                File.WriteAllText(configPath, sb.ToString());
-            }
-        }
+        public static bool EnableLogs { get; set; }
 
         internal static void LoadSettings()
         {
             Game.Console.Print("[LOG]: Loading config file from Adam69 Callouts");
-            InitializationFile initializationFile = new InitializationFile("Plugins/LSPDFR/Adam69Callouts/Adam69Callouts.ini");
+            InitializationFile initializationFile = new("Plugins\\LSPDFR\\Adam69Callouts\\Adam69Callouts.ini");
             initializationFile.Create();
             Game.LogTrivial("Initializing config for Adam69 Callouts....");
             Settings.VehicleBlockingSidewalk = initializationFile.ReadBoolean("Callouts", "VehicleBlockingSidewalk", true);
@@ -71,7 +56,7 @@
             CallAnimalControlKey = initializationFile.ReadEnum<Keys>("Keys", "CallAnimalControlKey", Keys.NumPad1);
             CallAmbulanceKey = initializationFile.ReadEnum<Keys>("Keys", "CallAmbulanceKey", Keys.K);
             RequestTowTruck = initializationFile.ReadEnum<Keys>("Keys", "RequestTowTruck", Keys.L);
-            Settings.DebugMode = initializationFile.ReadBoolean("Settings", "DebugMode", false);
+            Settings.EnableLogs = initializationFile.ReadBoolean("Settings", "EnableLogs", false);
 
 
         }
@@ -103,7 +88,7 @@
             ini.Write("Keys", "CallAmbulanceKey", Keys.NumPad1);
             ini.Write("Keys", "RequestVehicleInfo", Keys.P);
             ini.Write("Keys", "RequestTowTruck", Keys.L);
-            ini.Write("Settings", "DebugMode", false);
+            ini.Write("Settings", "EnableLogs", false);
 
             ini.ReCreate();
         }
