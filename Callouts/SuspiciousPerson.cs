@@ -58,8 +58,10 @@ namespace Adam69Callouts.Callouts
             susBlip.Alpha = 0.5f;
             susBlip.IsRouteEnabled = true;
 
-            malefemale = suspect.IsMale ? "Sir" : "Ma'am";
-            copGender = MainPlayer.IsMale ? "Sir" : "Ma'am";
+            if (suspect.IsMale)
+                malefemale = "Sir";
+            else
+                malefemale = "Ma'am";
 
             counter = 0;
 
@@ -68,8 +70,8 @@ namespace Adam69Callouts.Callouts
 
         public override void OnCalloutNotAccepted()
         {
-            suspect?.Delete();
-            susBlip?.Delete();
+            suspect.Delete();
+            susBlip.Delete();
 
             base.OnCalloutNotAccepted();
         }
@@ -238,8 +240,8 @@ namespace Adam69Callouts.Callouts
 
         public override void End()
         {
-            suspect?.Dismiss();
-            susBlip?.Delete();
+            suspect.Dismiss();
+            susBlip.Delete();
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Suspicious Person", "~b~You~w~: Dispatch, we are ~g~Code 4~w~. Show me back 10-8..");
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
 
