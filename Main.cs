@@ -6,35 +6,42 @@ namespace Adam69Callouts
         public static bool CalloutInterface;
         public static bool PolicingRedefined;
 
+        public static bool IsDlcInstalled(string dlcName)
+        {
+            uint dlcHash = Game.GetHashKey(dlcName);
+            return NativeFunction.CallByName<bool>("IS_DLC_PRESENT", dlcHash);
+        }
+
         public override void Initialize()
         {
-            try
-            {
-                Functions.OnOnDutyStateChanged += Functions_OnOnDutyStateChanged;
-                Settings.EnsureConfigCreated();
-                Game.AddConsoleCommands();
-                Settings.LoadSettings();
-                if (Settings.DebugMode)
+
+                try
                 {
-                    LoggingManager.Log("Adam69 Callouts: Plugin initialized successfully.");
+                    Functions.OnOnDutyStateChanged += Functions_OnOnDutyStateChanged;
+                    Settings.EnsureConfigCreated();
+                    Game.AddConsoleCommands();
+                    Settings.LoadSettings();
+                    if (Settings.DebugMode)
+                    {
+                        LoggingManager.Log("Adam69 Callouts: Plugin initialized successfully.");
+                    }
+                    else
+                    {
+                        Settings.DebugMode = false;
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    Settings.DebugMode = false;
+                    if (Settings.DebugMode)
+                    {
+                        Game.LogTrivial("Adam69Callouts [ERROR]: Failed to initialize the plugin: " + ex.Message);
+                        LoggingManager.Log("Adam69 Callouts: Failed to initialize the plugin: " + ex.Message);
+                    }
+                    else
+                    {
+                        Settings.DebugMode = false;
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                if (Settings.DebugMode)
-                {
-                    Game.LogTrivial("Adam69Callouts [ERROR]: Failed to initialize the plugin: " + ex.Message);
-                    LoggingManager.Log("Adam69 Callouts: Failed to initialize the plugin: " + ex.Message);
-                }
-                else
-                {
-                    Settings.DebugMode = false;
-                }
-            }
         }
 
         private static void Functions_OnOnDutyStateChanged(bool onDuty)
@@ -119,6 +126,14 @@ namespace Adam69Callouts
 
         private static void RegisterCallouts()
         {
+            int registered = 0;
+
+            if (DLCManager.IsDLCInstalled("mp2025_01"))
+            {
+                if (Settings.DrugsFound) { Functions.RegisterCallout(typeof(DrugsFound)); }
+                registered++;
+            }
+
             if (Functions.GetAllUserPlugins().ToList().Any(a => a != null && a.FullName.Contains("CalloutInterface")) == true)
             {
                 Game.LogTrivial("User has Callout Interface 1.4.1 by Opus INSTALLED. starting integration.......");
@@ -152,7 +167,6 @@ namespace Adam69Callouts
             if (Settings.BicycleBlockingRoadway) { Functions.RegisterCallout(typeof(BicycleBlockingRoadway)); }
             if (Settings.SuspiciousVehicle) { Functions.RegisterCallout(typeof(SuspiciousVehicle)); }
             if (Settings.AbandonedVehicle) { Functions.RegisterCallout(typeof(AbandonedVehicle)); }
-            if (Settings.DrugsFound) { Functions.RegisterCallout(typeof(DrugsFound)); }
             if (Settings.SuspiciousPerson) { Functions.RegisterCallout(typeof(SuspiciousPerson)); }
             if (Settings.OfficerDown) { Functions.RegisterCallout(typeof(OfficerDown)); }
             if (Settings.DerangedDrunkenFeller) { Functions.RegisterCallout(typeof(DerangedDrunkenFeller)); }
