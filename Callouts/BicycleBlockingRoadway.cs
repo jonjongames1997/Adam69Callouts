@@ -35,13 +35,9 @@ namespace Adam69Callouts.Callouts
 
         public override bool OnCalloutAccepted()
         {
-            if (Settings.DebugMode)
+            if (Settings.EnableLogs)
             {
                 Game.LogTrivial("[Adam69 Callouts LOG]: Bicycle Blocking Roadway callout accepted!");
-            }
-            else
-            {
-                Settings.DebugMode = false;
             }
 
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Bicycle Blocking Roadway", "~b~Dispatch~w~: The vehicle has been spotted! Respond ~r~Code 2~w~.");

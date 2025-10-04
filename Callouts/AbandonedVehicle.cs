@@ -23,13 +23,9 @@ namespace Adam69Callouts.Callouts
         public override bool OnCalloutAccepted()
         {
             Game.LogTrivial("[Adam69 Callouts LOG]: Abandoned Vehicle callout accepted!");
-            if (Settings.DebugMode)
+            if (Settings.EnableLogs)
             {
                 LoggingManager.Log("Adam69 Callouts: Abandoned Vehicle callout accepted!");
-            }
-            else
-            {
-                Settings.DebugMode = false;
             }
 
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Abandoned Vehicle", "~b~Dispatch~w~: The vehicle has been spotted! Respond ~r~Code 2~w~.");
@@ -49,14 +45,10 @@ namespace Adam69Callouts.Callouts
             else
             {
                 // Only logs to file if debug mode is enabled to avoid spamming the log with useless info
-                if (Settings.DebugMode)
+                if (Settings.EnableLogs)
                 {
                     Game.LogTrivial("[Adam69 Callouts LOG]: Failed to create vehicle.");
                     LoggingManager.Log("Adam69 Callouts: Failed to create vehicle");
-                }
-                else
-                {
-                    Settings.DebugMode = false;
                 }
             }
 
@@ -115,13 +107,9 @@ namespace Adam69Callouts.Callouts
                     return;
                 }
 
-                if (Settings.DebugMode)
+                if (Settings.EnableLogs)
                 {
                     LoggingManager.Log("Adam69 Callouts: Abandoned Vehicle callout failed!");
-                }
-                else
-                {
-                    Settings.DebugMode = false;
                 }
 
                 End();
@@ -132,8 +120,8 @@ namespace Adam69Callouts.Callouts
 
         public override void End()
         {
-            _vehicle?.Dismiss();
-            _vehicleBlip?.Delete();
+            _vehicle.Dismiss();
+            _vehicleBlip.Delete();
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Abandoned Vehicle", "~b~You~w~: Dispatch, we are ~g~CODE 4~w~. Show me back 10-8.");
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
 
@@ -153,15 +141,11 @@ namespace Adam69Callouts.Callouts
 
             base.End();
 
-            if (Settings.DebugMode)
+            if (Settings.EnableLogs)
             {
                 Game.LogTrivial("[Adam69 Callouts LOG]: Abandoned Vehicle callout is CODE 4!");
 
                 LoggingManager.Log("Adam69 Callouts: Abandoned Vehicle callout is CODE 4!");
-            }
-            else
-            {
-                Settings.DebugMode = false;
             }
         }
     }

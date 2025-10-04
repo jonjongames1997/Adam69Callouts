@@ -1,4 +1,5 @@
 ﻿using CalloutInterfaceAPI;
+using System.Security.Policy;
 
 namespace Adam69Callouts.Callouts
 {
@@ -30,8 +31,23 @@ namespace Adam69Callouts.Callouts
         private static float callerHeading;
         private static float copHeading;
 
+        public static bool IsDlcInstalled(uint dlcHash)
+        {
+            return NativeFunction.CallByName<bool>("IS_DLC_PRESENT", dlcHash);
+        }
+
         public override bool OnBeforeCalloutDisplayed()
         {
+
+            if (!DLCManager.AreRequiredDLCsInstalled())
+            {
+                string missing = DLCManager.GetMissingDLC();
+                Game.DisplayNotification("commonmenu", "mp_alerttriangle", "~r~DLC Missing", "~w~Adam69 Callouts", $"Required DLC '{missing}' is not installed. This callout will not function properly.");
+                Game.LogTrivial("Adam69 Callouts [LOG]: Required DLC '" + missing + "' is not installed. This callout will not function properly.");
+                LoggingManager.Log("Adam69 Callouts [LOG]: Required DLC '" + missing + "' is not installed. This callout will not function properly.");
+                return false;
+            }
+
             spawnpoint = new(979.11f, -1957.23f, 30.77f);
             callerSpawn = new(989.72f, -1945.02f, 30.99f);
             callerHeading = 199.09f;
@@ -101,15 +117,31 @@ namespace Adam69Callouts.Callouts
                 }
                 else
                 {
-                    Game.LogTrivial("ERR: copVehicle is null or invalid. Cannot enable emergency lights.");
-                    LoggingManager.Log("Adam69 Callouts [LOG]: copVehicle is null or invalid. Cannot enable emergency lights.");
+                    Game.DisplayNotification("commonmenu", "mp_alerttriangle", "~r~Error", "~w~Drugs Found", "Could not find police vehicle to enable emergency lights.");
+
+                    if (Settings.EnableLogs)
+                    {
+                        Game.LogTrivial("ERR: copVehicle is null or invalid. Cannot enable emergency lights.");
+                        LoggingManager.Log("Adam69 Callouts [LOG]: copVehicle is null or invalid. Cannot enable emergency lights.");
+                    }
+                    else
+                    {
+                        Settings.EnableLogs = false;
+                    }
                 }
             }
             catch (Exception ex)
             {
-                Game.LogTrivial("Adam69 Callouts [LOG]: Exception while setting up police vehicle emergency lights: " + ex.Message);
-                LoggingManager.Log("Adam69 Callouts [LOG]: " + ex.StackTrace);
-                LoggingManager.Log("Adam69 Callouts [LOG]: " + ex.Message);
+                if (Settings.EnableLogs)
+                {
+                    Game.LogTrivial("Adam69 Callouts [LOG]: Exception while setting up police vehicle emergency lights: " + ex.Message);
+                    LoggingManager.Log("Adam69 Callouts [LOG]: " + ex.StackTrace);
+                    LoggingManager.Log("Adam69 Callouts [LOG]: " + ex.Message);
+                }
+                else
+                {
+                    Settings.EnableLogs = false;
+                }
             }
 
             policeCarBlip = policeVehicle.AttachBlip();
@@ -196,66 +228,71 @@ namespace Adam69Callouts.Callouts
             }
             catch (Exception ex)
             {
-                Game.LogTrivial("Adam69 Callouts [LOG]: Error in Drugs Found callout. Error: " + ex.Message);
-                LoggingManager.Log("Adam69 Callouts [LOG]: ERROR:" + ex.StackTrace);
-                LoggingManager.Log("Adam69 Callouts [LOG]: ERROR:" + ex.Message);
-                LoggingManager.Log("Adam69 Callouts [LOG]: " + LogLevel.Error);
-                LoggingManager.Log("Adam69 Callouts [LOG]: " + LogLevel.Warning);
-            }
-
-            if (MainPlayer.DistanceTo(theDrugs) <= 10f)
-            {
-                if (Settings.HelpMessages)
+                if (Settings.EnableLogs)
                 {
-                    Game.DisplayHelp("Press ~y~" + Settings.PickUp + "~w~ to pick up the drugs.");
+                    Game.LogTrivial("Adam69 Callouts [LOG]: Error in Drugs Found callout. Error: " + ex.Message);
+                    LoggingManager.Log("Adam69 Callouts [LOG]: ERROR:" + ex.StackTrace);
+                    LoggingManager.Log("Adam69 Callouts [LOG]: ERROR:" + ex.Message);
                 }
                 else
                 {
-                    Settings.HelpMessages = false;
-                    return;
+                    Settings.EnableLogs = false;
                 }
 
-                if (Game.IsKeyDown(Settings.PickUp))
+                if (MainPlayer.DistanceTo(theDrugs) <= 10f)
                 {
-                    isCollected = true;
-                    MainPlayer.Tasks.PlayAnimation(new AnimationDictionary("anim@move_m@trash"), "pickup", -1f, AnimationFlags.UpperBodyOnly);
-                    theDrugs.AttachTo(MainPlayer, 6286, Vector3.RelativeRight, Rotator.Zero);
-                    GameFiber.Yield();
-                    theDrugs.Delete();
+                    if (Settings.HelpMessages)
+                    {
+                        Game.DisplayHelp("Press ~y~" + Settings.PickUp + "~w~ to pick up the drugs.");
+                    }
+                    else
+                    {
+                        Settings.HelpMessages = false;
+                        return;
+                    }
+
+                    if (Game.IsKeyDown(Settings.PickUp))
+                    {
+                        isCollected = true;
+                        MainPlayer.Tasks.PlayAnimation(new AnimationDictionary("anim@move_m@trash"), "pickup", -1f, AnimationFlags.UpperBodyOnly);
+                        theDrugs.AttachTo(MainPlayer, 6286, Vector3.RelativeRight, Rotator.Zero);
+                        GameFiber.Yield();
+                        theDrugs.Delete();
+                    }
                 }
+
+                if (MainPlayer.IsDead)
+                {
+                    if (Settings.MissionMessages)
+                    {
+                        BigMessageThread bigMessage = new BigMessageThread();
+                        bigMessage.MessageInstance.ShowColoredShard("Callout Failed!", "You are now ~r~CODE 4~w~.", RAGENativeUI.HudColor.Red, RAGENativeUI.HudColor.Black, 5000);
+                    }
+                    else
+                    {
+                        Settings.MissionMessages = false;
+                        return;
+                    }
+
+                    End();
+                }
+
+                if (Game.IsKeyDown(Settings.EndCall))
+                {
+                    if (Settings.MissionMessages)
+                    {
+                        BigMessageThread bigMessage = new BigMessageThread();
+                        bigMessage.MessageInstance.ShowColoredShard("Callout Complete!", "You are now ~r~CODE 4~w~.", RAGENativeUI.HudColor.Red, RAGENativeUI.HudColor.Black, 5000);
+                    }
+                    else
+                    {
+                        Settings.MissionMessages = false;
+                        return;
+                    }
+                }
+
+                base.Process();
             }
-
-            if (MainPlayer.IsDead)
-            {
-                if (Settings.MissionMessages)
-                {
-                    BigMessageThread bigMessage = new BigMessageThread();
-                    bigMessage.MessageInstance.ShowColoredShard("Callout Failed!", "You are now ~r~CODE 4~w~.", RAGENativeUI.HudColor.Red, RAGENativeUI.HudColor.Black, 5000);
-                }
-                else
-                {
-                    Settings.MissionMessages = false;
-                    return;
-                }
-
-                End();
-            }
-
-            if (Game.IsKeyDown(Settings.EndCall))
-            {
-                if (Settings.MissionMessages)
-                {
-                    BigMessageThread bigMessage = new BigMessageThread();
-                    bigMessage.MessageInstance.ShowColoredShard("Callout Complete!", "You are now ~r~CODE 4~w~.", RAGENativeUI.HudColor.Red, RAGENativeUI.HudColor.Black, 5000);
-                }
-                else
-                {
-                    Settings.MissionMessages = false;
-                    return;
-                }
-            }
-
-            base.Process();
         }
 
         public override void End()
@@ -280,13 +317,19 @@ namespace Adam69Callouts.Callouts
             else
             {
                 Settings.MissionMessages = false;
-                return;
             }
 
             base.End();
 
-            Game.LogTrivial("Adam69 Callouts [LOG]: Drugs Found callout is code 4!");
-            LoggingManager.Log("Adam69 Callouts [LOG]: Drugs Found callout is code 4!");
+            if (Settings.EnableLogs)
+            {
+                Game.LogTrivial("Adam69 Callouts [LOG]: Drugs Found callout is code 4!");
+                LoggingManager.Log("Adam69 Callouts [LOG]: Drugs Found callout is code 4!");
+            }
+            else
+            {
+                Settings.EnableLogs = false;
+            }
         }
     }
 }

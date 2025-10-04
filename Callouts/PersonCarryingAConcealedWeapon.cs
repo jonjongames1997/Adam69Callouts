@@ -119,10 +119,11 @@ namespace Adam69Callouts.Callouts
                     }
                     catch (Exception ex)
                     {
+                        Game.DisplayNotification("commonmenu", "mp_alerttriangle", "~r~Error", "~w~Person Carrying An Explosive Weapon", "~w~An error has occurred during the callout: " + ex.Message);
                         Game.LogTrivial("Adam69 Callouts [LOG]: Error found in Person Carrying An Explosive Weapon: " + ex.Message);
                         Game.LogTrivial("Adam69 Callouts [LOG]: Error found in Person Carrying An Explosive Weapon: " + ex.StackTrace);
-                        LoggingManager.Log("Adam69 Callouts [LOG] " + LogLevel.Error);
-                        LoggingManager.Log("Adam69 Callouts [LOG] " + LogLevel.Info);
+                        LoggingManager.Log("Adam69 Callouts [LOG] " + ex.Message);
+                        LoggingManager.Log("Adam69 Callouts [LOG] " + ex.StackTrace);
                     }
                 }
             }
@@ -153,7 +154,6 @@ namespace Adam69Callouts.Callouts
                 else
                 {
                     Settings.MissionMessages = false;
-                    return;
                 }
 
                 End();
@@ -176,7 +176,6 @@ namespace Adam69Callouts.Callouts
             else
             {
                 Settings.MissionMessages = false;
-                return;
             }
 
             base.End();

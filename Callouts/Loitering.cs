@@ -26,7 +26,16 @@ namespace Adam69Callouts.Callouts
 
         public override bool OnCalloutAccepted()
         {
-            Game.LogTrivial("Adam69 Callouts [LOG]: Loitering callout has been accepted!");
+            if (Settings.EnableLogs)
+            {
+                Game.LogTrivial("Adam69 Callouts [LOG]: Loitering callout has been accepted!");
+            }
+            else
+            {
+                Settings.EnableLogs = false;
+            }
+
+
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Loitering", "~b~Dispatch~w~: Suspect located. Respond code 2.");
 
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_2_Audio");
@@ -139,10 +148,11 @@ namespace Adam69Callouts.Callouts
             catch (Exception ex)
             {
                 Game.LogTrivial($"Error in {nameof(Process)}: {ex.Message}");
-                LoggingManager.Log("Adam69 Callouts [ERROR]: " + LogLevel.Error);
+                LoggingManager.Log("Adam69 Callouts [ERROR]: " + ex.Message);
+                LoggingManager.Log("Adam69 Callouts [ERROR]: " + ex.StackTrace);
             }
 
-            if (MainPlayer.IsDead || Game.IsKeyDown(Settings.EndCall))
+            if (MainPlayer.IsDead)
             {
                 if (Settings.MissionMessages)
                 {
@@ -155,6 +165,22 @@ namespace Adam69Callouts.Callouts
                     return;
                 }
 
+                End();
+            }
+
+            if (Game.IsKeyDown(Settings.EndCall))
+            {
+                if (Settings.MissionMessages)
+                {
+                    BigMessageThread bigMessage = new BigMessageThread();
+                    bigMessage.MessageInstance.ShowColoredShard("Callout Ended", "You are now ~g~CODE 4~w~.", RAGENativeUI.HudColor.Green, RAGENativeUI.HudColor.Black, 5000);
+                }
+                else
+                {
+                    Settings.MissionMessages = false;
+                }
+
+                Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Loitering", "~b~You~w~: Dispatch, we are ~g~CODE 4~w~. Show me back 10-8.");
                 End();
             }
         }
@@ -180,7 +206,14 @@ namespace Adam69Callouts.Callouts
 
             base.End();
 
-            Game.LogTrivial("Adam69 Callouts [LOG]: Loitering callout is Code 4!");
+            if (Settings.EnableLogs)
+            {
+                Game.LogTrivial("Adam69 Callouts [LOG]: Loitering callout is Code 4!");
+            }
+            else
+            {
+                Settings.EnableLogs = false;
+            }
         }
     }
 }

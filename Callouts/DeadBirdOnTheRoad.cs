@@ -31,7 +31,15 @@ namespace Adam69Callouts.Callouts
 
         public override bool OnCalloutAccepted()
         {
-            Game.LogTrivial("Adam69 Callouts [LOG]: Dead Bird On The Road callout has been accepted!");
+            if (Settings.EnableLogs)
+            {
+                Game.LogTrivial("Adam69 Callouts [LOG]: Dead Bird On The Road callout has been accepted!");
+            }
+            else
+            {
+                Settings.EnableLogs = false;
+            }
+
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Dead Bird On The Road", "~b~Dispatch~w~: A dead bird has been reported on the road. Respond ~y~Code 2~w~.");
 
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_2_Audio_01");
@@ -127,7 +135,10 @@ namespace Adam69Callouts.Callouts
 
             base.End();
 
-            Game.LogTrivial("Adam69 Callouts [LOG]: Dead Bird On The Road callout has ended!");
+            if (Settings.EnableLogs)
+            {
+                Game.LogTrivial("Adam69 Callouts [LOG]: Dead Bird On The Road callout has ended!");
+            }
         }
     }
 }

@@ -179,14 +179,17 @@ namespace Adam69Callouts.Callouts
                             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_ShotsFired_Audio_Remastered_01");
                             PolicingRedefined.API.BackupDispatchAPI.RequestPanicBackup();
                         }
-
-                        LoggingManager.Log("Adam69 Callouts [LOG]: " + LogLevel.Info);
                     }
                     catch (Exception ex)
                     {
-                        Game.LogTrivial("Adam69 Callouts [LOG]: " + ex.Message);
-                        LoggingManager.Log("Adam69 Callouts [LOG]: " + ex.Message);
-                        LoggingManager.Log("Adam69 Callouts [LOG]: " + ex.StackTrace);
+                        Game.DisplayNotification("commonmenu", "mp_alerttriangle", "~r~Error", "~w~Officer Down", "An error occurred, please report this on the JM Modifications Discord server.");
+
+                        if (Settings.EnableLogs)
+                        {
+                            Game.LogTrivial("Adam69 Callouts [LOG]: " + ex.Message);
+                            LoggingManager.Log("Adam69 Callouts [LOG]: " + ex.Message);
+                            LoggingManager.Log("Adam69 Callouts [LOG]: " + ex.StackTrace);
+                        }
                     }
                 }
 
@@ -200,7 +203,6 @@ namespace Adam69Callouts.Callouts
                     else
                     {
                         Settings.MissionMessages = false;
-                        return;
                     }
 
                     End();
@@ -236,7 +238,15 @@ namespace Adam69Callouts.Callouts
                 return;
             }
 
-            Game.LogTrivial("Adam69 Callouts [LOG]: Officer Down callout is code 4!");
+
+            if (Settings.EnableLogs)
+            {
+                Game.LogTrivial("Adam69 Callouts [LOG]: Officer Down callout is code 4!");
+            }
+            else
+            {
+                Settings.EnableLogs = false;
+            }
 
         }
 

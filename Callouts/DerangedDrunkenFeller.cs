@@ -30,7 +30,11 @@ namespace Adam69Callouts.Callouts
 
         public override bool OnCalloutAccepted()
         {
-            Game.LogTrivial("Adam69 Callouts [LOG]: Deranged Drunken Feller callout has been accepted!");
+            if (Settings.EnableLogs)
+            {
+                Game.LogTrivial("Adam69 Callouts [LOG]: Deranged Drunken Feller callout has been accepted!");
+            }
+
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "Deranged Drunken Feller", "~b~Dispatch~w~: Suspect has been located. Respond ~r~Code 2~w~.");
 
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_2_Audio");
@@ -97,10 +101,17 @@ namespace Adam69Callouts.Callouts
                     }
                     catch (Exception ex)
                     {
-                        Game.LogTrivial("Adam69 Callouts [LOG]: Exception in Deranged Drunken Feller callout: " + ex.Message);
-                        Game.LogTrivial("Adam69 Callouts [LOG]: Exception in Deranged Drunken Feller callout: " + ex.StackTrace);
-                        LoggingManager.Log("Adam69 Callouts [LOG]: Exception in Deranged Drunken Feller callout: " + ex.Message);
-                        LoggingManager.Log("Adam69 Callouts [LOG]: Exception in Deranged Drunken Feller callout: " + ex.StackTrace);
+                        if (Settings.EnableLogs)
+                        {
+                            Game.LogTrivial("Adam69 Callouts [LOG]: Exception in Deranged Drunken Feller callout: " + ex.Message);
+                            Game.LogTrivial("Adam69 Callouts [LOG]: Exception in Deranged Drunken Feller callout: " + ex.StackTrace);
+                            LoggingManager.Log("Adam69 Callouts [LOG]: Exception in Deranged Drunken Feller callout: " + ex.Message);
+                            LoggingManager.Log("Adam69 Callouts [LOG]: Exception in Deranged Drunken Feller callout: " + ex.StackTrace);
+                        }
+                        else
+                        {
+                            Settings.EnableLogs = false;
+                        }
                     }
 
                 }
@@ -166,8 +177,16 @@ namespace Adam69Callouts.Callouts
 
             base.End();
 
-            Game.LogTrivial("Adam69 Callouts [LOG]: Deranged Drunken Feller callout is CODE 4!");
-            LoggingManager.Log("Adam69 Callouts [LOG]: Deranged Drunken Feller callout is CODE 4!");
+            if (Settings.EnableLogs)
+            {
+
+                Game.LogTrivial("Adam69 Callouts [LOG]: Deranged Drunken Feller callout is CODE 4!");
+                LoggingManager.Log("Adam69 Callouts [LOG]: Deranged Drunken Feller callout is CODE 4!");
+            }
+            else
+            {
+                Settings.EnableLogs = false;
+            }
         }
     }
 }

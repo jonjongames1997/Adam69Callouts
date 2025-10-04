@@ -42,9 +42,18 @@ namespace Adam69Callouts.Callouts
 
         public override bool OnCalloutAccepted()
         {
-            Game.LogTrivial("[Adam69 Callouts LOG]: Knife Attack callout accepted!");
+            if (Settings.EnableLogs)
+            {
+                Game.LogTrivial("[Adam69 Callouts LOG]: Knife Attack callout accepted!");
+                LoggingManager.Log("Adam69 Callouts [LOG]: Knife Attack callout accepted!");
+            }
+            else
+            {
+                Settings.EnableLogs = false;
+            }
+
+
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Knife Attack", "~b~Dispatch~w~: The suspect has been located. Respond ~r~Code 3~w~.");
-            LoggingManager.Log("Adam69 Callouts [LOG]: Knife Attack callout accepted!");
 
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_3_Audio");
 
@@ -194,22 +203,10 @@ namespace Adam69Callouts.Callouts
 
         public override void End()
         {
-            if (suspect.Exists())
-            {
-                suspect.Delete();
-            }
-            if (victim.Exists())
-            {
-                victim.Delete();
-            }
-            if (suspectBlip.Exists())
-            {
-                suspectBlip.Delete();
-            }
-            if (victimBlip.Exists())
-            {
-                victimBlip.Delete();
-            }
+            if (suspect) suspect.Dismiss();
+            if (victim) victim.Dismiss();
+            if (suspectBlip) suspectBlip.Delete();
+            if (victimBlip) victimBlip.Delete();
 
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "Person With A Knife", "~w~Dispatch: The scene is now ~r~CODE 4~w~.");
@@ -222,13 +219,20 @@ namespace Adam69Callouts.Callouts
             else
             {
                 Settings.MissionMessages = false;
-                return;
             }
             base.End();
 
-            Game.LogTrivial("Adam69 Callouts [LOG]: Knife Attack callout is CODE 4!");
+            if (Settings.EnableLogs)
+            {
 
-            LoggingManager.Log("Adam69 Callouts [LOG]: Knife Attack callout is CODE 4!");
+                Game.LogTrivial("Adam69 Callouts [LOG]: Knife Attack callout is CODE 4!");
+
+                LoggingManager.Log("Adam69 Callouts [LOG]: Knife Attack callout is CODE 4!");
+            }
+            else
+            {
+                Settings.EnableLogs = false;
+            }
         }
     }
 }
