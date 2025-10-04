@@ -18,28 +18,27 @@ namespace Adam69Callouts
                 try
                 {
                     Functions.OnOnDutyStateChanged += Functions_OnOnDutyStateChanged;
-                    Settings.EnsureConfigCreated();
                     Game.AddConsoleCommands();
                     Settings.LoadSettings();
-                    if (Settings.DebugMode)
+                    if (Settings.EnableLogs)
                     {
                         LoggingManager.Log("Adam69 Callouts: Plugin initialized successfully.");
                     }
                     else
                     {
-                        Settings.DebugMode = false;
+                        Settings.EnableLogs = false;
                     }
                 }
                 catch (Exception ex)
                 {
-                    if (Settings.DebugMode)
+                    if (Settings.EnableLogs)
                     {
                         Game.LogTrivial("Adam69Callouts [ERROR]: Failed to initialize the plugin: " + ex.Message);
                         LoggingManager.Log("Adam69 Callouts: Failed to initialize the plugin: " + ex.Message);
                     }
                     else
                     {
-                        Settings.DebugMode = false;
+                        Settings.EnableLogs = false;
                     }
                 }
         }
@@ -93,14 +92,14 @@ namespace Adam69Callouts
                     else
                     {
                         Settings.HelpMessages = false;
-                        if (Settings.DebugMode)
+                        if (Settings.EnableLogs)
                         {
                             Game.LogTrivial("[LOG]: Help messages are disabled in the config file.");
                             LoggingManager.Log("Adam69 Callouts: Help messages are disabled in the config file.");
                         }
                         else
                         {
-                            Settings.DebugMode = false;
+                            Settings.EnableLogs = false;
                         }
                         return;
                     }
@@ -183,13 +182,13 @@ namespace Adam69Callouts
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "Adam69 Callouts", "~w~by JM Modifications", "Enjoy your night, Officer.");
             Game.Console.Print("[LOG] Adam69 Callouts: Mission Complete!");
             Game.Console.Print();
-            if (Settings.DebugMode)
+            if (Settings.EnableLogs)
             {
                 LoggingManager.Log("Adam69 Callouts: Plugin unloaded successfully.");
             }
             else
             {
-                Settings.DebugMode = false;
+                Settings.EnableLogs = false;
             }
 
             if (Settings.MissionMessages)
@@ -200,14 +199,14 @@ namespace Adam69Callouts
             }
             else
             {
-                if (Settings.DebugMode)
+                if (Settings.EnableLogs)
                 {
                     Game.LogTrivial("[LOG]: Mission messages are disabled in the config file.");
                     LoggingManager.Log("Adam69 Callouts: Mission messages are disabled in the config file.");
                 }
                 else
                 {
-                    Settings.DebugMode = false;
+                    Settings.EnableLogs = false;
                 }
                 Settings.MissionMessages = false;
                 return;
@@ -217,13 +216,13 @@ namespace Adam69Callouts
         private static void LoadConfig()
         {
             Settings.LoadSettings();
-            if (Settings.DebugMode)
+            if (Settings.EnableLogs)
             {
                 LoggingManager.Log("Adam69 Callouts: Config file loaded successfully.");
             }
             else
             {
-                Settings.DebugMode = false;
+                Settings.EnableLogs = false;
             }
         }
     }
