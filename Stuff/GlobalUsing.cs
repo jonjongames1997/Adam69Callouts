@@ -23,5 +23,6 @@ global using static Adam69Callouts.Utilities.LoggingManager;
 global using PolicingRedefined.API;
 global using PolicingRedefined;
 global using static Adam69Callouts.Utilities.DLCManager;
+global using static Adam69Callouts.Utilities.ConfigManager;
 
 #endregion
