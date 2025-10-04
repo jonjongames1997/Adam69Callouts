@@ -202,6 +202,7 @@ namespace Adam69Callouts.Callouts
 
         public override void End()
         {
+            if (officer) officer.WarpIntoVehicle(emergencyVehicle, -1);
             if (officer) officer.Dismiss();
             if (copBlip) copBlip.Delete();
             if (suspect) suspect.Dismiss();
