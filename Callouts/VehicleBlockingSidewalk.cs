@@ -21,7 +21,6 @@ namespace Adam69Callouts.Callouts
             };
             spawnpoint = LocationChooser.ChooseNearestLocation(list);
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
-            AddMinimumDistanceCheck(50f, spawnpoint);
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("CRIME_ROAD_BLOCKADE_01", spawnpoint);
             CalloutInterfaceAPI.Functions.SendMessage(this, "A citizen reporting a vehicle blocking sidewalk.");
             CalloutMessage = "Vehicle blocking pedestrian's way.";
@@ -51,8 +50,8 @@ namespace Adam69Callouts.Callouts
 
         public override void OnCalloutNotAccepted()
         {
-            motorVehicle?.Delete();
-            vehBlip?.Delete();
+            motorVehicle.Delete();
+            vehBlip.Delete();
 
             base.OnCalloutNotAccepted();
         }
@@ -109,8 +108,8 @@ namespace Adam69Callouts.Callouts
 
         public override void End()
         {
-            motorVehicle?.Delete();
-            vehBlip?.Delete();
+            motorVehicle.Delete();
+            vehBlip.Delete();
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Vehicle Blocking Sidewalk", "~b~You~w~: Dispatch, we are ~g~Code 4~w~. Show me back 10-8.");
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
 
