@@ -148,12 +148,12 @@ namespace Adam69Callouts
             }
             if (Functions.GetAllUserPlugins().ToList().Any(a => a != null && a.FullName.Contains("PolicingRedefined")) == true)
             {
-                Game.LogTrivial("User has Policing Redefined 1.0.0.0 by MarcelWRLD INSTALLED. starting integration.......");
+                Game.LogTrivial("User has Policing Redefined 1.0.0.2 by MarcelWRLD INSTALLED. starting integration.......");
                 PolicingRedefined = true;
             }
             else
             {
-                Game.LogTrivial("User does NOT have Policing Redefined 1.0.0.0 by MarcelWRLD installed. Stopping integration....");
+                Game.LogTrivial("User does NOT have Policing Redefined 1.0.0.2 by MarcelWRLD installed. Stopping integration....");
                 PolicingRedefined = false;
             }
 
