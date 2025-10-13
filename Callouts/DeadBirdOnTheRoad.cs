@@ -61,7 +61,7 @@ namespace Adam69Callouts.Callouts
 
         public override void OnCalloutNotAccepted()
         {
-            if (deadBird) deadBird.Dismiss();
+            if (deadBird) deadBird.Delete();
             if (deadBirdBlip) deadBirdBlip.Delete();
 
             base.OnCalloutNotAccepted();
@@ -73,7 +73,7 @@ namespace Adam69Callouts.Callouts
             if (Game.IsKeyDown(System.Windows.Forms.Keys.NumPad1))
             {
                 PolicingRedefined.API.BackupDispatchAPI.RequestAnimalControlBackup();
-                Game.DisplaySubtitle("~b~You~w~: Dispatch, requesting Animal Control to my 20.", 5000);
+                Game.DisplaySubtitle("~b~You~w~: Dispatch, requesting Animal Control to my 20.");
                 LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_AnimalControl_Audio_01");
             }
 
@@ -93,8 +93,14 @@ namespace Adam69Callouts.Callouts
                 else
                 {
                     Settings.MissionMessages = false;
-                    Game.LogTrivial("[LOG]: Mission messages are disabled in the config file.");
-                    return;
+                    if (Settings.EnableLogs)
+                    {
+                        Game.LogTrivial("[LOG]: Mission messages are disabled in the config file.");
+                    }
+                    else
+                    {
+                        Settings.EnableLogs = false;
+                    }
                 }
 
                 End();
@@ -130,7 +136,6 @@ namespace Adam69Callouts.Callouts
             {
                 Settings.MissionMessages = false;
                 Game.LogTrivial("[LOG]: Mission messages are disabled in the config file.");
-                return;
             }
 
             base.End();
