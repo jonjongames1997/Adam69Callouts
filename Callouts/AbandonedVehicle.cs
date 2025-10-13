@@ -136,7 +136,6 @@ namespace Adam69Callouts.Callouts
             else
             {
                 Settings.MissionMessages = false;
-                return;
             }
 
             base.End();
@@ -146,6 +145,10 @@ namespace Adam69Callouts.Callouts
                 Game.LogTrivial("[Adam69 Callouts LOG]: Abandoned Vehicle callout is CODE 4!");
 
                 LoggingManager.Log("Adam69 Callouts: Abandoned Vehicle callout is CODE 4!");
+            }
+            else
+            {
+                Settings.EnableLogs = false;
             }
         }
     }
