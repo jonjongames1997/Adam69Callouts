@@ -26,7 +26,7 @@ namespace Adam69Callouts.Callouts
             spawnpoint = LocationChooser.ChooseNearestLocation(list);
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
             CalloutInterfaceAPI.Functions.SendMessage(this, "Reports of a bicycle blocking traffic");
-            LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("ILLEGALLY_PARKED_VEHICLE", spawnpoint);
+            LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("Adam69Callouts_Bicycle_Blocking_Roadway", spawnpoint);
             CalloutMessage = "Abandoned bicycle left in the street";
             CalloutPosition = spawnpoint;
 
@@ -38,6 +38,10 @@ namespace Adam69Callouts.Callouts
             if (Settings.EnableLogs)
             {
                 Game.LogTrivial("[Adam69 Callouts LOG]: Bicycle Blocking Roadway callout accepted!");
+            }
+            else
+            {
+                Settings.EnableLogs = false;
             }
 
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Bicycle Blocking Roadway", "~b~Dispatch~w~: The vehicle has been spotted! Respond ~r~Code 2~w~.");
@@ -83,7 +87,7 @@ namespace Adam69Callouts.Callouts
                 }
                 else
                 {
-                    return;
+                    Settings.HelpMessages = false;
                 }
             }
 
@@ -97,7 +101,7 @@ namespace Adam69Callouts.Callouts
                 }
                 else
                 {
-                    return;
+                    Settings.MissionMessages = false;
                 }
 
                 End();
@@ -110,8 +114,12 @@ namespace Adam69Callouts.Callouts
 
                         bigMessage.MessageInstance.ShowColoredShard("Callout Complete!", "You are now ~g~CODE 4~w~.", RAGENativeUI.HudColor.Green, RAGENativeUI.HudColor.Black, 5000);
                     }
+                    else
+                    {
+                        Settings.MissionMessages = false;
+                    }
 
-                    End();
+                        End();
                 }
             }
 
@@ -134,7 +142,6 @@ namespace Adam69Callouts.Callouts
             else
             {
                 Settings.MissionMessages = false;
-                return;
             }
 
             base.End();
