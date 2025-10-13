@@ -6,7 +6,6 @@ namespace Adam69Callouts.Callouts
     public class BicyclePursuit : Callout
     {
         private static readonly string[] bikeList = { "bmx", "cruiser", "fixter", "scorcher", "tribike", "tribike2", "tribike3" };
-        private static readonly Random random = new();
         private static Vehicle bicycle;
         private static Blip blip;
         private static Ped suspect;
@@ -19,7 +18,7 @@ namespace Adam69Callouts.Callouts
             spawnpoint = World.GetNextPositionOnStreet(MainPlayer.Position.Around(1000f));
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
             CalloutInterfaceAPI.Functions.SendMessage(this, "A civilian is evading arrest");
-            LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("CRIME_PERSON_IN_A_STOLEN_VEHICLE_01", spawnpoint);
+            LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("Adam69Callouts_Bicycle_Pursuit", spawnpoint);
             CalloutMessage = "Bicycle Pursuit Reported";
             CalloutPosition = spawnpoint;
 
@@ -32,18 +31,24 @@ namespace Adam69Callouts.Callouts
             {
                 Game.LogTrivial("Adam69 Callouts [LOG]: Bicycle Pursuit callout has been accepted!");
             }
+            else
+            {
+                Settings.EnableLogs = false;
+            }
 
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Bicycle Pursuit", "~b~Dispatch~w~: The suspect has been spotted! Respond ~r~Code 3~w~.");
 
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_3_Audio");
 
-            bicycle = new Vehicle(bikeList[new Random().Next((int)bikeList.Length)], spawnpoint)
-            {
-                IsPersistent = true,
-                IsStolen = true
-            };
+            bicycle = new Vehicle(bikeList[new Random().Next((int)bikeList.Length)], spawnpoint);
+            bicycle.IsPersistent = true;
+            bicycle.IsStolen = true;
 
             bicycle.IsValid();
+
+            blip = bicycle.AttachBlip();
+            blip.Color = System.Drawing.Color.Yellow;
+            blip.Alpha = 1.0f;
 
             suspect = new Ped(spawnpoint);
             suspect.WarpIntoVehicle(bicycle, -1);
@@ -67,9 +72,9 @@ namespace Adam69Callouts.Callouts
 
         public override void OnCalloutNotAccepted()
         {
-            bicycle.Delete();
-            blip.Delete();
-            suspect.Delete();
+            if (bicycle) bicycle.Delete();
+            if (suspect) suspect.Dismiss();
+            if (blip) blip.Delete();
 
             base.OnCalloutNotAccepted();
         }
@@ -82,8 +87,16 @@ namespace Adam69Callouts.Callouts
             }
             else
             {
-                Game.LogTrivial("Adam69 Callouts [LOG]: Help messages are disabled in the config file.");
-                return;
+                if (Settings.EnableLogs)
+                {
+                    Game.LogTrivial("Adam69 Callouts [LOG]: Help messages are disabled in the config file.");
+                }
+                else
+                {
+                    Settings.EnableLogs = false;
+                }
+
+                Settings.HelpMessages = false;
             }
 
             if (MainPlayer.IsDead)
@@ -97,7 +110,6 @@ namespace Adam69Callouts.Callouts
                 else
                 {
                     Settings.MissionMessages = false;
-                    return;
                 }
 
                 End();
@@ -113,8 +125,8 @@ namespace Adam69Callouts.Callouts
                 else
                 {
                     Settings.MissionMessages = false;
-                    return;
                 }
+
                 End();
             }
 
@@ -123,9 +135,9 @@ namespace Adam69Callouts.Callouts
 
         public override void End()
         {
-            suspect.Dismiss();
-            bicycle.Delete();
-            blip.Delete();
+            if (suspect) suspect.Dismiss();
+            if (bicycle) bicycle.Delete();
+            if (blip) blip.Delete();
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Bicycle Pursuit", "~b~You~w~: Dispatch, we are ~g~CODE 4~w~. Show me back 10-8.");
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
 
@@ -139,7 +151,6 @@ namespace Adam69Callouts.Callouts
             else
             {
                 Settings.MissionMessages = false;
-                return;
             }
 
             base.End();
