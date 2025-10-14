@@ -43,7 +43,6 @@ namespace Adam69Callouts.Callouts
             bicycle = new Vehicle(bikeList[new Random().Next((int)bikeList.Length)], spawnpoint);
             bicycle.IsPersistent = true;
             bicycle.IsStolen = true;
-
             bicycle.IsValid();
 
             blip = bicycle.AttachBlip();
@@ -73,7 +72,7 @@ namespace Adam69Callouts.Callouts
         public override void OnCalloutNotAccepted()
         {
             if (bicycle) bicycle.Delete();
-            if (suspect) suspect.Dismiss();
+            if (suspect) suspect.Delete();
             if (blip) blip.Delete();
 
             base.OnCalloutNotAccepted();
@@ -155,7 +154,15 @@ namespace Adam69Callouts.Callouts
 
             base.End();
 
-            Game.LogTrivial("Adam69 Callouts [LOG]: Bicycle Pursuit callout is Code 4!");
+            if (Settings.EnableLogs)
+            {
+                Game.LogTrivial("Adam69 Callouts [LOG]: Bicycle Pursuit callout is Code 4!");
+                LoggingManager.Log("Adam69 Callouts [LOG]: Bicycle Pursuit callout has ended.");
+            }
+            else
+            {
+                Settings.EnableLogs = false;
+            }
         }
     }
 }
