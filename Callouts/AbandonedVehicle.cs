@@ -13,7 +13,7 @@ namespace Adam69Callouts.Callouts
         {
             _spawnPoint = World.GetNextPositionOnStreet(MainPlayer.Position.Around(500f));
             CalloutInterfaceAPI.Functions.SendMessage(this, "Reports of an Abandoned Vehicle");
-            LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("CRIME_SUSPICIOUS_VEHICLE_01", _spawnPoint);
+            LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("Adam69Callouts_Abandoned_Vehicle_01", _spawnPoint);
             CalloutMessage = "Abandoned Vehicle Reported";
             CalloutPosition = _spawnPoint;
 
@@ -22,13 +22,18 @@ namespace Adam69Callouts.Callouts
 
         public override bool OnCalloutAccepted()
         {
-            Game.LogTrivial("[Adam69 Callouts LOG]: Abandoned Vehicle callout accepted!");
+            
             if (Settings.EnableLogs)
             {
+                Game.LogTrivial("[Adam69 Callouts LOG]: Abandoned Vehicle callout accepted!");
                 LoggingManager.Log("Adam69 Callouts: Abandoned Vehicle callout accepted!");
             }
+            else
+            {
+                Settings.EnableLogs = false;
+            }
 
-            Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Abandoned Vehicle", "~b~Dispatch~w~: The vehicle has been spotted! Respond ~r~Code 2~w~.");
+                Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Abandoned Vehicle", "~b~Dispatch~w~: The vehicle has been spotted! Respond ~r~Code 2~w~.");
 
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_1_Audio");
 
