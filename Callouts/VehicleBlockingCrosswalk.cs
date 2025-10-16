@@ -41,7 +41,16 @@ namespace Adam69Callouts.Callouts
         /// <returns>True if the callout was successfully accepted, otherwise false.</returns>
         public override bool OnCalloutAccepted()
         {
-            Game.LogTrivial("Adam69 Callouts [LOG]: Vehicle Blocking Crosswalk callout has been accepted!");
+            if (Settings.EnableLogs)
+            {
+                Game.LogTrivial("Adam69 Callouts [LOG]: Vehicle Blocking Crosswalk callout has been accepted!");
+                LoggingManager.Log("Adam69 Callouts [LOG]: Vehicle Blocking Crosswalk callout has been accepted!");
+            }
+            else
+            {
+                Settings.EnableLogs = false;
+            }
+
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Vehicle Blocking Crosswalk", "~b~Dispatch~w~: The vehicle has been located. Respond ~y~Code 2~w~.");
 
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_2_Audio");
