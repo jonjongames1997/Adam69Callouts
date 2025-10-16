@@ -29,7 +29,7 @@ namespace Adam69Callouts.Callouts
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("CRIME_ROAD_BLOCKADE_01", spawnpoint);
             CalloutInterfaceAPI.Functions.SendMessage(this, "A vehicle blocking crosswalk");
-            CalloutMessage = "Multiple reports of a vehicle blocking crosswalk";
+            CalloutMessage = "Vehicle Blocking Crosswalk Reported";
             CalloutPosition = spawnpoint;
 
             return base.OnBeforeCalloutDisplayed();
@@ -98,7 +98,6 @@ namespace Adam69Callouts.Callouts
                 else
                 {
                     Settings.MissionMessages = false;
-                    return;
                 }
 
                 End();
@@ -114,7 +113,6 @@ namespace Adam69Callouts.Callouts
                 else
                 {
                     Settings.MissionMessages = false;
-                    return;
                 }
 
                 End();
@@ -133,21 +131,17 @@ namespace Adam69Callouts.Callouts
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Vehicle Blocking Crosswalk", "~b~You~w~: Dispatch, we are ~g~CODE 4~w~. Show me back 10-8.");
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
 
-            if (Settings.MissionMessages)
-            {
-                BigMessageThread bigMessage = new BigMessageThread();
+            base.End();
 
-                bigMessage.MessageInstance.ShowColoredShard("Callout Completed!", "You are now ~g~CODE 4~w~.", RAGENativeUI.HudColor.Green, RAGENativeUI.HudColor.Black, 5000);
+            if (Settings.EnableLogs)
+            {
+                Game.LogTrivial("Adam69 Callouts [LOG]: Vehicle Blocking Crosswalk callout is Code 4!");
+                LoggingManager.Log("Adam69 Callouts [LOG]: Vehicle Blocking Crosswalk callout is Code 4!");
             }
             else
             {
-                Settings.MissionMessages = false;
-                return;
+                Settings.EnableLogs = false;
             }
-
-            base.End();
-
-            Game.LogTrivial("Adam69 Callouts [LOG]: Vehicle Blocking Crosswalk callout is Code 4!");
         }
     }
 }
