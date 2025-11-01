@@ -1,10 +1,12 @@
 ﻿using CalloutInterfaceAPI;
+using Rage;
+using Rage.Native;
 
 namespace Adam69Callouts.Callouts
 {
 
 
-    [CalloutInterface("[Adam69 Callouts] Officer Down", CalloutProbability.Medium, "Reports of an officer down", "Code 3", "LEO")]
+    [CalloutInterface("[Adam69 Callouts] Officer Down", CalloutProbability.Medium, "Reports of an officer down", "Code3", "LEO")]
 
     public class OfficerDown : Callout
     {
@@ -26,6 +28,10 @@ namespace Adam69Callouts.Callouts
         private static int counter;
         private static string malefemale;
         private static readonly int armorCount = 1500; // Set the armor value for the officer and suspect
+
+        // NEW: shooting behavior fields
+        private static bool suspectStartedShooting = false;
+        private static readonly Vector3 stripClubPosition = new(127.0f, -1297.0f, 29.2f); // interior entry-ish position
 
         public static bool IsDlcInstalled(string dlcName)
         {
@@ -57,7 +63,7 @@ namespace Adam69Callouts.Callouts
         public override bool OnCalloutAccepted()
         {
             Game.LogTrivial("Adam69 Callouts [LOG]: Officer Down callout has been accepted!");
-            Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Officer Down", "~b~Dispatch~w~: The suspect has been spotted! Respond ~r~Code 3~w~.");
+            Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Officer Down", "~b~Dispatch~w~: The suspect has been spotted! Respond ~r~Code3~w~.");
 
 
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_3_Audio");
@@ -120,6 +126,7 @@ namespace Adam69Callouts.Callouts
                 malefemale = "Ma'am";
 
             counter = 0;
+            suspectStartedShooting = false; // ensure flag reset on accept
 
             return base.OnCalloutAccepted();
         }
@@ -149,6 +156,73 @@ namespace Adam69Callouts.Callouts
                 {
                     Settings.HelpMessages = false;
                     return;
+                }
+
+                // NEW: when player arrives, have suspect run into strip club and start shooting
+                if (!suspectStartedShooting && suspect != null && suspect.IsValid())
+                {
+                    try
+                    {
+                        suspectStartedShooting = true;
+
+                        // Clear current tasks and start navigation in a separate fiber so we don't block Process()
+                        suspect.Tasks.Clear();
+
+                        GameFiber.StartNew(() =>
+                        {
+                            try
+                            {
+                                // Ask the suspect to move toward the interior position
+                                suspect.Tasks.FollowNavigationMeshToPosition(stripClubPosition, 2.0f, -1);
+
+                                // Wait until suspect is close to the target or until suspect becomes invalid
+                                int waitTicks = 0;
+                                while (suspect != null && suspect.IsValid() && suspect.Position.DistanceTo2D(stripClubPosition) > 3f && waitTicks < 1000)
+                                {
+                                    GameFiber.Yield();
+                                    waitTicks++;
+                                }
+
+                                if (suspect != null && suspect.IsValid())
+                                {
+                                    // Equip weapon and armour
+                                    suspect.Inventory.GiveNewWeapon("WEAPON_COMBATPISTOL", 500, true);
+                                    suspect.Armor = armorCount;
+
+                                    // Make suspect aggressive toward the player
+                                    suspect.Tasks.Clear();
+                                    suspect.Tasks.FightAgainst(MainPlayer);
+
+                                    // Request backup and play shots fired audio
+                                    PolicingRedefined.API.BackupDispatchAPI.RequestPanicBackup();
+                                    LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_ShotsFired_Audio_Remastered_01");
+
+                                    if (Settings.EnableLogs)
+                                    {
+                                        Game.LogTrivial("[Adam69 Callouts LOG]: Suspect started shooting inside strip club.");
+                                    }
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                Game.LogTrivial("Adam69 Callouts [LOG]: Error in suspect navigation fiber: " + ex.Message);
+                                if (Settings.EnableLogs)
+                                {
+                                    LoggingManager.Log("Adam69 Callouts [LOG]: Error in suspect navigation fiber: " + ex.Message);
+                                    LoggingManager.Log(ex.StackTrace);
+                                }
+                            }
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        Game.LogTrivial("Adam69 Callouts [LOG]: Error while making suspect shoot: " + ex.Message);
+                        if (Settings.EnableLogs)
+                        {
+                            LoggingManager.Log("Adam69 Callouts [LOG]: Error while making suspect shoot: " + ex.Message);
+                            LoggingManager.Log(ex.StackTrace);
+                        }
+                    }
                 }
 
                 if (Game.IsKeyDown(System.Windows.Forms.Keys.Y))
@@ -222,15 +296,15 @@ namespace Adam69Callouts.Callouts
             if (emergencyVehicle) emergencyVehicle.Delete();
             if (officerVehicleBlip) officerVehicleBlip.Delete();
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
-            Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Officer Down", "~b~You~w~: We are Code 4. Show me back 10-8!");
+            Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Officer Down", "~b~You~w~: We are Code4. Show me back10-8!");
             base.End();
 
-            
+
             if (Settings.MissionMessages)
             {
                 BigMessageThread bigMessage = new BigMessageThread();
 
-                bigMessage.MessageInstance.ShowColoredShard("CODE 4", "The scene is now secure.", RAGENativeUI.HudColor.Green, RAGENativeUI.HudColor.Black, 5000);
+                bigMessage.MessageInstance.ShowColoredShard("CODE4", "The scene is now secure.", RAGENativeUI.HudColor.Green, RAGENativeUI.HudColor.Black, 5000);
             }
             else
             {
@@ -241,7 +315,7 @@ namespace Adam69Callouts.Callouts
 
             if (Settings.EnableLogs)
             {
-                Game.LogTrivial("Adam69 Callouts [LOG]: Officer Down callout is code 4!");
+                Game.LogTrivial("Adam69 Callouts [LOG]: Officer Down callout is code4!");
             }
             else
             {
