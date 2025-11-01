@@ -1,9 +1,11 @@
 ﻿using CalloutInterfaceAPI;
+using Rage;
+using Rage.Native;
 
 namespace Adam69Callouts.Callouts
 {
 
-    [CalloutInterface("[Adam69 Callouts] Bicycle Blocking Roadway", CalloutProbability.Medium, "Bicycle obstructing roadway", "Code 2", "LSPD")]
+    [CalloutInterface("[Adam69 Callouts] Bicycle Blocking Roadway", CalloutProbability.Medium, "Bicycle obstructing roadway", "Code2", "LSPD")]
 
     public class BicycleBlockingRoadway : Callout
     {
@@ -11,6 +13,10 @@ namespace Adam69Callouts.Callouts
         private static Vehicle thebike;
         private static Blip blip;
         private static Vector3 spawnpoint;
+
+        // Traffic control
+        private static bool trafficStopped = false;
+        private const float trafficStopRadius = 60f; // radius to clear/stop traffic around the bike
 
         public override bool OnBeforeCalloutDisplayed()
         {
@@ -44,7 +50,7 @@ namespace Adam69Callouts.Callouts
                 Settings.EnableLogs = false;
             }
 
-            Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Bicycle Blocking Roadway", "~b~Dispatch~w~: The vehicle has been spotted! Respond ~r~Code 2~w~.");
+            Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Bicycle Blocking Roadway", "~b~Dispatch~w~: The vehicle has been spotted! Respond ~r~Code2~w~.");
 
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_2_Audio");
 
@@ -59,6 +65,9 @@ namespace Adam69Callouts.Callouts
             blip.Alpha = 0.75f;
             blip.IsRouteEnabled = true;
 
+            // Stop traffic around the spawn point
+            StopTraffic();
+
             return base.OnCalloutAccepted();
         }
 
@@ -68,11 +77,23 @@ namespace Adam69Callouts.Callouts
             if (thebike) thebike.Delete();
             if (blip) blip.Delete();
 
+            // Ensure traffic restored if callout not accepted
+            if (trafficStopped) RestoreTraffic();
+
             base.OnCalloutNotAccepted();
         }
 
         public override void Process()
         {
+            // While traffic is stopped, keep density at zero each frame (native functions are per-frame)
+            if (trafficStopped)
+            {
+                // Prevent new vehicles from spawning and parked vehicles from appearing
+                NativeFunction.Natives.SET_VEHICLE_DENSITY_MULTIPLIER_THIS_FRAME(0f);
+                NativeFunction.Natives.SET_RANDOM_VEHICLE_DENSITY_MULTIPLIER_THIS_FRAME(0f);
+                NativeFunction.Natives.SET_PARKED_VEHICLE_DENSITY_MULTIPLIER_THIS_FRAME(0f);
+            }
+
             if (Game.IsKeyDown(System.Windows.Forms.Keys.L))
             {
                 PolicingRedefined.API.BackupDispatchAPI.RequestTowServiceBackup();
@@ -112,7 +133,7 @@ namespace Adam69Callouts.Callouts
                     {
                         BigMessageThread bigMessage = new BigMessageThread();
 
-                        bigMessage.MessageInstance.ShowColoredShard("Callout Complete!", "You are now ~g~CODE 4~w~.", RAGENativeUI.HudColor.Green, RAGENativeUI.HudColor.Black, 5000);
+                        bigMessage.MessageInstance.ShowColoredShard("Callout Complete!", "You are now ~g~CODE4~w~.", RAGENativeUI.HudColor.Green, RAGENativeUI.HudColor.Black, 5000);
                     }
                     else
                     {
@@ -130,12 +151,62 @@ namespace Adam69Callouts.Callouts
         {
             if (thebike) thebike.Dismiss();
             if (blip) blip.Delete();
-            Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Vehicle Blocking Crosswalk", "~b~You~w~: Dispatch, we are ~g~CODE 4~w~. Show me back 10-8.");
+            Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Vehicle Blocking Crosswalk", "~b~You~w~: Dispatch, we are ~g~CODE4~w~. Show me back 10-8.");
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
+
+            // Restore traffic when the callout ends
+            if (trafficStopped) RestoreTraffic();
 
             base.End();
 
-            Game.LogTrivial("[Adam69 Callouts LOG]: Bicycle Blocking Roadway callout is CODE 4!");
+            Game.LogTrivial("[Adam69 Callouts LOG]: Bicycle Blocking Roadway callout is CODE4!");
+        }
+
+        private static void StopTraffic()
+        {
+            try
+            {
+                // Immediately clear nearby vehicles to reduce collisions
+                NativeFunction.Natives.CLEAR_AREA_OF_VEHICLES(spawnpoint.X, spawnpoint.Y, spawnpoint.Z, trafficStopRadius, false, false, false, false, false);
+
+                // Set multipliers to zero for this and subsequent frames (kept in Process)
+                NativeFunction.Natives.SET_VEHICLE_DENSITY_MULTIPLIER_THIS_FRAME(0f);
+                NativeFunction.Natives.SET_RANDOM_VEHICLE_DENSITY_MULTIPLIER_THIS_FRAME(0f);
+                NativeFunction.Natives.SET_PARKED_VEHICLE_DENSITY_MULTIPLIER_THIS_FRAME(0f);
+
+                trafficStopped = true;
+
+                if (Settings.EnableLogs)
+                {
+                    Game.LogTrivial("[Adam69 Callouts LOG]: Traffic stopped around bicycle spawnpoint.");
+                }
+            }
+            catch
+            {
+                // Fail silently; not critical
+            }
+        }
+
+        private static void RestoreTraffic()
+        {
+            try
+            {
+                // Restore normal traffic multipliers
+                NativeFunction.Natives.SET_VEHICLE_DENSITY_MULTIPLIER_THIS_FRAME(1f);
+                NativeFunction.Natives.SET_RANDOM_VEHICLE_DENSITY_MULTIPLIER_THIS_FRAME(1f);
+                NativeFunction.Natives.SET_PARKED_VEHICLE_DENSITY_MULTIPLIER_THIS_FRAME(1f);
+
+                trafficStopped = false;
+
+                if (Settings.EnableLogs)
+                {
+                    Game.LogTrivial("[Adam69 Callouts LOG]: Traffic restored after bicycle callout.");
+                }
+            }
+            catch
+            {
+                // Fail silently
+            }
         }
 
     }
