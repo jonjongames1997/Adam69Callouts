@@ -1,4 +1,6 @@
-﻿namespace Adam69Callouts
+﻿using System.Globalization;
+
+namespace Adam69Callouts
 {
     internal static class Settings
     {
@@ -26,6 +28,11 @@
         internal static Keys RequestVehicleInfo { get; set; } = Keys.P;
         internal static Keys RequestTowTruck { get; set; } = Keys.L;
         public static bool EnableLogs { get; set; }
+
+        // Traffic settings (configurable via INI)
+        internal static float TrafficStopRadius { get; set; } = 60f; // meters
+        internal static float TrafficDensityMultiplier { get; set; } = 0f; //0 = no traffic,1 = normal
+        internal static float TrafficRestoreMultiplier { get; set; } = 1f; // value to restore to when callout ends
 
         internal static void LoadSettings()
         {
@@ -58,7 +65,27 @@
             RequestTowTruck = initializationFile.ReadEnum<Keys>("Keys", "RequestTowTruck", Keys.L);
             Settings.EnableLogs = initializationFile.ReadBoolean("Settings", "EnableLogs", false);
 
+            // Read traffic settings (as strings then parse to allow safe parsing)
+            var radiusStr = initializationFile.ReadString("Traffic", "StopRadius", Settings.TrafficStopRadius.ToString(CultureInfo.InvariantCulture));
+            if (!float.TryParse(radiusStr, NumberStyles.Float, CultureInfo.InvariantCulture, out var radius))
+            {
+                radius = Settings.TrafficStopRadius;
+            }
+            TrafficStopRadius = radius;
 
+            var densityStr = initializationFile.ReadString("Traffic", "DensityMultiplier", Settings.TrafficDensityMultiplier.ToString(CultureInfo.InvariantCulture));
+            if (!float.TryParse(densityStr, NumberStyles.Float, CultureInfo.InvariantCulture, out var density))
+            {
+                density = Settings.TrafficDensityMultiplier;
+            }
+            TrafficDensityMultiplier = density;
+
+            var restoreStr = initializationFile.ReadString("Traffic", "RestoreMultiplier", Settings.TrafficRestoreMultiplier.ToString(CultureInfo.InvariantCulture));
+            if (!float.TryParse(restoreStr, NumberStyles.Float, CultureInfo.InvariantCulture, out var restore))
+            {
+                restore = Settings.TrafficRestoreMultiplier;
+            }
+            TrafficRestoreMultiplier = restore;
         }
 
         internal static void SaveConfigSettings()
@@ -89,6 +116,11 @@
             ini.Write("Keys", "RequestVehicleInfo", Keys.P);
             ini.Write("Keys", "RequestTowTruck", Keys.L);
             ini.Write("Settings", "EnableLogs", false);
+
+            // Traffic settings
+            ini.Write("Traffic", "StopRadius", TrafficStopRadius);
+            ini.Write("Traffic", "DensityMultiplier", TrafficDensityMultiplier);
+            ini.Write("Traffic", "RestoreMultiplier", TrafficRestoreMultiplier);
 
             ini.ReCreate();
         }
