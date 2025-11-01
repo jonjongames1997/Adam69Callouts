@@ -16,7 +16,12 @@ namespace Adam69Callouts.Callouts
 
         // Traffic control
         private static bool trafficStopped = false;
-        private const float trafficStopRadius = 60f; // radius to clear/stop traffic around the bike
+        private static bool trafficOverrideEnabled = false;
+
+        // Saved multipliers (best-effort; game does not expose getters reliably, so we use configured restore value)
+        private static float savedVehicleDensity = 1f;
+        private static float savedRandomVehicleDensity = 1f;
+        private static float savedParkedVehicleDensity = 1f;
 
         public override bool OnBeforeCalloutDisplayed()
         {
@@ -85,13 +90,20 @@ namespace Adam69Callouts.Callouts
 
         public override void Process()
         {
-            // While traffic is stopped, keep density at zero each frame (native functions are per-frame)
-            if (trafficStopped)
+            // While traffic override is enabled, apply configured multipliers each frame (these natives are per-frame overrides)
+            if (trafficOverrideEnabled)
             {
-                // Prevent new vehicles from spawning and parked vehicles from appearing
-                NativeFunction.Natives.SET_VEHICLE_DENSITY_MULTIPLIER_THIS_FRAME(0f);
-                NativeFunction.Natives.SET_RANDOM_VEHICLE_DENSITY_MULTIPLIER_THIS_FRAME(0f);
-                NativeFunction.Natives.SET_PARKED_VEHICLE_DENSITY_MULTIPLIER_THIS_FRAME(0f);
+                try
+                {
+                    float target = Settings.TrafficDensityMultiplier;
+                    NativeFunction.Natives.SET_VEHICLE_DENSITY_MULTIPLIER_THIS_FRAME(target);
+                    NativeFunction.Natives.SET_RANDOM_VEHICLE_DENSITY_MULTIPLIER_THIS_FRAME(target);
+                    NativeFunction.Natives.SET_PARKED_VEHICLE_DENSITY_MULTIPLIER_THIS_FRAME(target);
+                }
+                catch
+                {
+                    // ignore any native call failures
+                }
             }
 
             if (Game.IsKeyDown(System.Windows.Forms.Keys.L))
@@ -167,13 +179,15 @@ namespace Adam69Callouts.Callouts
             try
             {
                 // Immediately clear nearby vehicles to reduce collisions
-                NativeFunction.Natives.CLEAR_AREA_OF_VEHICLES(spawnpoint.X, spawnpoint.Y, spawnpoint.Z, trafficStopRadius, false, false, false, false, false);
+                NativeFunction.Natives.CLEAR_AREA_OF_VEHICLES(spawnpoint.X, spawnpoint.Y, spawnpoint.Z, Settings.TrafficStopRadius, false, false, false, false, false);
 
-                // Set multipliers to zero for this and subsequent frames (kept in Process)
-                NativeFunction.Natives.SET_VEHICLE_DENSITY_MULTIPLIER_THIS_FRAME(0f);
-                NativeFunction.Natives.SET_RANDOM_VEHICLE_DENSITY_MULTIPLIER_THIS_FRAME(0f);
-                NativeFunction.Natives.SET_PARKED_VEHICLE_DENSITY_MULTIPLIER_THIS_FRAME(0f);
+                // Save current multipliers (best effort). The game does not provide reliable GET natives for these, so use configured restore value.
+                savedVehicleDensity = Settings.TrafficRestoreMultiplier;
+                savedRandomVehicleDensity = Settings.TrafficRestoreMultiplier;
+                savedParkedVehicleDensity = Settings.TrafficRestoreMultiplier;
 
+                // Enable per-frame override in Process()
+                trafficOverrideEnabled = true;
                 trafficStopped = true;
 
                 if (Settings.EnableLogs)
@@ -191,10 +205,13 @@ namespace Adam69Callouts.Callouts
         {
             try
             {
-                // Restore normal traffic multipliers
-                NativeFunction.Natives.SET_VEHICLE_DENSITY_MULTIPLIER_THIS_FRAME(1f);
-                NativeFunction.Natives.SET_RANDOM_VEHICLE_DENSITY_MULTIPLIER_THIS_FRAME(1f);
-                NativeFunction.Natives.SET_PARKED_VEHICLE_DENSITY_MULTIPLIER_THIS_FRAME(1f);
+                // Disable per-frame override so game returns to normal behavior
+                trafficOverrideEnabled = false;
+
+                // Apply saved multipliers for the current frame to reduce visual glitches (best-effort)
+                NativeFunction.Natives.SET_VEHICLE_DENSITY_MULTIPLIER_THIS_FRAME(savedVehicleDensity);
+                NativeFunction.Natives.SET_RANDOM_VEHICLE_DENSITY_MULTIPLIER_THIS_FRAME(savedRandomVehicleDensity);
+                NativeFunction.Natives.SET_PARKED_VEHICLE_DENSITY_MULTIPLIER_THIS_FRAME(savedParkedVehicleDensity);
 
                 trafficStopped = false;
 
