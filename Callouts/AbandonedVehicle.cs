@@ -129,8 +129,8 @@ namespace Adam69Callouts.Callouts
 
         public override void End()
         {
-            _vehicle.Dismiss();
-            _vehicleBlip.Delete();
+            if (_vehicle.Exists()) _vehicle.Dismiss();
+            if (_vehicleBlip.Exists()) _vehicleBlip.Delete();
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Abandoned Vehicle", "~b~You~w~: Dispatch, we are ~g~CODE 4~w~. Show me back 10-8.");
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
 
