@@ -61,8 +61,8 @@ namespace Adam69Callouts.Callouts
 
         public override void OnCalloutNotAccepted()
         {
-            if (deadBird) deadBird.Delete();
-            if (deadBirdBlip) deadBirdBlip.Delete();
+            if (deadBird.Exists()) deadBird.Delete();
+            if (deadBirdBlip.Exists()) deadBirdBlip.Delete();
 
             base.OnCalloutNotAccepted();
         }
@@ -79,7 +79,23 @@ namespace Adam69Callouts.Callouts
 
             if (MainPlayer.DistanceTo(deadBird) <= 5f)
             {
-                Game.DisplayHelp("Press ~y~" + Settings.CallAnimalControlKey.ToString() + "~w~ to call animal control");
+                if (Settings.HelpMessages)
+                {
+                    Game.DisplayHelp("Press ~y~" + Settings.CallAnimalControlKey.ToString() + "~w~ to call animal control");
+                }
+                else
+                {
+                    Settings.HelpMessages = false;
+                    if (Settings.EnableLogs)
+                    {
+                        Game.LogTrivial("[LOG]: Help messages are disabled in the config file.");
+                        LoggingManager.Log("[LOG]: Help messages are disabled in the config file.");
+                    }
+                    else
+                    {
+                        Settings.EnableLogs = false;
+                    }
+                }
             }
 
             if (MainPlayer.IsDead)
