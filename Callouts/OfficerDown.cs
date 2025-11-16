@@ -272,7 +272,7 @@ namespace Adam69Callouts.Callouts
                     }
                 }
 
-                if (MainPlayer.IsDead || Game.IsKeyDown(Settings.EndCall))
+                if (MainPlayer.IsDead)
                 {
                     if (Settings.MissionMessages)
                     {
@@ -284,6 +284,11 @@ namespace Adam69Callouts.Callouts
                         Settings.MissionMessages = false;
                     }
 
+                    End();
+                }
+
+                if(Game.IsKeyDown(Settings.EndCall))
+                {
                     End();
                 }
             }
