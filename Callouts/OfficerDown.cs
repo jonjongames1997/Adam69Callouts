@@ -73,24 +73,29 @@ namespace Adam69Callouts.Callouts
             officer.BlockPermanentEvents = true;
             officer.Kill();
             officer.IsValid();
+            officer.Exists();
 
             NativeFunction.Natives.APPLY_PED_DAMAGE_PACK(officer, "TD_PISTOL_FRONT", 1f, 1f);
 
             emergencyVehicle = new Vehicle(officerVehicle[new Random().Next((int)officerVehicle.Length)], vehicleSpawn, 0f);
             emergencyVehicle.IsPersistent = true;
             emergencyVehicle.IsValid();
+            emergencyVehicle.Exists();
 
             suspect = new Ped(susSpawn);
             suspect.IsPersistent = true;
             suspect.IsValid();
             suspect.BlockPermanentEvents = true;
+            suspect.Exists();
 
             copBlip = officer.AttachBlip();
             copBlip.Color = System.Drawing.Color.Blue;
             copBlip.IsRouteEnabled = true;
+            copBlip.Exists();
 
             suspectBlip = suspect.AttachBlip();
             suspectBlip.Color = System.Drawing.Color.Red;
+            suspectBlip.Exists();
 
             try
             {
@@ -133,13 +138,13 @@ namespace Adam69Callouts.Callouts
 
         public override void OnCalloutNotAccepted()
         {
-            if (suspect) suspect.Delete();
-            if (suspectBlip) suspectBlip.Delete();
-            if (copBlip) copBlip.Delete();
-            if (officer) officer.Delete();
-            if (officerVehicleBlip) officerVehicleBlip.Delete();
-            if (copBlip) copBlip.Delete();
-            if (emergencyVehicle) emergencyVehicle.Delete();
+            if (suspect.Exists()) suspect.Delete();
+            if (suspectBlip.Exists()) suspectBlip.Delete();
+            if (copBlip.Exists()) copBlip.Delete();
+            if (officer.Exists()) officer.Delete();
+            if (officerVehicleBlip.Exists()) officerVehicleBlip.Delete();
+            if (copBlip.Exists()) copBlip.Delete();
+            if (emergencyVehicle.Exists()) emergencyVehicle.Delete();
 
             base.OnCalloutNotAccepted();
         }
@@ -288,13 +293,13 @@ namespace Adam69Callouts.Callouts
 
         public override void End()
         {
-            if (officer) officer.WarpIntoVehicle(emergencyVehicle, -1);
-            if (officer) officer.Dismiss();
-            if (copBlip) copBlip.Delete();
-            if (suspect) suspect.Dismiss();
-            if (suspectBlip) suspectBlip.Delete();
-            if (emergencyVehicle) emergencyVehicle.Delete();
-            if (officerVehicleBlip) officerVehicleBlip.Delete();
+            if (officer.Exists()) officer.WarpIntoVehicle(emergencyVehicle, -1);
+            if (officer.Exists()) officer.Dismiss();
+            if (copBlip.Exists()) copBlip.Delete();
+            if (suspect.Exists()) suspect.Dismiss();
+            if (suspectBlip.Exists()) suspectBlip.Delete();
+            if (emergencyVehicle.Exists()) emergencyVehicle.Delete();
+            if (officerVehicleBlip.Exists()) officerVehicleBlip.Delete();
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Officer Down", "~b~You~w~: We are Code4. Show me back10-8!");
             base.End();
@@ -309,7 +314,6 @@ namespace Adam69Callouts.Callouts
             else
             {
                 Settings.MissionMessages = false;
-                return;
             }
 
 
