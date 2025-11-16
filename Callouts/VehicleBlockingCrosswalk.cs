@@ -27,7 +27,7 @@ namespace Adam69Callouts.Callouts
             };
             spawnpoint = LocationChooser.ChooseNearestLocation(list);
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
-            LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("CRIME_ROAD_BLOCKADE_01", spawnpoint);
+            LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("Adam69Callouts_Vehicle_Obstruction_Crime_01", spawnpoint);
             CalloutInterfaceAPI.Functions.SendMessage(this, "A vehicle blocking crosswalk");
             CalloutMessage = "Vehicle Blocking Crosswalk Reported";
             CalloutPosition = spawnpoint;
