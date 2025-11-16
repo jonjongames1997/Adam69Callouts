@@ -34,7 +34,15 @@ namespace Adam69Callouts.Callouts
 
         public override bool OnCalloutAccepted()
         {
-            Game.LogTrivial("Adam69 Callouts [LOG]: Suspicious Vehicle callout has been accepted!");
+            if (Settings.EnableLogs)
+            {
+                Game.LogTrivial("Adam69 Callouts [LOG]: Suspicious Vehicle callout has been accepted!");
+            }
+            else
+            {
+                Settings.EnableLogs = false;
+            }
+
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Suspicious Vehicle", "~b~Dispatch~w~: Vehicle and Suspect has been spotted. Respond ~y~Code 2~w~.");
 
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_2_Audio");
@@ -44,6 +52,7 @@ namespace Adam69Callouts.Callouts
                 IsPersistent = true,
                 IsStolen = false
             };
+            motorVehicle.Exists();
 
             if (motorVehicle.IsValid())
             {
@@ -51,6 +60,7 @@ namespace Adam69Callouts.Callouts
                 vehBlip.Color = System.Drawing.Color.Red;
                 vehBlip.Alpha = 0.75f;
                 vehBlip.IsRouteEnabled = true;
+                vehBlip.Exists();
             }
 
             return base.OnCalloutAccepted();
@@ -58,8 +68,8 @@ namespace Adam69Callouts.Callouts
 
         public override void OnCalloutNotAccepted()
         {
-            motorVehicle.Delete();
-            vehBlip.Delete();
+            if (motorVehicle.Exists()) motorVehicle.Delete();
+            if (vehBlip.Exists()) vehBlip.Delete();
 
             base.OnCalloutNotAccepted();
         }
@@ -87,7 +97,6 @@ namespace Adam69Callouts.Callouts
                 else
                 {
                     Settings.MissionMessages = false;
-                    return;
                 }
 
                 End();
@@ -103,7 +112,6 @@ namespace Adam69Callouts.Callouts
                 else
                 {
                     Settings.MissionMessages = false;
-                    return;
                 }
 
                 End();
@@ -114,8 +122,8 @@ namespace Adam69Callouts.Callouts
 
         public override void End()
         {
-            motorVehicle?.Dismiss();
-            vehBlip?.Delete();
+            if (motorVehicle.Exists()) motorVehicle.Delete();
+            if (vehBlip.Exists()) vehBlip.Delete();
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Suspicious Vehicle", "~b~You~w~: Dispatch, we are ~g~CODE 4~w~. Show me back 10-8.");
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
 
@@ -130,10 +138,16 @@ namespace Adam69Callouts.Callouts
             else
             {
                 Settings.MissionMessages = false;
-                return;
             }
 
-            Game.LogTrivial("Adam69 Callouts [LOG]: Suspicious Vehicle callout is Code 4!");
+            if (Settings.EnableLogs)
+            {
+                Game.LogTrivial("Adam69 Callouts [LOG]: Suspicious Vehicle callout is Code 4!");
+            }
+            else
+            {
+                Settings.EnableLogs = false;
+            }
         }
     }
 }
