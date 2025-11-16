@@ -29,7 +29,7 @@ namespace Adam69Callouts.Callouts
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_SuspiciousPerson_Audio");
             CalloutInterfaceAPI.Functions.SendMessage(this, "Citizen's report of a suspicious person.");
-            CalloutMessage = "Suspect may be armed with a deadly weapon.";
+            CalloutMessage = "Suspicious Person Reported";
             CalloutPosition = spawnpoint;
 
             return base.OnBeforeCalloutDisplayed();
@@ -37,7 +37,15 @@ namespace Adam69Callouts.Callouts
 
         public override bool OnCalloutAccepted()
         {
-            Game.LogTrivial("[Adam69 Callouts LOG]: Suspicious Person callout accepted!");
+            if (Settings.EnableLogs)
+            {
+                Game.LogTrivial("[Adam69 Callouts LOG]: Suspicious Person callout accepted!");
+            }
+            else
+            {
+                Settings.EnableLogs = false;
+            }
+
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Suspicious Person", "~b~Dispatch~w~: The suspect has been spotted! Respond ~r~Code 2~w~.");
 
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_2_Audio");
@@ -50,6 +58,7 @@ namespace Adam69Callouts.Callouts
                 BlockPermanentEvents = true
             };
             suspect.IsValid();
+            suspect.Exists();
 
             suspect.Tasks.PlayAnimation(new AnimationDictionary("anim@heists@fleeca_bank@ig_7_jetski_owner"), "owner_idle", -1f, AnimationFlags.Loop);
 
@@ -57,6 +66,7 @@ namespace Adam69Callouts.Callouts
             susBlip.Color = System.Drawing.Color.Red;
             susBlip.Alpha = 0.5f;
             susBlip.IsRouteEnabled = true;
+            susBlip.Exists();
 
             if (suspect.IsMale)
                 malefemale = "Sir";
@@ -70,8 +80,8 @@ namespace Adam69Callouts.Callouts
 
         public override void OnCalloutNotAccepted()
         {
-            suspect.Delete();
-            susBlip.Delete();
+            if (suspect.Exists()) suspect.Delete();
+            if(susBlip.Exists()) susBlip.Delete();
 
             base.OnCalloutNotAccepted();
         }
@@ -98,7 +108,6 @@ namespace Adam69Callouts.Callouts
                 else
                 {
                     Settings.MissionMessages = false;
-                    return;
                 }
 
                 End();
@@ -114,7 +123,6 @@ namespace Adam69Callouts.Callouts
                 else
                 {
                     Settings.MissionMessages = false;
-                    return;
                 }
                 End();
 
@@ -240,8 +248,8 @@ namespace Adam69Callouts.Callouts
 
         public override void End()
         {
-            suspect.Dismiss();
-            susBlip.Delete();
+            if (suspect.Exists()) suspect.Delete();
+            if (susBlip.Exists()) susBlip.Delete();
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Suspicious Person", "~b~You~w~: Dispatch, we are ~g~Code 4~w~. Show me back 10-8..");
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
 
@@ -254,10 +262,17 @@ namespace Adam69Callouts.Callouts
             else
             {
                 Settings.MissionMessages = false;
-                return;
             }
 
-            Game.LogTrivial("Adam69 Callouts [LOG]: Suspicious Person callout is code 4!");
+            if (Settings.EnableLogs)
+            {
+                Game.LogTrivial("Adam69 Callouts [LOG]: Suspicious Person callout is code 4!");
+            }
+            else
+            {
+                Settings.EnableLogs = false;
+            }
+
             base.End();
         }
     }
