@@ -1,6 +1,6 @@
 ﻿Changelog:
 
-[October 2025]
+[November 2025]
 
 v0.4.3:
 
@@ -9,6 +9,8 @@ v0.4.3:
 - Added a DLCChecker for the Drugs Found callout to check if you have the required DLC installed. (Requires the Money Fronts DLC installed) // DLC: mp2025_01 
 - Added an option in the config for debug logging. You only enable this if you encounter an issue with the plugin/Asked by my support team.
 - Working on a new callout for Blaine County and Paleto Bay area. (No ETA yet)
+- Airport Callouts are being considered for a future update.
+- Improved entity existence checks to prevent potential crashes.
 
 [September 23, 2025]
 
