@@ -23,7 +23,7 @@ namespace Adam69Callouts.Callouts
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("CRIME_ROAD_BLOCKADE_01", spawnpoint);
             CalloutInterfaceAPI.Functions.SendMessage(this, "A citizen reporting a vehicle blocking sidewalk.");
-            CalloutMessage = "Vehicle blocking pedestrian's way.";
+            CalloutMessage = "Vehicle Blocking Sidewalk Reported";
             CalloutPosition = spawnpoint;
 
             return base.OnBeforeCalloutDisplayed();
@@ -31,7 +31,11 @@ namespace Adam69Callouts.Callouts
 
         public override bool OnCalloutAccepted()
         {
-            Game.LogTrivial("Adam69 Callouts [LOG]: Vehicle Blocking Sidewalk callout has been accepted!");
+            if (Settings.EnableLogs)
+            {
+                Game.LogTrivial("Adam69 Callouts [LOG]: Vehicle Blocking Sidewalk callout has been accepted!");
+            }
+
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Vehicle Blocking Sidewalk", "~b~Dispatch~w~: Vehicle has been located. Respond ~g~Code 1~w~.");
 
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_1_Audio");
@@ -40,18 +44,20 @@ namespace Adam69Callouts.Callouts
             {
                 IsPersistent = true
             };
+            motorVehicle.Exists();
 
             vehBlip = motorVehicle.AttachBlip();
             vehBlip.Color = System.Drawing.Color.AliceBlue;
             vehBlip.IsRouteEnabled = true;
+            vehBlip.Exists();
 
             return base.OnCalloutAccepted();
         }
 
         public override void OnCalloutNotAccepted()
         {
-            motorVehicle.Delete();
-            vehBlip.Delete();
+            if (motorVehicle.Exists()) motorVehicle.Delete();
+            if (vehBlip.Exists()) vehBlip.Delete();
 
             base.OnCalloutNotAccepted();
         }
@@ -60,7 +66,7 @@ namespace Adam69Callouts.Callouts
         {
             base.Process();
 
-            if (Game.IsKeyDown(Settings.RequestVehicleInfo))
+            if (Game.IsKeyDown(System.Windows.Forms.Keys.P))
             {
                 PolicingRedefined.API.VehicleAPI.RunVehicleThroughDispatch(motorVehicle, true, true, true);
                 LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69_Callouts_Request_Vehicle_Info_Audio");
@@ -83,7 +89,6 @@ namespace Adam69Callouts.Callouts
                 else
                 {
                     Settings.MissionMessages = false;
-                    return;
                 }
 
                 End();
@@ -99,7 +104,6 @@ namespace Adam69Callouts.Callouts
                 else
                 {
                     Settings.MissionMessages = false;
-                    return;
                 }
 
                 End();
@@ -108,8 +112,8 @@ namespace Adam69Callouts.Callouts
 
         public override void End()
         {
-            motorVehicle.Delete();
-            vehBlip.Delete();
+            if (motorVehicle.Exists()) motorVehicle.Delete();
+            if (vehBlip.Exists()) vehBlip.Delete();
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Vehicle Blocking Sidewalk", "~b~You~w~: Dispatch, we are ~g~Code 4~w~. Show me back 10-8.");
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
 
@@ -122,12 +126,14 @@ namespace Adam69Callouts.Callouts
             else
             {
                 Settings.MissionMessages = false;
-                return;
             }
 
             base.End();
 
-            Game.LogTrivial("Adam69 Callouts [LOG]: Vehicle Blocking Sidewalk callout is Code 4!");
+            if(Settings.EnableLogs)
+            {
+                Game.LogTrivial("Adam69 Callouts [LOG]: Vehicle Blocking Sidewalk callout has ended!");
+            }
         }
     }
 }
