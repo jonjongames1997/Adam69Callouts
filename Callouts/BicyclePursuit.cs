@@ -44,10 +44,12 @@ namespace Adam69Callouts.Callouts
             bicycle.IsPersistent = true;
             bicycle.IsStolen = true;
             bicycle.IsValid();
+            bicycle.Exists();
 
             blip = bicycle.AttachBlip();
             blip.Color = System.Drawing.Color.Yellow;
             blip.Alpha = 1.0f;
+            blip.Exists();
 
             suspect = new Ped(spawnpoint);
             suspect.WarpIntoVehicle(bicycle, -1);
@@ -55,6 +57,7 @@ namespace Adam69Callouts.Callouts
             suspect.IsPersistent = true;
             suspect.BlockPermanentEvents = true;
             suspect.IsValid();
+            suspect.Exists();
 
             blip = suspect.AttachBlip();
             blip.Color = System.Drawing.Color.Red;
@@ -71,9 +74,9 @@ namespace Adam69Callouts.Callouts
 
         public override void OnCalloutNotAccepted()
         {
-            if (bicycle) bicycle.Delete();
-            if (suspect) suspect.Delete();
-            if (blip) blip.Delete();
+            if (bicycle.Exists()) bicycle.Delete();
+            if (suspect.Exists()) suspect.Delete();
+            if (blip.Exists()) blip.Delete();
 
             base.OnCalloutNotAccepted();
         }
@@ -134,9 +137,9 @@ namespace Adam69Callouts.Callouts
 
         public override void End()
         {
-            if (suspect) suspect.Dismiss();
-            if (bicycle) bicycle.Delete();
-            if (blip) blip.Delete();
+            if (suspect.Exists()) suspect.Dismiss();
+            if (bicycle.Exists()) bicycle.Delete();
+            if (blip.Exists()) blip.Delete();
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Bicycle Pursuit", "~b~You~w~: Dispatch, we are ~g~CODE 4~w~. Show me back 10-8.");
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
 
