@@ -47,6 +47,7 @@ namespace Adam69Callouts.Callouts
             };
 
             suspect.IsValid();
+            suspect.Exists();
 
             suspect.Tasks.PlayAnimation(new AnimationDictionary("timetable@tracy@ig_5@idle_a"), "idle_a", -1f, AnimationFlags.Loop);
             suspect.KeepTasks = true;
@@ -54,6 +55,7 @@ namespace Adam69Callouts.Callouts
             susBlip = suspect.AttachBlip();
             susBlip.Color = System.Drawing.Color.Pink;
             susBlip.IsRouteEnabled = true;
+            susBlip.Exists();
 
             if (suspect.IsMale)
                 malefemale = "sir";
@@ -67,8 +69,8 @@ namespace Adam69Callouts.Callouts
 
         public override void OnCalloutNotAccepted()
         {
-            if (suspect) suspect.Delete();
-            if (susBlip) susBlip.Delete();
+            if (suspect.Exists()) suspect.Delete();
+            if (susBlip.Exists()) susBlip.Delete();
 
             base.OnCalloutNotAccepted();
         }
@@ -93,7 +95,6 @@ namespace Adam69Callouts.Callouts
                             else
                             {
                                 Settings.HelpMessages = false;
-                                return;
                             }
 
                             if (Game.IsKeyDown(Settings.Dialog))
@@ -162,7 +163,6 @@ namespace Adam69Callouts.Callouts
                 else
                 {
                     Settings.MissionMessages = false;
-                    return;
                 }
 
                 End();
@@ -179,8 +179,6 @@ namespace Adam69Callouts.Callouts
                 {
                     Settings.MissionMessages = false;
                 }
-
-                Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Loitering", "~b~You~w~: Dispatch, we are ~g~CODE 4~w~. Show me back 10-8.");
                 End();
             }
         }
@@ -201,7 +199,6 @@ namespace Adam69Callouts.Callouts
             else
             {
                 Settings.MissionMessages = false;
-                return;
             }
 
             base.End();
