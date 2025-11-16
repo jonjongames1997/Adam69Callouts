@@ -104,7 +104,6 @@ namespace Adam69Callouts
                         {
                             Settings.EnableLogs = false;
                         }
-                        return;
                     }
 
                     if (Settings.MissionMessages)
@@ -116,7 +115,6 @@ namespace Adam69Callouts
                     else
                     {
                         Settings.MissionMessages = false;
-                        return;
                     }
 
                     VersionChecker.PluginCheck.IsUpdateAvailableAsync().GetAwaiter().GetResult();
