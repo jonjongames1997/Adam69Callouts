@@ -63,6 +63,7 @@ namespace Adam69Callouts.Callouts
                 BlockPermanentEvents = true
             };
             suspect.IsValid();
+            suspect.Exists();
 
             victim = new Ped(victimSpawn)
             {
@@ -71,7 +72,7 @@ namespace Adam69Callouts.Callouts
             };
 
             victim.IsValid();
-
+            victim.Exists();
             victim.Kill();
             NativeFunction.Natives.APPLY_PED_DAMAGE_PACK(victim, "TD_KNIFE_FRONT", 1f, 1f);
 
@@ -184,7 +185,7 @@ namespace Adam69Callouts.Callouts
                 Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Dispatch:", "An Ambulance has been called to the scene.");
             }
 
-            if (Game.IsKeyDown(Settings.EndCall))
+            if (Game.IsKeyDown(System.Windows.Forms.Keys.NumPad1))
             {
                 if (Settings.MissionMessages)
                 {
@@ -194,7 +195,6 @@ namespace Adam69Callouts.Callouts
                 else
                 {
                     Settings.MissionMessages = false;
-                    return;
                 }
 
                 this.End();
@@ -203,10 +203,10 @@ namespace Adam69Callouts.Callouts
 
         public override void End()
         {
-            if (suspect) suspect.Dismiss();
-            if (victim) victim.Dismiss();
-            if (suspectBlip) suspectBlip.Delete();
-            if (victimBlip) victimBlip.Delete();
+            if (suspect.Exists()) suspect.Dismiss();
+            if (victim.Exists()) victim.Dismiss();
+            if (suspectBlip.Exists()) suspectBlip.Delete();
+            if (victimBlip.Exists()) victimBlip.Delete();
 
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "Person With A Knife", "~w~Dispatch: The scene is now ~r~CODE 4~w~.");
