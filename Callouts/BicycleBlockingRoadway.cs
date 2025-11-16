@@ -62,13 +62,15 @@ namespace Adam69Callouts.Callouts
             thebike = new Vehicle(BicycleList[new Random().Next((int)BicycleList.Length)], spawnpoint, 0f);
             thebike.IsValid();
             thebike.IsPersistent = true;
+            thebike.Exists();
 
             thebike.IsStolen = false;
 
             blip = thebike.AttachBlip();
             blip.Color = System.Drawing.Color.Yellow;
-            blip.Alpha = 0.75f;
+            blip.Alpha = 0.8f;
             blip.IsRouteEnabled = true;
+            blip.Exists();
 
             // Stop traffic around the spawn point
             StopTraffic();
@@ -79,8 +81,8 @@ namespace Adam69Callouts.Callouts
         public override void OnCalloutNotAccepted()
         {
 
-            if (thebike) thebike.Delete();
-            if (blip) blip.Delete();
+            if (thebike.Exists()) thebike.Delete();
+            if (blip.Exists()) blip.Delete();
 
             // Ensure traffic restored if callout not accepted
             if (trafficStopped) RestoreTraffic();
@@ -171,7 +173,14 @@ namespace Adam69Callouts.Callouts
 
             base.End();
 
-            Game.LogTrivial("[Adam69 Callouts LOG]: Bicycle Blocking Roadway callout is CODE4!");
+            if (Settings.EnableLogs)
+            {
+                Game.LogTrivial("[Adam69 Callouts LOG]: Bicycle Blocking Roadway callout is CODE4!");
+            }
+            else
+            {
+                Settings.EnableLogs = false;
+            }
         }
 
         private static void StopTraffic()
