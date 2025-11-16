@@ -28,7 +28,15 @@ namespace Adam69Callouts.Callouts
 
         public override bool OnCalloutAccepted()
         {
-            Game.LogTrivial("Adam69 Callouts [LOG]: Person Carrying A Concealed Weapon callout has been accepted!");
+            if (Settings.EnableLogs)
+            {
+                Game.LogTrivial("Adam69 Callouts [LOG]: Person Carrying A Concealed Weapon callout has been accepted!");
+            }
+            else
+            {
+                Settings.EnableLogs = false;
+            }
+
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Person Carrying A Concealed Weapon", "~b~Dispatch~w~: Suspect has been spotted. Respond ~y~Code 2~w~.");
 
 
@@ -37,12 +45,14 @@ namespace Adam69Callouts.Callouts
             suspect = new Ped(spawnpoint);
             suspect.IsPersistent = true;
             suspect.BlockPermanentEvents = true;
+            suspect.Exists();
 
             suspect.Tasks.StandStill(6000);
 
             susBlip = suspect.AttachBlip();
             susBlip.Color = System.Drawing.Color.Red;
             susBlip.IsRouteEnabled = true;
+            susBlip.Exists();
 
             if (suspect.IsMale)
                 malefemale = "Sir";
@@ -56,8 +66,8 @@ namespace Adam69Callouts.Callouts
 
         public override void OnCalloutNotAccepted()
         {
-            if (suspect) suspect.Delete();
-            if (susBlip) susBlip.Delete();
+            if (suspect.Exists()) suspect.Delete();
+            if (susBlip.Exists()) susBlip.Delete();
 
             base.OnCalloutNotAccepted();
         }
@@ -137,7 +147,7 @@ namespace Adam69Callouts.Callouts
                 }
                 else
                 {
-                    return;
+                    Settings.MissionMessages = false;
                 }
 
                 End();
@@ -180,7 +190,14 @@ namespace Adam69Callouts.Callouts
 
             base.End();
 
-            Game.LogTrivial("Adam69 Callouts [LOG]: Person Carrying A Concealed Weapon callout is Code 4!");
+            if (Settings.EnableLogs)
+            {
+                Game.LogTrivial("Adam69 Callouts [LOG]: Person Carrying A Concealed Weapon callout is Code 4!");
+            }
+            else
+            {
+                Settings.EnableLogs = false;
+            }
         }
     }
 }
