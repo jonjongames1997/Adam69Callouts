@@ -46,6 +46,7 @@ namespace Adam69Callouts.Callouts
                 _vehicleBlip.Color = System.Drawing.Color.Yellow;
                 _vehicleBlip.Alpha = 0.5f;
                 _vehicleBlip.IsRouteEnabled = true;
+                _vehicle.Exists();
             }
             else
             {
@@ -62,8 +63,8 @@ namespace Adam69Callouts.Callouts
 
         public override void OnCalloutNotAccepted()
         {
-            if (_vehicle) _vehicle.Delete();
-            if (_vehicleBlip) _vehicleBlip.Delete();
+            if (_vehicle.Exists()) _vehicle.Delete();
+            if (_vehicleBlip.Exists()) _vehicleBlip.Delete();
 
             base.OnCalloutNotAccepted();
         }
@@ -94,11 +95,10 @@ namespace Adam69Callouts.Callouts
                 else
                 {
                     Settings.HelpMessages = false;
-                    return;
                 }
             }
 
-            if (MainPlayer.IsDead || Game.IsKeyDown(Settings.EndCall))
+            if (MainPlayer.IsDead)
             {
                 if (Settings.MissionMessages)
                 {
@@ -109,7 +109,6 @@ namespace Adam69Callouts.Callouts
                 else
                 {
                     Settings.MissionMessages = false;
-                    return;
                 }
 
                 if (Settings.EnableLogs)
@@ -117,6 +116,11 @@ namespace Adam69Callouts.Callouts
                     LoggingManager.Log("Adam69 Callouts: Abandoned Vehicle callout failed!");
                 }
 
+                End();
+            }
+
+            if (Game.IsKeyDown(Settings.EndCall))
+            {
                 End();
             }
 
