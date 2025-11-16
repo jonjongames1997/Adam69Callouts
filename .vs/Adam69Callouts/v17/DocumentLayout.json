@@ -3,16 +3,12 @@
   "WorkspaceRootPath": "D:\\Adam69Callouts\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C330EC03-8BB7-467B-A80A-544D0C7839DE}|Adam69Callouts.csproj|d:\\adam69callouts\\callouts\\vehicleblockingcrosswalk.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C330EC03-8BB7-467B-A80A-544D0C7839DE}|Adam69Callouts.csproj|solutionrelative:callouts\\vehicleblockingcrosswalk.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C330EC03-8BB7-467B-A80A-544D0C7839DE}|Adam69Callouts.csproj|D:\\Adam69Callouts\\changelog.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{C330EC03-8BB7-467B-A80A-544D0C7839DE}|Adam69Callouts.csproj|solutionrelative:changelog.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C330EC03-8BB7-467B-A80A-544D0C7839DE}|Adam69Callouts.csproj|D:\\Adam69Callouts\\adam69callouts.ini||{3B902123-F8A7-4915-9F01-361F908088D0}",
       "RelativeMoniker": "D:0:0:{C330EC03-8BB7-467B-A80A-544D0C7839DE}|Adam69Callouts.csproj|solutionrelative:adam69callouts.ini||{3B902123-F8A7-4915-9F01-361F908088D0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C330EC03-8BB7-467B-A80A-544D0C7839DE}|Adam69Callouts.csproj|D:\\Adam69Callouts\\changelog.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{C330EC03-8BB7-467B-A80A-544D0C7839DE}|Adam69Callouts.csproj|solutionrelative:changelog.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C330EC03-8BB7-467B-A80A-544D0C7839DE}|Adam69Callouts.csproj|D:\\Adam69Callouts\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -30,11 +26,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "Main.cs",
               "DocumentMoniker": "D:\\Adam69Callouts\\Main.cs",
               "RelativeDocumentMoniker": "Main.cs",
@@ -48,7 +44,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "Settings.cs",
               "DocumentMoniker": "D:\\Adam69Callouts\\Stuff\\Settings.cs",
               "RelativeDocumentMoniker": "Stuff\\Settings.cs",
@@ -75,29 +71,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "Changelog.txt",
               "DocumentMoniker": "D:\\Adam69Callouts\\Changelog.txt",
               "RelativeDocumentMoniker": "Changelog.txt",
               "ToolTip": "D:\\Adam69Callouts\\Changelog.txt",
               "RelativeToolTip": "Changelog.txt",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
               "WhenOpened": "2025-10-04T17:42:29.587Z",
               "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "VehicleBlockingCrosswalk.cs",
-              "DocumentMoniker": "D:\\Adam69Callouts\\Callouts\\VehicleBlockingCrosswalk.cs",
-              "RelativeDocumentMoniker": "Callouts\\VehicleBlockingCrosswalk.cs",
-              "ToolTip": "D:\\Adam69Callouts\\Callouts\\VehicleBlockingCrosswalk.cs",
-              "RelativeToolTip": "Callouts\\VehicleBlockingCrosswalk.cs",
-              "ViewState": "AgIAAEUAAAAAAAAAAAAAAEsAAAAMAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-16T06:41:35.029Z",
               "EditorCaption": ""
             },
             {
