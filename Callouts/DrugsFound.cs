@@ -84,23 +84,28 @@ namespace Adam69Callouts.Callouts
                 IsPersistent = true
             };
             theDrugs.IsValid();
+            theDrugs.Exists();
             NativeFunction.Natives.ADD_BLIP_FOR_PICKUP(theDrugs);
 
             callerBlip = theCaller.AttachBlip();
             callerBlip.Color = System.Drawing.Color.Orange;
             callerBlip.Alpha = 0.5f;
+            callerBlip.Exists();
 
             drugBlip = theDrugs.AttachBlip();
             drugBlip.Color = System.Drawing.Color.Purple;
             drugBlip.IsRouteEnabled = true;
+            drugBlip.Exists();
 
             theCop = new Ped(backupList[new Random().Next((int)backupList.Length)], copSpawn, 0f);
             theCop.IsPersistent = true;
             theCop.BlockPermanentEvents = true;
             theCop.IsValid();
+            theCop.Exists();
 
             theCopBlip = theCop.AttachBlip();
             theCopBlip.Color = System.Drawing.Color.LightBlue;
+            theCopBlip.Exists();
 
             policeVehicle = new Vehicle(backupVehicle[new Random().Next((int)backupVehicle.Length)], leoVehicleSpawn, 0f);
             policeVehicle.IsPersistent = true;
@@ -239,7 +244,7 @@ namespace Adam69Callouts.Callouts
                     Settings.EnableLogs = false;
                 }
 
-                if (MainPlayer.DistanceTo(theDrugs) <= 10f)
+                if (MainPlayer.DistanceTo(theDrugs) <= 15f)
                 {
                     if (Settings.HelpMessages)
                     {
@@ -248,10 +253,9 @@ namespace Adam69Callouts.Callouts
                     else
                     {
                         Settings.HelpMessages = false;
-                        return;
                     }
 
-                    if (Game.IsKeyDown(Settings.PickUp))
+                    if (Game.IsKeyDown(System.Windows.Forms.Keys.E))
                     {
                         isCollected = true;
                         MainPlayer.Tasks.PlayAnimation(new AnimationDictionary("anim@move_m@trash"), "pickup", -1f, AnimationFlags.UpperBodyOnly);
@@ -271,7 +275,6 @@ namespace Adam69Callouts.Callouts
                     else
                     {
                         Settings.MissionMessages = false;
-                        return;
                     }
 
                     End();
@@ -287,7 +290,6 @@ namespace Adam69Callouts.Callouts
                     else
                     {
                         Settings.MissionMessages = false;
-                        return;
                     }
                 }
 
@@ -297,14 +299,14 @@ namespace Adam69Callouts.Callouts
 
         public override void End()
         {
-            if (theDrugs) theDrugs.Delete();
-            if (theCaller) theCaller.Dismiss();
-            if (drugBlip) drugBlip.Delete();
-            if (callerBlip) callerBlip.Delete();
-            if (theCop) theCop.Dismiss();
-            if (theCopBlip) theCopBlip.Delete();
-            if (policeVehicle) policeVehicle.Delete();
-            if (policeCarBlip) policeCarBlip.Delete();
+            if (theDrugs.Exists()) theDrugs.Delete();
+            if (theCaller.Exists()) theCaller.Dismiss();
+            if (drugBlip.Exists()) drugBlip.Delete();
+            if (callerBlip.Exists()) callerBlip.Delete();
+            if (theCop.Exists()) theCop.Dismiss();
+            if (theCopBlip.Exists()) theCopBlip.Delete();
+            if (policeVehicle.Exists()) policeVehicle.Delete();
+            if (policeCarBlip.Exists()) policeCarBlip.Delete();
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~y~Drugs Found", "~b~You~w~: Dispatch, we are ~g~Code 4~w~. Show me back 10-8.");
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
 
