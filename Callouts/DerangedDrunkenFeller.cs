@@ -55,8 +55,8 @@ namespace Adam69Callouts.Callouts
 
         public override void OnCalloutNotAccepted()
         {
-            if (suspect) suspect.Delete();
-            if (blip) blip.Delete();
+            if (suspect.Exists()) suspect.Delete();
+            if (blip.Exists()) blip.Delete();
 
             base.OnCalloutNotAccepted();
         }
@@ -128,7 +128,6 @@ namespace Adam69Callouts.Callouts
                 {
                     Settings.MissionMessages = false;
                     Game.LogTrivial("[LOG]: Mission messages are disabled in the config file.");
-                    return;
                 }
 
                 End();
@@ -146,7 +145,6 @@ namespace Adam69Callouts.Callouts
                     Settings.MissionMessages = false;
                     Game.LogTrivial("[LOG]: Mission messages are disabled in the config file.");
                     LoggingManager.Log("Adam69 Callouts [LOG]: Mission messages are disabled in the config file.");
-                    return;
                 }
 
                 End();
@@ -157,8 +155,8 @@ namespace Adam69Callouts.Callouts
 
         public override void End()
         {
-            if (suspect) suspect.Dismiss();
-            if (blip) blip.Delete();
+            if (suspect.Exists()) suspect.Dismiss();
+            if (blip.Exists()) blip.Delete();
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Deranged Drunken Feller", "~b~You~w~: Dispatch, we are ~g~Code 4~w~. Show me back 10-8.");
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
 
@@ -172,7 +170,6 @@ namespace Adam69Callouts.Callouts
             {
                 Settings.MissionMessages = false;
                 Game.LogTrivial("[LOG]: Mission messages are disabled in the config file.");
-                return;
             }
 
             base.End();
