@@ -73,8 +73,8 @@ namespace Adam69Callouts.Callouts
         /// </summary>
         public override void OnCalloutNotAccepted()
         {
-            motorVehicle.Delete();
-            vehBlip.Delete();
+            if (motorVehicle.Exists()) motorVehicle.Delete();
+            if (vehBlip.Exists()) vehBlip.Delete();
 
             base.OnCalloutNotAccepted();
         }
@@ -84,7 +84,7 @@ namespace Adam69Callouts.Callouts
         /// </summary>
         public override void Process()
         {
-            if (Game.IsKeyDown(Settings.RequestVehicleInfo))
+            if (Game.IsKeyDown(System.Windows.Forms.Keys.P))
             {
                 PolicingRedefined.API.VehicleAPI.RunVehicleThroughDispatch(motorVehicle, true, true, true);
                 LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69_Callouts_Request_Vehicle_Info_Audio");
@@ -135,8 +135,8 @@ namespace Adam69Callouts.Callouts
         /// </summary>
         public override void End()
         {
-            motorVehicle.Delete();
-            vehBlip.Delete();
+            if (motorVehicle.Exists()) motorVehicle.Delete();
+            if (vehBlip.Exists()) vehBlip.Delete();
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Vehicle Blocking Crosswalk", "~b~You~w~: Dispatch, we are ~g~CODE 4~w~. Show me back 10-8.");
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
 
