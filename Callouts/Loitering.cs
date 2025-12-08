@@ -103,6 +103,7 @@ namespace Adam69Callouts.Callouts
 
                                 if (counter == 1)
                                 {
+                                    NativeFunction.Natives.TASK_TURN_PED_TO_FACE_ENTITY(suspect, MainPlayer, -1);
                                     suspect.Tasks.PlayAnimation(new AnimationDictionary("rcmjosh1"), "idle", -1f, AnimationFlags.Loop);
                                     Game.DisplaySubtitle("~b~You~w~: Pardon me, " + malefemale + ". What are you doing here loitering for?");
                                 }
@@ -168,17 +169,8 @@ namespace Adam69Callouts.Callouts
                 End();
             }
 
-            if (Game.IsKeyDown(Settings.EndCall))
+            if (Game.IsKeyDown(System.Windows.Forms.Keys.End))
             {
-                if (Settings.MissionMessages)
-                {
-                    BigMessageThread bigMessage = new BigMessageThread();
-                    bigMessage.MessageInstance.ShowColoredShard("Callout Ended", "You are now ~g~CODE 4~w~.", RAGENativeUI.HudColor.Green, RAGENativeUI.HudColor.Black, 5000);
-                }
-                else
-                {
-                    Settings.MissionMessages = false;
-                }
                 End();
             }
         }

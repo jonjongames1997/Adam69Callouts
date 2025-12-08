@@ -94,19 +94,9 @@ namespace Adam69Callouts.Callouts
                 End();
             }
 
-            if (Game.IsKeyDown(Settings.EndCall))
+            if (Game.IsKeyDown(System.Windows.Forms.Keys.End))
             {
-                if (Settings.MissionMessages)
-                {
-                    BigMessageThread bigMessage = new BigMessageThread();
-                    bigMessage.MessageInstance.ShowColoredShard("Callout Complete!", "You are now ~r~CODE 4~w~.", RAGENativeUI.HudColor.Green, RAGENativeUI.HudColor.Black, 5000);
-                }
-                else
-                {
-                    Settings.MissionMessages = false;
-                }
-
-                End();
+               End();
             }
         }
 

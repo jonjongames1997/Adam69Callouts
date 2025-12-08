@@ -122,12 +122,8 @@ namespace Adam69Callouts.Callouts
                 End();
             }
 
-            if (Game.IsKeyDown(Settings.EndCall))
+            if (Game.IsKeyDown(System.Windows.Forms.Keys.End))
             {
-                
-                BigMessageThread bigMessage = new BigMessageThread();
-                bigMessage.MessageInstance.ShowColoredShard("Callout Complete!", "Return Back to patrol!", RAGENativeUI.HudColor.Red, RAGENativeUI.HudColor.Black, 5000);
-                
                 LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
 
                 End();

@@ -141,7 +141,7 @@ namespace Adam69Callouts.Callouts
 
                 End();
 
-                if (Game.IsKeyDown(Settings.EndCall))
+                if (Game.IsKeyDown(System.Windows.Forms.Keys.End))
                 {
                     if (Settings.MissionMessages)
                     {

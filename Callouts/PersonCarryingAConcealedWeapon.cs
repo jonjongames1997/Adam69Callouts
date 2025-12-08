@@ -153,18 +153,8 @@ namespace Adam69Callouts.Callouts
                 End();
             }
 
-            if (Game.IsKeyDown(Settings.EndCall))
+            if (Game.IsKeyDown(System.Windows.Forms.Keys.End))
             {
-
-                if (Settings.MissionMessages)
-                {
-                    BigMessageThread bigMessage = new BigMessageThread();
-                    bigMessage.MessageInstance.ShowColoredShard("Callout Complete!", "You are marked 10-8", RAGENativeUI.HudColor.Red, RAGENativeUI.HudColor.Black, 5000);
-                }
-                else
-                {
-                    Settings.MissionMessages = false;
-                }
 
                 End();
             }
@@ -172,8 +162,8 @@ namespace Adam69Callouts.Callouts
 
         public override void End()
         {
-            if (susBlip) susBlip.Delete();
-            if (suspect) suspect.Dismiss();
+            if (susBlip.Exists()) susBlip.Delete();
+            if (suspect.Exists()) suspect.Dismiss();
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Person Carrying A Concealed Weapon", "~b~You~w~: Dispatch, we are ~g~CODE 4~w~. Show me back 10-8.");
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
 

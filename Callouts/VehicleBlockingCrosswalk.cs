@@ -35,10 +35,6 @@ namespace Adam69Callouts.Callouts
             return base.OnBeforeCalloutDisplayed();
         }
 
-        /// <summary>
-        /// Called when the callout is accepted by the player.
-        /// </summary>
-        /// <returns>True if the callout was successfully accepted, otherwise false.</returns>
         public override bool OnCalloutAccepted()
         {
             if (Settings.EnableLogs)
@@ -112,18 +108,8 @@ namespace Adam69Callouts.Callouts
                 End();
             }
 
-            if (Game.IsKeyDown(Settings.EndCall))
+            if (Game.IsKeyDown(System.Windows.Forms.Keys.End))
             {
-                if (Settings.MissionMessages)
-                {
-                    BigMessageThread bigMessage = new BigMessageThread();
-                    bigMessage.MessageInstance.ShowColoredShard("Callout Complete!", "You are now ~r~CODE 4~w~.", RAGENativeUI.HudColor.Green, RAGENativeUI.HudColor.Black, 5000);
-                }
-                else
-                {
-                    Settings.MissionMessages = false;
-                }
-
                 End();
             }
 
@@ -139,6 +125,16 @@ namespace Adam69Callouts.Callouts
             if (vehBlip.Exists()) vehBlip.Delete();
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Vehicle Blocking Crosswalk", "~b~You~w~: Dispatch, we are ~g~CODE 4~w~. Show me back 10-8.");
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
+
+            if (Settings.MissionMessages)
+            {
+                BigMessageThread bigMessage = new BigMessageThread();
+                bigMessage.MessageInstance.ShowColoredShard("Callout Complete!", "You are now ~g~CODE 4~w~.", RAGENativeUI.HudColor.Green, RAGENativeUI.HudColor.Black, 5000);
+            }
+            else
+            {
+                Settings.MissionMessages = false;
+            }
 
             base.End();
 

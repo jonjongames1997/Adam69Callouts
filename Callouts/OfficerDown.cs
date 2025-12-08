@@ -62,8 +62,16 @@ namespace Adam69Callouts.Callouts
 
         public override bool OnCalloutAccepted()
         {
-            Game.LogTrivial("Adam69 Callouts [LOG]: Officer Down callout has been accepted!");
-            Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Officer Down", "~b~Dispatch~w~: The suspect has been spotted! Respond ~r~Code3~w~.");
+            if (Settings.EnableLogs)
+            {
+                Game.LogTrivial("Adam69 Callouts [LOG]: Officer Down callout has been accepted!");
+            }
+            else
+            {
+                Settings.EnableLogs = false;
+            }
+
+                Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Officer Down", "~b~Dispatch~w~: The suspect has been spotted! Respond ~r~Code3~w~.");
 
 
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_3_Audio");
@@ -109,9 +117,12 @@ namespace Adam69Callouts.Callouts
                 }
                 else
                 {
-                    Game.LogTrivial("Emergency Vehicle is null or invalid. Cannot enable emergency lights.");
-                    LoggingManager.Log("Adam69 Callouts [LOG]: " + LogLevel.Error);
-                    LoggingManager.Log("Adam69 Callouts [LOG]: " + LogLevel.Warning);
+                    if (Settings.EnableLogs)
+                    {
+                        Game.LogTrivial("Emergency Vehicle is null or invalid. Cannot enable emergency lights.");
+                        LoggingManager.Log("Adam69 Callouts [LOG]: " + LogLevel.Error);
+                        LoggingManager.Log("Adam69 Callouts [LOG]: " + LogLevel.Warning);
+                    }
                 }
             }
             catch (Exception ex)
@@ -287,7 +298,7 @@ namespace Adam69Callouts.Callouts
                     End();
                 }
 
-                if(Game.IsKeyDown(Settings.EndCall))
+                if(Game.IsKeyDown(System.Windows.Forms.Keys.End))
                 {
                     End();
                 }

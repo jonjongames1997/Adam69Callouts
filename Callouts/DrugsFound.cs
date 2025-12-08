@@ -65,7 +65,15 @@ namespace Adam69Callouts.Callouts
 
         public override bool OnCalloutAccepted()
         {
-            Game.LogTrivial("Adam69 Callouts [LOG]: Drugs Found callout has been accepted!");
+            if (Settings.EnableLogs)
+            {
+                Game.LogTrivial("Adam69 Callouts [LOG]: Drugs Found callout has been accepted!");
+            }
+            else
+            {
+                Settings.EnableLogs = false;
+            }
+
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~y~Drugs Found", "~b~Dispatch~w~: The caller has been located. Respond ~r~Code 2~w~.");
             LoggingManager.Log("Adam69 Callouts [LOG]: Drugs Found callout has been accepted!");
 
@@ -169,14 +177,14 @@ namespace Adam69Callouts.Callouts
 
         public override void OnCalloutNotAccepted()
         {
-            if (theDrugs) theDrugs.Delete();
-            if (theCaller) theCaller.Delete();
-            if (drugBlip) drugBlip.Delete();
-            if (callerBlip) callerBlip.Delete();
-            if (theCop) theCop.Delete();
-            if (theCopBlip) theCopBlip.Delete();
-            if (policeVehicle) policeVehicle.Delete();
-            if (policeCarBlip) policeCarBlip.Delete();
+            if (theDrugs.Exists()) theDrugs.Delete();
+            if (theCaller.Exists()) theCaller.Delete();
+            if (drugBlip.Exists()) drugBlip.Delete();
+            if (callerBlip.Exists()) callerBlip.Delete();
+            if (theCop.Exists()) theCop.Delete();
+            if (theCopBlip.Exists()) theCopBlip.Delete();
+            if (policeVehicle.Exists()) policeVehicle.Delete();
+            if (policeCarBlip.Exists()) policeCarBlip.Delete();
 
             base.OnCalloutNotAccepted();
         }
@@ -195,6 +203,7 @@ namespace Adam69Callouts.Callouts
 
                         if (counter == 1)
                         {
+                            NativeFunction.Natives.TASK_TURN_PED_TO_FACE_ENTITY(theCaller, MainPlayer, -1);
                             theCop.Tasks.PlayAnimation(new AnimationDictionary("amb@world_human_cop_idles@male@idle_b"), "idle_e", -1f, AnimationFlags.Loop);
                             Game.DisplaySubtitle("~b~You~w~: Hello there, " + malefemale + ". Are you the caller?");
                         }
@@ -244,11 +253,11 @@ namespace Adam69Callouts.Callouts
                     Settings.EnableLogs = false;
                 }
 
-                if (MainPlayer.DistanceTo(theDrugs) <= 15f)
+                if (MainPlayer.DistanceTo(theDrugs) <= 5f)
                 {
                     if (Settings.HelpMessages)
                     {
-                        Game.DisplayHelp("Press ~y~" + Settings.PickUp + "~w~ to pick up the drugs.");
+                        Game.DisplayHelp("Press ~y~" + Settings.PickUp.ToString() + "~w~ to pick up the drugs.");
                     }
                     else
                     {

@@ -178,14 +178,14 @@ namespace Adam69Callouts.Callouts
             }
             base.Process();
 
-            if (Game.IsKeyDown(Settings.CallAmbulanceKey))
+            if (Game.IsKeyDown(System.Windows.Forms.Keys.K))
             {
                 PolicingRedefined.API.BackupDispatchAPI.RequestEMSCode3Backup();
                 LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Call_Ambulance_Audio");
                 Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Dispatch:", "An Ambulance has been called to the scene.");
             }
 
-            if (Game.IsKeyDown(System.Windows.Forms.Keys.NumPad1))
+            if (Game.IsKeyDown(System.Windows.Forms.Keys.End))
             {
                 if (Settings.MissionMessages)
                 {
