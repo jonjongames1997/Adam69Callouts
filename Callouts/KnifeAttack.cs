@@ -113,18 +113,22 @@ namespace Adam69Callouts.Callouts
 
         public override void Process()
         {
-            if (!suspect.Inventory.Weapons.Contains(WeaponHash.Knife) && suspect.DistanceTo(MainPlayer.GetOffsetPosition(Vector3.RelativeFront)) < 20f)
+            // Ensure suspect is valid before accessing Inventory or other members to avoid invalid PedInventory exceptions
+            if (suspect != null && suspect.Exists() && suspect.IsValid())
             {
-                suspect.Inventory.GiveNewWeapon(WeaponHash.Knife, 0, true);
-                isArmed = true;
-            }
-            else if (!isArmed && suspect.Inventory.Weapons.Contains(WeaponHash.Knife) && suspect.DistanceTo(MainPlayer.GetOffsetPosition(Vector3.RelativeFront)) < 20f)
-            {
-                suspect.Inventory.EquippedWeapon = WeaponHash.Knife;
-                isArmed = true;
+                if (!suspect.Inventory.Weapons.Contains(WeaponHash.Knife) && suspect.DistanceTo(MainPlayer.GetOffsetPosition(Vector3.RelativeFront)) < 20f)
+                {
+                    suspect.Inventory.GiveNewWeapon(WeaponHash.Knife, 0, true);
+                    isArmed = true;
+                }
+                else if (!isArmed && suspect.Inventory.Weapons.Contains(WeaponHash.Knife) && suspect.DistanceTo(MainPlayer.GetOffsetPosition(Vector3.RelativeFront)) < 20f)
+                {
+                    suspect.Inventory.EquippedWeapon = WeaponHash.Knife;
+                    isArmed = true;
+                }
             }
 
-            if (!hasBegunAttacking && suspect && suspect.DistanceTo(MainPlayer.GetOffsetPosition(Vector3.RelativeFront)) < 20f)
+            if (!hasBegunAttacking && suspect != null && suspect.Exists() && suspect.IsValid() && suspect.DistanceTo(MainPlayer.GetOffsetPosition(Vector3.RelativeFront)) < 20f)
             {
                 hasBegunAttacking = true;
                 GameFiber.StartNew(() =>
