@@ -1,5 +1,15 @@
 ﻿Changelog:
 
+[December 2025]
+
+v0.4.4:
+
+- Updated LSPDFR and RAGEPluginHookSDK to latest version
+- Fixed more bugs
+- Minor adjustments to "Officer Down" and "Vehicle Blocking Sidewalk" callouts
+- Added a DLC check for "Officer Down" callout whether or not the user has "patch2025_02" DLC pack installed.
+- Hopefully fixed the "Rage.PedInventory is invalid" error
+
 [November 2025]
 
 v0.4.3:
