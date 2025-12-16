@@ -56,8 +56,8 @@ namespace Adam69Callouts.Callouts
 
         public override void OnCalloutNotAccepted()
         {
-            if (motorVehicle.Exists()) motorVehicle.Delete();
-            if (vehBlip.Exists()) vehBlip.Delete();
+            if (motorVehicle != null && motorVehicle.Exists()) motorVehicle.Delete();
+            if (vehBlip != null && vehBlip.Exists()) vehBlip.Delete();
 
             base.OnCalloutNotAccepted();
         }
@@ -68,13 +68,16 @@ namespace Adam69Callouts.Callouts
 
             if (Game.IsKeyDown(System.Windows.Forms.Keys.P))
             {
-                PolicingRedefined.API.VehicleAPI.RunVehicleThroughDispatch(motorVehicle, true, true, true);
-                LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69_Callouts_Request_Vehicle_Info_Audio");
-                LoggingManager.Log("Adam69 Callouts - Vehicle Blocking Sidewalk [LOG]: Player has requested vehicle information.");
-                Game.LogTrivial("Adam69 Callouts - Vehicle Blocking Sidewalk [LOG]: Player has requested vehicle information.");
+                if (motorVehicle != null && motorVehicle.Exists())
+                {
+                    PolicingRedefined.API.VehicleAPI.RunVehicleThroughDispatch(motorVehicle, true, true, true);
+                    LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69_Callouts_Request_Vehicle_Info_Audio");
+                    LoggingManager.Log("Adam69 Callouts - Vehicle Blocking Sidewalk [LOG]: Player has requested vehicle information.");
+                    Game.LogTrivial("Adam69 Callouts - Vehicle Blocking Sidewalk [LOG]: Player has requested vehicle information.");
+                }
             }
 
-            if (MainPlayer.DistanceTo(motorVehicle) <= 10f)
+            if (motorVehicle != null && motorVehicle.Exists() && MainPlayer.DistanceTo(motorVehicle) <= 10f)
             {
                 Game.DisplaySubtitle("Investigate the Vehicle, check vehicle record, then call tow truck", 5000);
             }
@@ -102,8 +105,8 @@ namespace Adam69Callouts.Callouts
 
         public override void End()
         {
-            if (motorVehicle.Exists()) motorVehicle.Delete();
-            if (vehBlip.Exists()) vehBlip.Delete();
+            if (motorVehicle != null && motorVehicle.Exists()) motorVehicle.Delete();
+            if (vehBlip != null && vehBlip.Exists()) vehBlip.Delete();
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Vehicle Blocking Sidewalk", "~b~You~w~: Dispatch, we are ~g~Code 4~w~. Show me back 10-8.");
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
 
