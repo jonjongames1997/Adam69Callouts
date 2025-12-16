@@ -132,11 +132,22 @@ namespace Adam69Callouts
             {
                 if (Settings.DrugsFound) { Functions.RegisterCallout(typeof(DrugsFound)); }
                 registered++;
-                Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~g~DLC Pack Found!", "~b~mp2025_01~w~ DLC Pack detected! Loading related callout(s)...");
+                Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~g~DLC Pack Found!", "~b~mp2025_01~w~ DLC Pack detected! Loading Drugs Found callout...");
             }
             else
             {
-                Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~r~DLC Pack Missing!", "~b~mp2025_01~w~ DLC Pack not detected! Skipping related callout(s)...");
+                Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~r~DLC Pack Missing!", "~b~mp2025_01~w~ DLC Pack not detected! Skipping Drugs Found callout...");
+            }
+
+            if (DLCManager.IsDLCInstalled("patch2025_01"))
+            {
+                if (Settings.OfficerDown) { Functions.RegisterCallout(typeof(OfficerDown)); }
+                registered++;
+                Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~g~DLC Pack Found!", "~b~patch2025_02~w~ DLC Pack detected! Loading Officer Down callout...");
+            }
+            else
+            {
+                Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~r~DLC Pack Missing!", "~b~patch2025_02~w~ DLC Pack not detected! Skipping Officer Down callout...");
             }
 
             if (Functions.GetAllUserPlugins().ToList().Any(a => a != null && a.FullName.Contains("CalloutInterface")) == true)
