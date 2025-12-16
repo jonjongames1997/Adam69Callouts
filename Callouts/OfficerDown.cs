@@ -16,7 +16,7 @@ namespace Adam69Callouts.Callouts
         private static Ped officer;
         private static Blip copBlip;
         private static Vehicle emergencyVehicle;
-        private static readonly string[] officerVehicle = new string[] { "police", "police2", "police3", "police4", "police5", "polgauntlet", "poldominator10", "poldorado", "polgreenwood", "polimpaler5", "polimpaler6", "polcaracara", "polcoquette4", "polfaction2", "polterminus", "dilettante2", "fbi", "pbus", "policeb", "pranger", "riot", "riot2", "sheriff", "sheriff2" };
+        private static readonly string[] officerVehicle = new string[] { "police", "police2", "police3", "police4", "police5", "polgauntlet", "poldominator10", "poldorado", "polgreenwood", "polimpaler5", "polimpaler6", "polcaracara", "polcoquette4", "polfaction2", "polterminus", "dilettante2", "fbi", "pbus", "policeb", "pranger", "riot", "riot2", "sheriff", "sheriff2", "policeb2" };
         private static Blip officerVehicleBlip;
         private static Vector3 spawnpoint;
         private static Vector3 vehicleSpawn;
@@ -41,10 +41,15 @@ namespace Adam69Callouts.Callouts
 
         public override bool OnBeforeCalloutDisplayed()
         {
-            if (!DLCManager.IsDLCInstalled("mp2025_01"))
+            if (!DLCManager.AreRequiredDLCsInstalled())
             {
+                string missing = DLCManager.GetMissingDLC();
+                Game.DisplayNotification("commonmenu", "mp_alerttriangle", "~r~DLC Missing", "~w~Adam69 Callouts", $"Required DLC '{missing}' is not installed. This callout will not function properly.");
+                Game.LogTrivial("Adam69 Callouts [LOG]: Required DLC '" + missing + "' is not installed. This callout will not function properly.");
+                LoggingManager.Log("Adam69 Callouts [LOG]: Required DLC '" + missing + "' is not installed. This callout will not function properly.");
                 return false;
             }
+
             spawnpoint = new(132.69f, -1308.34f, 29.03f);
             officerheading = 318.26f;
             susSpawn = new(116.04f, -1291.59f, 28.26f);
