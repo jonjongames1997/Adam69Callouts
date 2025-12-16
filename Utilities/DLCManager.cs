@@ -9,7 +9,9 @@ namespace Adam69Callouts.Utilities
         // List DLCs the callout pack requires (by internal name)
         private static readonly List<string> RequiredDLCs = new List<string>
         {
-            "mp2025_01" // Money Fronts
+            "mp2025_01", // Money Fronts
+            "patch2025_01", // The Michael DeSanta DLC
+            "patch2025_02" // The Michael DeSanta DLC
         };
 
         public static bool AreRequiredDLCsInstalled()
