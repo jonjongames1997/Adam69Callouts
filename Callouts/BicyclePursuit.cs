@@ -1,4 +1,5 @@
 ﻿using CalloutInterfaceAPI;
+using Adam69Callouts.Common;
 
 namespace Adam69Callouts.Callouts
 {
@@ -53,7 +54,7 @@ namespace Adam69Callouts.Callouts
 
             suspect = new Ped(spawnpoint);
             suspect.WarpIntoVehicle(bicycle, -1);
-            suspect.Inventory.GiveNewWeapon("WEAPON_COMBATPISTOL", 500, true);
+            if (suspect != null && suspect.Exists() && suspect.IsValid()) SafeInventory.SafeGiveWeapon(suspect, "WEAPON_COMBATPISTOL", 500, true);
             suspect.IsPersistent = true;
             suspect.BlockPermanentEvents = true;
             suspect.IsValid();
@@ -74,9 +75,9 @@ namespace Adam69Callouts.Callouts
 
         public override void OnCalloutNotAccepted()
         {
-            if (bicycle.Exists()) bicycle.Delete();
-            if (suspect.Exists()) suspect.Delete();
-            if (blip.Exists()) blip.Delete();
+            if (bicycle != null && bicycle.Exists()) bicycle.Delete();
+            if (suspect != null && suspect.Exists()) suspect.Delete();
+            if (blip != null && blip.Exists()) blip.Delete();
 
             base.OnCalloutNotAccepted();
         }
@@ -137,9 +138,9 @@ namespace Adam69Callouts.Callouts
 
         public override void End()
         {
-            if (suspect.Exists()) suspect.Dismiss();
-            if (bicycle.Exists()) bicycle.Delete();
-            if (blip.Exists()) blip.Delete();
+            if (suspect != null && suspect.Exists()) suspect.Dismiss();
+            if (bicycle != null && bicycle.Exists()) bicycle.Delete();
+            if (blip != null && blip.Exists()) blip.Delete();
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Bicycle Pursuit", "~b~You~w~: Dispatch, we are ~g~CODE 4~w~. Show me back 10-8.");
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
 
