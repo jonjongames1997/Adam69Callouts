@@ -1,4 +1,5 @@
 ﻿using CalloutInterfaceAPI;
+using Adam69Callouts.Common;
 
 namespace Adam69Callouts.Callouts
 {
@@ -66,8 +67,8 @@ namespace Adam69Callouts.Callouts
 
         public override void OnCalloutNotAccepted()
         {
-            if (suspect.Exists()) suspect.Delete();
-            if (susBlip.Exists()) susBlip.Delete();
+            if (suspect != null && suspect.Exists()) suspect.Delete();
+            if (susBlip != null && susBlip.Exists()) susBlip.Delete();
 
             base.OnCalloutNotAccepted();
         }
@@ -123,7 +124,8 @@ namespace Adam69Callouts.Callouts
                         {
                             Game.DisplaySubtitle("~r~Suspect~w~: Screw this! Die, motherfucker, you!");
                             suspect.Tasks.FightAgainst(MainPlayer);
-                            suspect.Inventory.GiveNewWeapon(wepList[new Random().Next((int)wepList.Length)], 500, true);
+                            if (suspect != null && suspect.Exists() && suspect.IsValid())
+                                SafeInventory.SafeGiveWeapon(suspect, wepList[new Random().Next((int)wepList.Length)], 500, true);
                             suspect.Armor = 2500;
                         }
                     }
@@ -162,8 +164,8 @@ namespace Adam69Callouts.Callouts
 
         public override void End()
         {
-            if (susBlip.Exists()) susBlip.Delete();
-            if (suspect.Exists()) suspect.Dismiss();
+            if (susBlip != null && susBlip.Exists()) susBlip.Delete();
+            if (suspect != null && suspect.Exists()) suspect.Dismiss();
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Person Carrying A Concealed Weapon", "~b~You~w~: Dispatch, we are ~g~CODE 4~w~. Show me back 10-8.");
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
 
