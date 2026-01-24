@@ -125,6 +125,6 @@ namespace Adam69Callouts
             ini.ReCreate();
         }
 
-        public static readonly string PluginVersion = "0.4.4";
+        public static readonly string PluginVersion = "0.4.5";
     }
 }
