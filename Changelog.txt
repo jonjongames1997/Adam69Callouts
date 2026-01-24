@@ -1,5 +1,29 @@
 ﻿Changelog:
 
+[January 24, 2026]
+
+v0.4.5:
+
+- Fixed recurring `Rage.PedInventory` invalid exceptions by adding centralized, defensive helpers to safely access ped inventory and weapons (`SafeInventory`) and by replacing direct `Ped.Inventory` access across callouts.
+- Updated callouts to use safe inventory access and stronger entity checks (`null`, `Exists()`, `IsValid()`):
+  - `KnifeAttack`
+  - `OfficerDown`
+  - `BicyclePursuit`
+  - `SuspiciousPerson`
+  - `DerangedDrunkenFeller`
+  - `PersonCarryingAConcealedWeapon`
+  - (Additional callouts audited for direct inventory usage and hardening)
+- Improved overall entity lifecycle handling (more consistent use of `Dismiss()`, `Delete()`, and blip cleanup) to reduce memory leaks and dangling references.
+- Minor logging improvements and additional guarded try/catch blocks to surface useful diagnostics only when debug logging is enabled.
+- Miscellaneous small bug fixes and stability improvements.
+
+Files updated in this release:
+- `Adam69Callouts.dll` (build)
+- `Adam69Callouts.pdb` (build)
+- New helper: `Adam69Callouts.Common.SafeInventory.cs`
+- Callout source updates: `Callouts\KnifeAttack.cs`, `Callouts\OfficerDown.cs`, `Callouts\BicyclePursuit.cs`, `Callouts\SuspiciousPerson.cs`, `Callouts\DerangedDrunkenFeller.cs`, `Callouts\PersonCarryingAConcealedWeapon.cs`, and others audited.
+
+
 [December 2025]
 
 v0.4.4:
