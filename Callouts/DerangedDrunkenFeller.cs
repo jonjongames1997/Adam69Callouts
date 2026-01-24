@@ -1,4 +1,5 @@
 ﻿using CalloutInterfaceAPI;
+using Adam69Callouts.Common;
 
 namespace Adam69Callouts.Callouts
 {
@@ -55,8 +56,8 @@ namespace Adam69Callouts.Callouts
 
         public override void OnCalloutNotAccepted()
         {
-            if (suspect.Exists()) suspect.Delete();
-            if (blip.Exists()) blip.Delete();
+            if (suspect != null && suspect.Exists()) suspect.Delete();
+            if (blip != null && blip.Exists()) blip.Delete();
 
             base.OnCalloutNotAccepted();
         }
@@ -96,7 +97,8 @@ namespace Adam69Callouts.Callouts
                             Game.DisplaySubtitle("Convo ended. Chase and arrest the suspect.");
                             suspect.Tasks.FightAgainst(MainPlayer);
                             suspect.Armor = 500;
-                            suspect.Inventory.GiveNewWeapon(wepList[new Random().Next((int)wepList.Length)], 500, true);
+                            if (suspect != null && suspect.Exists() && suspect.IsValid())
+                                SafeInventory.SafeGiveWeapon(suspect, wepList[new Random().Next((int)wepList.Length)], 500, true);
                         }
                     }
                     catch (Exception ex)
@@ -155,8 +157,8 @@ namespace Adam69Callouts.Callouts
 
         public override void End()
         {
-            if (suspect.Exists()) suspect.Dismiss();
-            if (blip.Exists()) blip.Delete();
+            if (suspect != null && suspect.Exists()) suspect.Dismiss();
+            if (blip != null && blip.Exists()) blip.Delete();
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Deranged Drunken Feller", "~b~You~w~: Dispatch, we are ~g~Code 4~w~. Show me back 10-8.");
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
 
