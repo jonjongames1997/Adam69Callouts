@@ -25,6 +25,75 @@ namespace Adam69Callouts.Callouts
         private static LHandle pursuit;
 
 
+        // Helper: safely detect if a ped has a weapon (guards against invalid PedInventory)
+        private static bool TryPedHasWeapon(Ped ped, WeaponHash weapon)
+        {
+            if (ped == null || !ped.Exists() || !ped.IsValid()) return false;
+
+            try
+            {
+                // Access Inventory safely; this can throw if PedInventory is invalid
+                return ped.Inventory != null && ped.Inventory.Weapons.Contains(weapon);
+            }
+            catch
+            {
+                // Fallback to native check if Inventory is invalid
+                try
+                {
+                    return (bool)NativeFunction.Natives.HAS_PED_GOT_WEAPON(ped, (int)weapon);
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
+
+        // Helper: safely give a weapon to a ped, falling back to native if Inventory is invalid
+        private static void SafeGiveWeapon(Ped ped, WeaponHash weapon)
+        {
+            if (ped == null || !ped.Exists() || !ped.IsValid()) return;
+
+            try
+            {
+                ped.Inventory.GiveNewWeapon(weapon, 0, true);
+            }
+            catch
+            {
+                // Fallback native: give weapon and equip it
+                try
+                {
+                    NativeFunction.Natives.GIVE_WEAPON_TO_PED(ped, (int)weapon, 0, false, true);
+                }
+                catch
+                {
+                    // swallow - best effort
+                }
+            }
+        }
+
+        // Helper: safely equip a weapon on a ped, falling back to native if Inventory is invalid
+        private static void SafeEquipWeapon(Ped ped, WeaponHash weapon)
+        {
+            if (ped == null || !ped.Exists() || !ped.IsValid()) return;
+
+            try
+            {
+                ped.Inventory.EquippedWeapon = weapon;
+            }
+            catch
+            {
+                try
+                {
+                    NativeFunction.Natives.SET_CURRENT_PED_WEAPON(ped, (int)weapon, true);
+                }
+                catch
+                {
+                    // swallow - best effort
+                }
+            }
+        }
+
         public override bool OnBeforeCalloutDisplayed()
         {
             spawnpoint = new(-315.15f, 2786.42f, 59.56f);
@@ -91,19 +160,19 @@ namespace Adam69Callouts.Callouts
 
         public override void OnCalloutNotAccepted()
         {
-            if (suspect.Exists())
+            if (suspect != null && suspect.Exists())
             {
                 suspect.Delete();
             }
-            if (victim.Exists())
+            if (victim != null && victim.Exists())
             {
                 victim.Delete();
             }
-            if (suspectBlip.Exists())
+            if (suspectBlip != null && suspectBlip.Exists())
             {
                 suspectBlip.Delete();
             }
-            if (victimBlip.Exists())
+            if (victimBlip != null && victimBlip.Exists())
             {
                 victimBlip.Delete();
             }
@@ -116,14 +185,15 @@ namespace Adam69Callouts.Callouts
             // Ensure suspect is valid before accessing Inventory or other members to avoid invalid PedInventory exceptions
             if (suspect != null && suspect.Exists() && suspect.IsValid())
             {
-                if (!suspect.Inventory.Weapons.Contains(WeaponHash.Knife) && suspect.DistanceTo(MainPlayer.GetOffsetPosition(Vector3.RelativeFront)) < 20f)
+                // Use safe helpers instead of direct Inventory access which can throw
+                if (!TryPedHasWeapon(suspect, WeaponHash.Knife) && suspect.DistanceTo(MainPlayer.GetOffsetPosition(Vector3.RelativeFront)) < 20f)
                 {
-                    suspect.Inventory.GiveNewWeapon(WeaponHash.Knife, 0, true);
+                    SafeGiveWeapon(suspect, WeaponHash.Knife);
                     isArmed = true;
                 }
-                else if (!isArmed && suspect.Inventory.Weapons.Contains(WeaponHash.Knife) && suspect.DistanceTo(MainPlayer.GetOffsetPosition(Vector3.RelativeFront)) < 20f)
+                else if (!isArmed && TryPedHasWeapon(suspect, WeaponHash.Knife) && suspect.DistanceTo(MainPlayer.GetOffsetPosition(Vector3.RelativeFront)) < 20f)
                 {
-                    suspect.Inventory.EquippedWeapon = WeaponHash.Knife;
+                    SafeEquipWeapon(suspect, WeaponHash.Knife);
                     isArmed = true;
                 }
             }
@@ -207,10 +277,10 @@ namespace Adam69Callouts.Callouts
 
         public override void End()
         {
-            if (suspect.Exists()) suspect.Dismiss();
-            if (victim.Exists()) victim.Dismiss();
-            if (suspectBlip.Exists()) suspectBlip.Delete();
-            if (victimBlip.Exists()) victimBlip.Delete();
+            if (suspect != null && suspect.Exists()) suspect.Dismiss();
+            if (victim != null && victim.Exists()) victim.Dismiss();
+            if (suspectBlip != null && suspectBlip.Exists()) suspectBlip.Delete();
+            if (victimBlip != null && victimBlip.Exists()) victimBlip.Delete();
 
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "Person With A Knife", "~w~Dispatch: The scene is now ~r~CODE 4~w~.");
