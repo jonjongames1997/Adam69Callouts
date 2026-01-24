@@ -1,0 +1,9 @@
+﻿# CONTRIBUTING.md
+
+## Guidelines
+
+- Always check for null and call `Exists()` before operating on Rage entities (Ped, Vehicle, Blip, etc.).
+- When accessing `Ped.Inventory`, guard access with try/catch because `PedInventory` can be invalid; fall back to native functions (`GIVE_WEAPON_TO_PED`, `SET_CURRENT_PED_WEAPON`, `HAS_PED_GOT_WEAPON`) when Inventory is unavailable.
+- Use utility helpers in `Adam69Callouts.Common.SafeInventory` for safe inventory operations.
+- Use `.IsValid()` to confirm entities where appropriate.
+- Follow the .editorconfig rules for formatting.

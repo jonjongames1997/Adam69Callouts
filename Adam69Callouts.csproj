@@ -107,12 +107,14 @@
     <Compile Include="Utilities\DLCManager.cs" />
     <Compile Include="Utilities\GlobalsManager.cs" />
     <Compile Include="Utilities\LoggingManager.cs" />
+    <Compile Include="Utilities\SafeInventory.cs" />
     <Compile Include="Utilities\VehicleColor.cs" />
     <Compile Include="Utilities\VehicleExtension.cs" />
     <Compile Include="VersionChecker\PluginCheck.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Adam69Callouts.ini" />
+    <None Include="CONTRIBUTING.md" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
