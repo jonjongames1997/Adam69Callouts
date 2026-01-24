@@ -1,6 +1,7 @@
 ﻿using CalloutInterfaceAPI;
 using Rage;
 using Rage.Native;
+using Adam69Callouts.Common;
 
 namespace Adam69Callouts.Callouts
 {
@@ -154,13 +155,13 @@ namespace Adam69Callouts.Callouts
 
         public override void OnCalloutNotAccepted()
         {
-            if (suspect.Exists()) suspect.Delete();
-            if (suspectBlip.Exists()) suspectBlip.Delete();
-            if (copBlip.Exists()) copBlip.Delete();
-            if (officer.Exists()) officer.Delete();
-            if (officerVehicleBlip.Exists()) officerVehicleBlip.Delete();
-            if (copBlip.Exists()) copBlip.Delete();
-            if (emergencyVehicle.Exists()) emergencyVehicle.Delete();
+            if (suspect != null && suspect.Exists()) suspect.Delete();
+            if (suspectBlip != null && suspectBlip.Exists()) suspectBlip.Delete();
+            if (copBlip != null && copBlip.Exists()) copBlip.Delete();
+            if (officer != null && officer.Exists()) officer.Delete();
+            if (officerVehicleBlip != null && officerVehicleBlip.Exists()) officerVehicleBlip.Delete();
+            if (copBlip != null && copBlip.Exists()) copBlip.Delete();
+            if (emergencyVehicle != null && emergencyVehicle.Exists()) emergencyVehicle.Delete();
 
             base.OnCalloutNotAccepted();
         }
@@ -314,13 +315,13 @@ namespace Adam69Callouts.Callouts
 
         public override void End()
         {
-            if (officer.Exists()) officer.WarpIntoVehicle(emergencyVehicle, -1);
-            if (officer.Exists()) officer.Dismiss();
-            if (copBlip.Exists()) copBlip.Delete();
-            if (suspect.Exists()) suspect.Dismiss();
-            if (suspectBlip.Exists()) suspectBlip.Delete();
-            if (emergencyVehicle.Exists()) emergencyVehicle.Delete();
-            if (officerVehicleBlip.Exists()) officerVehicleBlip.Delete();
+            if (officer != null && officer.Exists()) officer.WarpIntoVehicle(emergencyVehicle, -1);
+            if (officer != null && officer.Exists()) officer.Dismiss();
+            if (copBlip != null && copBlip.Exists()) copBlip.Delete();
+            if (suspect != null && suspect.Exists()) suspect.Dismiss();
+            if (suspectBlip != null && suspectBlip.Exists()) suspectBlip.Delete();
+            if (emergencyVehicle != null && emergencyVehicle.Exists()) emergencyVehicle.Delete();
+            if (officerVehicleBlip != null && officerVehicleBlip.Exists()) officerVehicleBlip.Delete();
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Officer Down", "~b~You~w~: We are Code4. Show me back10-8!");
             base.End();
