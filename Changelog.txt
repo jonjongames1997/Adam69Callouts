@@ -1,9 +1,10 @@
 ﻿Changelog:
 
-[January 24, 2026]
+[January 29, 2026]
 
 v0.4.5:
 
+- Updated RagePluginHook Reference to latest version
 - Fixed recurring `Rage.PedInventory` invalid exceptions by adding centralized, defensive helpers to safely access ped inventory and weapons (`SafeInventory`) and by replacing direct `Ped.Inventory` access across callouts.
 - Updated callouts to use safe inventory access and stronger entity checks (`null`, `Exists()`, `IsValid()`):
   - `KnifeAttack`
