@@ -55,8 +55,8 @@
     <Reference Include="RAGENativeUI, Version=1.9.3.0, Culture=neutral, processorArchitecture=AMD64">
       <HintPath>packages\RAGENativeUI.1.9.3\lib\net472\RAGENativeUI.dll</HintPath>
     </Reference>
-    <Reference Include="RagePluginHookSDK">
-      <HintPath>C:\Users\JonJo\OneDrive\Documentos\references\RagePluginHookSDK.dll</HintPath>
+    <Reference Include="RagePluginHook, Version=0.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>packages\RagePluginHook.1.124.0\lib\net472\RagePluginHook.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

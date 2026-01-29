@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "D:\\Adam69Callouts\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{C330EC03-8BB7-467B-A80A-544D0C7839DE}|Adam69Callouts.csproj|D:\\Adam69Callouts\\changelog.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{C330EC03-8BB7-467B-A80A-544D0C7839DE}|Adam69Callouts.csproj|solutionrelative:changelog.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{C330EC03-8BB7-467B-A80A-544D0C7839DE}|Adam69Callouts.csproj|d:\\adam69callouts\\properties\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C330EC03-8BB7-467B-A80A-544D0C7839DE}|Adam69Callouts.csproj|solutionrelative:properties\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C330EC03-8BB7-467B-A80A-544D0C7839DE}|Adam69Callouts.csproj|d:\\adam69callouts\\utilities\\safeinventory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{C330EC03-8BB7-467B-A80A-544D0C7839DE}|Adam69Callouts.csproj|D:\\Adam69Callouts\\utilities\\safeinventory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C330EC03-8BB7-467B-A80A-544D0C7839DE}|Adam69Callouts.csproj|solutionrelative:utilities\\safeinventory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C330EC03-8BB7-467B-A80A-544D0C7839DE}|Adam69Callouts.csproj|D:\\Adam69Callouts\\changelog.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{C330EC03-8BB7-467B-A80A-544D0C7839DE}|Adam69Callouts.csproj|solutionrelative:changelog.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C330EC03-8BB7-467B-A80A-544D0C7839DE}|Adam69Callouts.csproj|D:\\Adam69Callouts\\stuff\\settings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -34,7 +34,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
@@ -47,7 +47,8 @@
               "ViewState": "AgIAAOQAAAAAAAAAAAAAAKIAAAB/AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-10T21:46:28.517Z",
-              "IsPinned": true
+              "IsPinned": true,
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -60,32 +61,21 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002768|",
               "WhenOpened": "2025-12-08T20:15:04.839Z",
-              "IsPinned": true
+              "IsPinned": true,
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "Changelog.txt",
               "DocumentMoniker": "D:\\Adam69Callouts\\Changelog.txt",
               "RelativeDocumentMoniker": "Changelog.txt",
               "ToolTip": "D:\\Adam69Callouts\\Changelog.txt",
               "RelativeToolTip": "Changelog.txt",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAeAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
               "WhenOpened": "2025-12-16T10:36:03.209Z",
-              "IsPinned": true
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "AssemblyInfo.cs",
-              "DocumentMoniker": "D:\\Adam69Callouts\\Properties\\AssemblyInfo.cs",
-              "RelativeDocumentMoniker": "Properties\\AssemblyInfo.cs",
-              "ToolTip": "D:\\Adam69Callouts\\Properties\\AssemblyInfo.cs",
-              "RelativeToolTip": "Properties\\AssemblyInfo.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-25T05:06:06.335Z",
+              "IsPinned": true,
               "EditorCaption": ""
             },
             {
@@ -107,6 +97,19 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "AssemblyInfo.cs",
+              "DocumentMoniker": "D:\\Adam69Callouts\\Properties\\AssemblyInfo.cs",
+              "RelativeDocumentMoniker": "Properties\\AssemblyInfo.cs",
+              "ToolTip": "D:\\Adam69Callouts\\Properties\\AssemblyInfo.cs",
+              "RelativeToolTip": "Properties\\AssemblyInfo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-25T05:06:06.335Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "SafeInventory.cs",
               "DocumentMoniker": "D:\\Adam69Callouts\\Utilities\\SafeInventory.cs",
               "RelativeDocumentMoniker": "Utilities\\SafeInventory.cs",
@@ -127,7 +130,8 @@
               "RelativeToolTip": "Stuff\\Settings.cs",
               "ViewState": "AgIAAGkAAAAAAAAAAAAAAH8AAAA8AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-24T20:40:31.402Z"
+              "WhenOpened": "2026-01-24T20:40:31.402Z",
+              "EditorCaption": ""
             }
           ]
         }
