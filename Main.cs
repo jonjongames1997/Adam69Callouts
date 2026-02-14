@@ -188,6 +188,7 @@ namespace Adam69Callouts
             if (Settings.DerangedDrunkenFeller) { Functions.RegisterCallout(typeof(DerangedDrunkenFeller)); }
             if (Settings.DeadBirdOnTheRoad) { Functions.RegisterCallout(typeof(DeadBirdOnTheRoad)); }
             if (Settings.KnifeAttack) { Functions.RegisterCallout(typeof(KnifeAttack)); }
+            if (Settings.LSIAAirportIncident) { Functions.RegisterCallout(typeof(LSIAAirportIncident)); }
             Game.Console.Print("[LOG]: All callouts of the Adam69Callouts.ini were loaded successfully.");
             Game.Console.Print();
             Game.Console.Print("================================================== Adam69 Callouts ===================================================");
