@@ -28,6 +28,7 @@ namespace Adam69Callouts
         internal static Keys RequestVehicleInfo { get; set; } = Keys.P;
         internal static Keys RequestTowTruck { get; set; } = Keys.L;
         public static bool EnableLogs { get; set; }
+        internal static bool LSIAAirportIncident { get; set; } = true;
 
         // Traffic settings (configurable via INI)
         internal static float TrafficStopRadius { get; set; } = 60f; // meters
@@ -63,7 +64,7 @@ namespace Adam69Callouts
             CallAnimalControlKey = initializationFile.ReadEnum<Keys>("Keys", "CallAnimalControlKey", Keys.NumPad1);
             CallAmbulanceKey = initializationFile.ReadEnum<Keys>("Keys", "CallAmbulanceKey", Keys.K);
             RequestTowTruck = initializationFile.ReadEnum<Keys>("Keys", "RequestTowTruck", Keys.L);
-            Settings.EnableLogs = initializationFile.ReadBoolean("Settings", "EnableLogs", false);
+            Settings.LSIAAirportIncident = initializationFile.ReadBoolean("Callouts", "LSIAAirportIncident", true);
 
             // Read traffic settings (as strings then parse to allow safe parsing)
             var radiusStr = initializationFile.ReadString("Traffic", "StopRadius", Settings.TrafficStopRadius.ToString(CultureInfo.InvariantCulture));
@@ -116,6 +117,7 @@ namespace Adam69Callouts
             ini.Write("Keys", "RequestVehicleInfo", Keys.P);
             ini.Write("Keys", "RequestTowTruck", Keys.L);
             ini.Write("Settings", "EnableLogs", false);
+            ini.Write("Callouts", "LSIAAirportIncident", true);
 
             // Traffic settings
             ini.Write("Traffic", "StopRadius", TrafficStopRadius);
