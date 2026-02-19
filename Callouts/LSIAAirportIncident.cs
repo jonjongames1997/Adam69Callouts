@@ -275,7 +275,7 @@ namespace Adam69Callouts.Callouts
                 {
                     if (Settings.HelpMessages && counter == 0)
                     {
-                        Game.DisplayHelp("Press ~y~Y~w~ to interact with the suspect.");
+                        Game.DisplayHelp("Press ~y~" + Settings.Dialog.ToString() + "~w~ to interact with the suspect.");
                     }
 
                     if (Game.IsKeyDown(System.Windows.Forms.Keys.Y))
