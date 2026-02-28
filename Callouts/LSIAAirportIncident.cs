@@ -23,11 +23,13 @@ namespace Adam69Callouts.Callouts
         private static float witnessHeading;
         private static float vehicleHeading;
         private static int counter;
+        private static int witnessCounter;
         private static string malefemale;
         private static string victimGender;
         private static string witnessGender;
         private static bool scenarioTriggered;
         private static bool pursuitCreated;
+        private static bool witnessInteractionComplete;
         private static LHandle pursuit;
         private static readonly string[] weaponList = new string[] { "WEAPON_PISTOL", "WEAPON_COMBATPISTOL", "WEAPON_KNIFE", "WEAPON_BAT", "WEAPON_PUMPSHOTGUN" };
 
@@ -115,8 +117,10 @@ namespace Adam69Callouts.Callouts
             SpawnScenarioEntities();
 
             counter = 0;
+            witnessCounter = 0;
             scenarioTriggered = false;
             pursuitCreated = false;
+            witnessInteractionComplete = false;
 
             return base.OnCalloutAccepted();
         }
@@ -269,11 +273,29 @@ namespace Adam69Callouts.Callouts
         {
             base.Process();
 
+            // Witness interaction
+            if (witness != null && witness.Exists() && witness.IsValid() && !witnessInteractionComplete)
+            {
+                if (MainPlayer.DistanceTo(witness) <= 12f)
+                {
+                    if (Settings.HelpMessages && witnessCounter == 0)
+                    {
+                        Game.DisplayHelp("Press ~y~" + Settings.Dialog.ToString() + "~w~ to speak with the witness. Press ~g~T~w~ to interact with suspect.");
+                    }
+
+                    if (Game.IsKeyDown(System.Windows.Forms.Keys.T))
+                    {
+                        witnessCounter++;
+                        HandleWitnessInteraction();
+                    }
+                }
+            }
+
             if (suspect != null && suspect.Exists() && suspect.IsValid())
             {
                 if (MainPlayer.DistanceTo(suspect) <= 15f && !scenarioTriggered)
                 {
-                    if (Settings.HelpMessages && counter == 0)
+                    if (Settings.HelpMessages && counter == 0 && witnessCounter == 0)
                     {
                         Game.DisplayHelp("Press ~y~" + Settings.Dialog.ToString() + "~w~ to interact with the suspect.");
                     }
@@ -314,6 +336,167 @@ namespace Adam69Callouts.Callouts
                     bigMessage.MessageInstance.ShowColoredShard("MISSION FAILED!", "You'll get 'em next time!", RAGENativeUI.HudColor.Red, RAGENativeUI.HudColor.Black, 5000);
                 }
                 End();
+            }
+        }
+
+        private void HandleWitnessInteraction()
+        {
+            switch (scenario)
+            {
+                case AirportScenario.CargoTheft:
+                    HandleWitnessCargoTheft();
+                    break;
+                case AirportScenario.DomesticDispute:
+                    HandleWitnessDomesticDispute();
+                    break;
+                case AirportScenario.DrunkPassenger:
+                    HandleWitnessDrunkPassenger();
+                    break;
+                case AirportScenario.SmugglingAttempt:
+                    HandleWitnessSmuggling();
+                    break;
+            }
+        }
+
+        private void HandleWitnessCargoTheft()
+        {
+            if (witness == null || !witness.Exists() || !witness.IsValid()) return;
+
+            switch (witnessCounter)
+            {
+                case 1:
+                    NativeFunction.Natives.TASK_TURN_PED_TO_FACE_ENTITY(witness, MainPlayer, -1);
+                    Game.DisplaySubtitle($"~b~You~w~: LSPD. {witnessGender}, did you call about suspicious activity?");
+                    break;
+                case 2:
+                    witness.Tasks.PlayAnimation(new AnimationDictionary("gestures@m@standing@casual"), "gesture_point", -1f, AnimationFlags.None);
+                    Game.DisplaySubtitle($"~g~Witness~w~: Yes, officer! That {malefemale} over there has been loading boxes into that vehicle for the past hour.");
+                    break;
+                case 3:
+                    Game.DisplaySubtitle("~b~You~w~: Did you see what was in the boxes?");
+                    break;
+                case 4:
+                    witness.Tasks.PlayAnimation(new AnimationDictionary("anim@amb@casino@brawl@fights@argue@"), "arguement_loop_mp_m_brawler_01", -1f, AnimationFlags.Loop);
+                    Game.DisplaySubtitle("~g~Witness~w~: No, but they're not wearing any airport employee uniform, and they looked nervous when I walked by.");
+                    break;
+                case 5:
+                    Game.DisplaySubtitle("~b~You~w~: Thank you. Please stay here while I investigate.");
+                    GameFiber.Sleep(1500);
+                    Game.DisplaySubtitle("~g~Witness statement recorded. Confront the suspect.");
+                    witnessInteractionComplete = true;
+                    if (witnessBlip != null && witnessBlip.Exists())
+                        witnessBlip.Color = System.Drawing.Color.Gray;
+                    break;
+            }
+        }
+
+        private void HandleWitnessDomesticDispute()
+        {
+            if (witness == null || !witness.Exists() || !witness.IsValid()) return;
+
+            switch (witnessCounter)
+            {
+                case 1:
+                    NativeFunction.Natives.TASK_TURN_PED_TO_FACE_ENTITY(witness, MainPlayer, -1);
+                    Game.DisplaySubtitle($"~b~You~w~: LSPD. {witnessGender}, what happened here?");
+                    break;
+                case 2:
+                    witness.Tasks.PlayAnimation(new AnimationDictionary("gestures@m@standing@casual"), "gesture_point", -1f, AnimationFlags.None);
+                    Game.DisplaySubtitle($"~g~Witness~w~: Officer, those two have been arguing for at least 20 minutes. It started getting really heated.");
+                    break;
+                case 3:
+                    Game.DisplaySubtitle("~b~You~w~: Did either of them get physical?");
+                    break;
+                case 4:
+                    witness.Tasks.PlayAnimation(new AnimationDictionary("amb@world_human_bum_standing@depressed@idle_a"), "idle_a", -1f, AnimationFlags.Loop);
+                    Game.DisplaySubtitle($"~g~Witness~w~: The {malefemale} tried to grab the other person's arm, but they pulled away. I thought it was going to escalate so I called you.");
+                    break;
+                case 5:
+                    Game.DisplaySubtitle("~b~You~w~: Did you hear what they were arguing about?");
+                    break;
+                case 6:
+                    witness.Tasks.PlayAnimation(new AnimationDictionary("anim@amb@casino@brawl@fights@argue@"), "arguement_loop_mp_m_brawler_01", -1f, AnimationFlags.Loop);
+                    Game.DisplaySubtitle($"~g~Witness~w~: Something about a relationship and a vacation. The {malefemale} seemed really angry and kept saying they were cheated on.");
+                    break;
+                case 7:
+                    Game.DisplaySubtitle("~b~You~w~: Alright, thank you. Please wait here while I sort this out.");
+                    GameFiber.Sleep(1500);
+                    Game.DisplaySubtitle("~g~Witness statement recorded. Speak with both parties.");
+                    witnessInteractionComplete = true;
+                    if (witnessBlip != null && witnessBlip.Exists())
+                        witnessBlip.Color = System.Drawing.Color.Gray;
+                    break;
+            }
+        }
+
+        private void HandleWitnessDrunkPassenger()
+        {
+            if (witness == null || !witness.Exists() || !witness.IsValid()) return;
+
+            switch (witnessCounter)
+            {
+                case 1:
+                    NativeFunction.Natives.TASK_TURN_PED_TO_FACE_ENTITY(witness, MainPlayer, -1);
+                    Game.DisplaySubtitle($"~b~You~w~: LSPD. {witnessGender}, I understand you reported a disturbance?");
+                    break;
+                case 2:
+                    witness.Tasks.PlayAnimation(new AnimationDictionary("gestures@m@standing@casual"), "gesture_point", -1f, AnimationFlags.None);
+                    Game.DisplaySubtitle($"~g~Witness~w~: Yes! That {malefemale} is completely wasted. They were stumbling around, almost knocked over a child.");
+                    break;
+                case 3:
+                    Game.DisplaySubtitle("~b~You~w~: Did they say anything to you?");
+                    break;
+                case 4:
+                    witness.Tasks.PlayAnimation(new AnimationDictionary("anim@amb@casino@brawl@fights@argue@"), "arguement_loop_mp_m_brawler_01", -1f, AnimationFlags.Loop);
+                    Game.DisplaySubtitle("~g~Witness~w~: They were slurring and yelling nonsense. I think they missed their flight and have been drinking at the bar.");
+                    break;
+                case 5:
+                    Game.DisplaySubtitle("~b~You~w~: Understood. Stay back, I'll handle this.");
+                    GameFiber.Sleep(1500);
+                    Game.DisplaySubtitle("~g~Witness statement recorded. Deal with the intoxicated passenger.");
+                    witnessInteractionComplete = true;
+                    if (witnessBlip != null && witnessBlip.Exists())
+                        witnessBlip.Color = System.Drawing.Color.Gray;
+                    break;
+            }
+        }
+
+        private void HandleWitnessSmuggling()
+        {
+            if (witness == null || !witness.Exists() || !witness.IsValid()) return;
+
+            switch (witnessCounter)
+            {
+                case 1:
+                    NativeFunction.Natives.TASK_TURN_PED_TO_FACE_ENTITY(witness, MainPlayer, -1);
+                    Game.DisplaySubtitle($"~b~You~w~: LSPD. {witnessGender}, what did you see?");
+                    break;
+                case 2:
+                    witness.Tasks.PlayAnimation(new AnimationDictionary("gestures@m@standing@casual"), "gesture_point", -1f, AnimationFlags.None);
+                    Game.DisplaySubtitle($"~g~Witness~w~: That {malefemale} has been hanging around this restricted area for hours. They keep looking around like they're waiting for someone.");
+                    break;
+                case 3:
+                    Game.DisplaySubtitle("~b~You~w~: Did you see them with any cargo or packages?");
+                    break;
+                case 4:
+                    witness.Tasks.PlayAnimation(new AnimationDictionary("anim@amb@casino@brawl@fights@argue@"), "arguement_loop_mp_m_brawler_01", -1f, AnimationFlags.Loop);
+                    Game.DisplaySubtitle("~g~Witness~w~: I saw them put something in the trunk of that vehicle earlier. It looked heavy, and they were trying to hide it with blankets.");
+                    break;
+                case 5:
+                    Game.DisplaySubtitle("~b~You~w~: Did you see what it was?");
+                    break;
+                case 6:
+                    witness.Tasks.PlayAnimation(new AnimationDictionary("amb@world_human_bum_standing@depressed@idle_a"), "idle_a", -1f, AnimationFlags.Loop);
+                    Game.DisplaySubtitle("~g~Witness~w~: No, but I work here and I know they shouldn't be in this area. Something's definitely wrong.");
+                    break;
+                case 7:
+                    Game.DisplaySubtitle("~b~You~w~: Thank you for the information. Please step back to a safe distance.");
+                    GameFiber.Sleep(1500);
+                    Game.DisplaySubtitle("~g~Witness statement recorded. Investigate the suspect and vehicle.");
+                    witnessInteractionComplete = true;
+                    if (witnessBlip != null && witnessBlip.Exists())
+                        witnessBlip.Color = System.Drawing.Color.Gray;
+                    break;
             }
         }
 
