@@ -20,6 +20,7 @@ namespace Adam69Callouts.Callouts
         private static bool scenarioTriggered;
         private static bool pursuitCreated;
         private static bool behaviorStarted;
+        private static bool witnessInteractionComplete;
         private static LHandle pursuit;
         private static readonly Random random = new Random();
 
