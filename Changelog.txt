@@ -1,5 +1,12 @@
 ﻿Changelog:
 
+[April 2026]
+
+- Added 2 new callouts ["Traffic Light Out" and "Spectrum Alert" - Florida Based Callout]
+- Minor Bug Fixes
+- Minor Adjustments
+- Misc Improvements 
+
 [March 12, 2026] - Update Release
 
 v0.4.5:
