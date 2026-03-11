@@ -31,6 +31,7 @@ namespace Adam69Callouts
         internal static bool LSIAAirportIncident { get; set; } = true;
         internal static bool IndecentExposure { get; set; } = true;
         internal static bool IllegalHuntingBlaineCounty { get; set; } = true;
+        internal static bool SpectrumAlertFlorida { get; set; } = true;
 
         // Traffic settings (configurable via INI)
         internal static float TrafficStopRadius { get; set; } = 60f; // meters
@@ -69,6 +70,7 @@ namespace Adam69Callouts
             Settings.LSIAAirportIncident = initializationFile.ReadBoolean("Callouts", "LSIAAirportIncident", true);
             Settings.IndecentExposure = initializationFile.ReadBoolean("Callouts", "IndecentExposure", true);
             Settings.IllegalHuntingBlaineCounty = initializationFile.ReadBoolean("Callouts", "IllegalHuntingBlaineCounty", true);
+            Settings.SpectrumAlertFlorida = initializationFile.ReadBoolean("Callouts", "SpectrumAlertFlorida", true);
 
             // Read traffic settings (as strings then parse to allow safe parsing)
             var radiusStr = initializationFile.ReadString("Traffic", "StopRadius", Settings.TrafficStopRadius.ToString(CultureInfo.InvariantCulture));
@@ -124,6 +126,7 @@ namespace Adam69Callouts
             ini.Write("Callouts", "LSIAAirportIncident", true);
             ini.Write("Callouts", "IndecentExposure", true);
             ini.Write("Callouts", "IllegalHuntingBlaineCounty", true);
+            ini.Write("Callouts", "SpectrumAlertFlorida", true);
 
             // Traffic settings
             ini.Write("Traffic", "StopRadius", TrafficStopRadius);
