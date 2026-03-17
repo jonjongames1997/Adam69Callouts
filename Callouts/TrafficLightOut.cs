@@ -1,4 +1,3 @@
-Callouts\TrafficLightOut.cs
 using CalloutInterfaceAPI;
 using Rage;
 using Rage.Native;
@@ -56,7 +55,7 @@ namespace Adam69Callouts.Callouts
                 {
                     veh.IsPersistent = true;
                     veh.IsEngineOn = false;
-                    veh.Heading = spawnPoint.Heading;
+                    veh.Heading = 0f; // Or use a calculated heading if needed
                     veh.IsStolen = false;
                     spawnedVehicles.Add(veh);
 
@@ -159,7 +158,7 @@ namespace Adam69Callouts.Callouts
             if (Game.IsKeyDown(Settings.RequestVehicleInfo))
             {
                 GameFiber.Sleep(200);
-                PolicingRedefined.API.BackupDispatchAPI.RequestBackup();
+                PolicingRedefined.API.InfoDispatchAPI.RunNearestVehicleThroughDispatch(true);
                 LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Backup_Audio");
             }
 
