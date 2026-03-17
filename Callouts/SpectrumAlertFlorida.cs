@@ -1,6 +1,6 @@
-Callouts\SpectrumAlertFlorida.cs
 using CalloutInterfaceAPI;
 using Adam69Callouts.Common;
+using LSPD_First_Response.Engine.Scripting.Entities;
 
 namespace Adam69Callouts.Callouts
 {
@@ -84,8 +84,7 @@ namespace Adam69Callouts.Callouts
                 {
                     suspectVehicle.IsPersistent = true;
                     suspectVehicle.IsEngineOn = false;
-                    missingPerson = suspectVehicle.CreateRandomPedOnSeat(VehicleSeat.Passenger);
-                    if (missingPerson.Exists())
+                    if (suspectVehicle.IsSeatFree((int)VehicleSeat.Passenger))
                     {
                         missingPerson.IsPersistent = true;
                         missingPerson.BlockPermanentEvents = true;
@@ -197,10 +196,10 @@ namespace Adam69Callouts.Callouts
             }
 
             // If suspect flees in vehicle, trigger pursuit via LSPDFR API
-            if (suspectVehicle != null && suspectVehicle.Exists() && suspect.IsInVehicle(suspectVehicle, false) && suspect.Vehicle.IsDriveable && suspect.IsInCombat == false)
+            if (suspectVehicle != null && suspectVehicle.Exists() && suspect.IsInVehicle(suspectVehicle, false) && suspectVehicle.IsDriveable && suspect.IsInCombat == false)
             {
                 // If suspect attempts to flee by pressing gas (simulated randomly), start pursuit
-                if (suspect.IsInVehicle(suspectVehicle, false) && suspect.IsSittingInVehicle())
+                if (suspect.IsInVehicle(suspectVehicle, false) && !suspect.IsBailingOutOfVehicle)
                 {
                     // If vehicle is driving away (distance from spawnpoint increases quickly)
                     if (suspectVehicle.Speed > 5f && MainPlayer.DistanceTo(suspectVehicle) > 20f)
@@ -218,7 +217,7 @@ namespace Adam69Callouts.Callouts
             if (Game.IsKeyDown(Settings.RequestVehicleInfo))
             {
                 GameFiber.Sleep(200);
-                PolicingRedefined.API.BackupDispatchAPI.RequestBackup();
+                PolicingRedefined.API.InfoDispatchAPI.RunNearestVehicleThroughDispatch(true);
                 LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Backup_Audio");
             }
 
