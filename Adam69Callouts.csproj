@@ -89,11 +89,15 @@
     <Compile Include="Callouts\IndecentExposure.cs" />
     <Compile Include="Callouts\KnifeAttack.cs" />
     <Compile Include="Callouts\Loitering.cs" />
+    <Compile Include="Callouts\LostDog.cs" />
     <Compile Include="Callouts\LSIAAirportIncident.cs" />
     <Compile Include="Callouts\OfficerDown.cs" />
     <Compile Include="Callouts\PersonCarryingAConcealedWeapon.cs" />
+    <Compile Include="Callouts\SovereignCitizen.cs" />
+    <Compile Include="Callouts\SpectrumAlertFlorida.cs" />
     <Compile Include="Callouts\SuspiciousPerson.cs" />
     <Compile Include="Callouts\SuspiciousVehicle.cs" />
+    <Compile Include="Callouts\TrafficLightOut.cs" />
     <Compile Include="Callouts\VehicleBlockingCrosswalk.cs" />
     <Compile Include="Callouts\VehicleBlockingSidewalk.cs" />
     <Compile Include="Stuff\ConsoleCommands.cs" />
