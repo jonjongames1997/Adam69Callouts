@@ -73,7 +73,27 @@ namespace Adam69Callouts.Callouts
                 }
 
                 suspect = suspectVehicle.CreateRandomDriver();
-                passenger = (r.Next(0, 10) > 6) ? suspectVehicle.CreateRandomPassenger() : null;
+
+                if (r.Next(0, 10) > 6)
+                {
+                    int? seatIndex = suspectVehicle.GetFreePassengerSeatIndex();
+                    if (seatIndex.HasValue)
+                    {
+                        passenger = new Ped(pedPool[r.Next(pedPool.Length)], suspectVehicle.GetOffsetPositionFront(2f), 0f);
+                        if (passenger.Exists())
+                        {
+                            passenger.WarpIntoVehicle(suspectVehicle, seatIndex.Value);
+                        }
+                    }
+                    else
+                    {
+                        passenger = null;
+                    }
+                }
+                else
+                {
+                    passenger = null;
+                }   
             }
             else // ProtestBlocking
             {
@@ -239,7 +259,7 @@ namespace Adam69Callouts.Callouts
                 if (Game.IsKeyDown(Settings.RequestVehicleInfo))
                 {
                     GameFiber.Sleep(300);
-                    PolicingRedefined.API.BackupDispatchAPI.RequestBackup();
+                    PolicingRedefined.API.InfoDispatchAPI.RunNearestVehicleThroughDispatch(true);
                     LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Backup_Audio");
                     Game.DisplaySubtitle("~b~You~w~: Dispatch, requesting backup.");
                 }
