@@ -194,6 +194,7 @@ namespace Adam69Callouts
             if (Settings.SpectrumAlertFlorida) { Functions.RegisterCallout(typeof(SpectrumAlertFlorida)); }
             if (Settings.LostDogCallout) { Functions.RegisterCallout(typeof(LostDog)); }
             if (Settings.SoveriegnCitizen) { Functions.RegisterCallout(typeof(SovereignCitizen)); }
+            if (Settings.NakedDrugUser) { Functions.RegisterCallout(typeof(NakedDrugUser)); }
             Game.Console.Print("[LOG]: All callouts of the Adam69Callouts.ini were loaded successfully.");
             Game.Console.Print();
             Game.Console.Print("================================================== Adam69 Callouts ===================================================");
