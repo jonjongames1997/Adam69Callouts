@@ -56,7 +56,7 @@ namespace Adam69Callouts.VersionChecker
             Game.Console.Print("===================================================== Adam69 Callouts ===========================================");
             Game.Console.Print();
             Game.Console.Print("[WARNING!]: A new version of Adam69 Callouts is NOW AVAILABLE to download! Update to latest build!");
-            Game.Console.Print("[WARNING!]: v0.3.3.3 or lower is NO LONGER Supported! Update to latest build for guaranteed suppport");
+            Game.Console.Print("[WARNING!]: v0.4.5.0 or lower is NO LONGER Supported! Update to latest build for guaranteed suppport");
             Game.Console.Print($"[LOG]: Current Version: {curVersion}");
             Game.Console.Print($"[LOG]: New Version: {newVersion}");
             Game.Console.Print();
