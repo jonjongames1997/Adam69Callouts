@@ -1,11 +1,13 @@
 ﻿Changelog:
 
-[April 2026]
+[March 18, 2026]
 
+- Updated LSPDFR API and RAGEPluginHook references to latest version
 - Added 2 new callouts ["Traffic Light Out" and "Spectrum Alert" - Florida Based Callout]
 - Minor Bug Fixes
 - Minor Adjustments
-- Misc Improvements 
+- Misc Improvements
+- Refactored Drugs Found callout
 
 [March 12, 2026] - Update Release
 
