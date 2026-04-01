@@ -1,5 +1,13 @@
 ﻿Changelog:
 
+[April 2026]
+
+- Added 4 new callouts
+- Minor Bug Fixes
+- 
+
+Note: Lost Dog callout has returned. May expect bugs.
+
 [March 18, 2026]
 
 - Updated LSPDFR API and RAGEPluginHook references to latest version
