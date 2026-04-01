@@ -84,6 +84,7 @@
     <Compile Include="Callouts\BicyclePursuit.cs" />
     <Compile Include="Callouts\DeadBirdOnTheRoad.cs" />
     <Compile Include="Callouts\DerangedDrunkenFeller.cs" />
+    <Compile Include="Callouts\DisabledVehicle.cs" />
     <Compile Include="Callouts\DrugsFound.cs" />
     <Compile Include="Callouts\IllegalHuntingBlaineCounty.cs" />
     <Compile Include="Callouts\IndecentExposure.cs" />
@@ -94,10 +95,12 @@
     <Compile Include="Callouts\NakedDrugUser.cs" />
     <Compile Include="Callouts\OfficerDown.cs" />
     <Compile Include="Callouts\PersonCarryingAConcealedWeapon.cs" />
+    <Compile Include="Callouts\RoadDebris.cs" />
     <Compile Include="Callouts\SovereignCitizen.cs" />
     <Compile Include="Callouts\SpectrumAlertFlorida.cs" />
     <Compile Include="Callouts\SuspiciousPerson.cs" />
     <Compile Include="Callouts\SuspiciousVehicle.cs" />
+    <Compile Include="Callouts\TrafficAccident.cs" />
     <Compile Include="Callouts\TrafficLightOut.cs" />
     <Compile Include="Callouts\VehicleBlockingCrosswalk.cs" />
     <Compile Include="Callouts\VehicleBlockingSidewalk.cs" />
