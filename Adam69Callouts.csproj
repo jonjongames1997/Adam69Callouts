@@ -58,6 +58,13 @@
     <Reference Include="RagePluginHook, Version=0.0.0.0, Culture=neutral, processorArchitecture=AMD64">
       <HintPath>packages\RagePluginHook.1.124.0\lib\net472\RagePluginHook.dll</HintPath>
     </Reference>
+    <Reference Include="SceneManager">
+      <HintPath>C:\Users\JonJo\OneDrive\Documentos\references\SceneManager.dll</HintPath>
+    </Reference>
+    <Reference Include="StopThePed, Version=4.9.5.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\JonJo\OneDrive\Documentos\references\StopThePed.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
@@ -76,6 +83,10 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="UltimateBackup, Version=1.8.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\JonJo\OneDrive\Documentos\references\UltimateBackup.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
