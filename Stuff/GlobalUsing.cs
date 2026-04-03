@@ -24,5 +24,7 @@ global using PolicingRedefined.API;
 global using PolicingRedefined;
 global using static Adam69Callouts.Utilities.DLCManager;
 global using static Adam69Callouts.Utilities.ConfigManager;
+global using StopThePed;
+global using UltimateBackup;
 
 #endregion
