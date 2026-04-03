@@ -63,8 +63,8 @@ namespace Adam69Callouts.Callouts
 
         public override void OnCalloutNotAccepted()
         {
-            if (_vehicle.Exists()) _vehicle.Delete();
-            if (_vehicleBlip.Exists()) _vehicleBlip.Delete();
+            if (_vehicle != null && _vehicle.Exists()) _vehicle.Delete();
+            if (_vehicleBlip != null && _vehicleBlip.Exists()) _vehicleBlip.Delete();
 
             base.OnCalloutNotAccepted();
         }
@@ -72,17 +72,11 @@ namespace Adam69Callouts.Callouts
         public override void Process()
         {
 
-            if (Game.IsKeyDown(System.Windows.Forms.Keys.P))
+            if (Game.IsKeyDown(System.Windows.Forms.Keys.L))
             {
                 PolicingRedefined.API.TrafficControlAPI.Slow(true);
                 PolicingRedefined.API.TrafficControlAPI.IsActive();
                 PolicingRedefined.API.VehicleAPI.RunVehicleThroughDispatch(_vehicle, true, true, true);
-                LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Dispatch_Audio");
-            }
-
-            if (Game.IsKeyDown(System.Windows.Forms.Keys.K))
-            {
-                PolicingRedefined.API.BackupDispatchAPI.RequestTowServiceBackup();
                 LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Tow_Truck_Audio");
             }
 
