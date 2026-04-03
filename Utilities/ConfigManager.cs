@@ -33,6 +33,16 @@ namespace Adam69Callouts.Utilities
         private static Keys RequestVehicleInfo { get; set; }
         private static Keys RequestTowTruck { get; set; }
         private static Keys CallFireDepartmentKey { get; set; }
+        private static bool LostDog { get; set; }
+        private static bool NakedDrugUser { get; set; }
+        private static bool TrafficAccident {  get; set; }
+        private static bool RoadDebris { get; set; }
+        private static bool SovereignCitizen { get; set; }
+        private static bool TrafficLightOut { get; set; }
+        private static bool SpectrumAlert { get; set; }
+        private static bool LSIAAirportIncident { get; set; }
+        private static bool IllegalHuntingBlaineCounty { get; set; }
+        private static bool DisabledVehicle { get; set; }
 
         private static void LoadConfig()
         {
@@ -96,6 +106,16 @@ namespace Adam69Callouts.Utilities
                     DerangedDrunkenFeller = false // Disabled for a complete rewrite
                     DeadBirdOnTheRoad = true
                     KnifeAttack = true
+                    LostDog = true
+                    NakedDrugUser = true // This is a beta callout. Use at your own risk. This will not be in the final build.
+                    TrafficAccident = true
+                    RoadDebris = true
+                    SovereignCitizen = true
+                    TrafficLightOut = true
+                    SpectrumAlert = true // This is an actual thing in the State of Florida. For info about this alert type, visit: https://www.flsenate.gov/Committees/billsummaries/2025/html/711
+                    LSIAAirportIncident = true
+                    IllegalHuntingBlaineCounty = true
+                    DisabledVehicle = true
 
                     ------------------------------
 
@@ -143,6 +163,17 @@ namespace Adam69Callouts.Utilities
             KnifeAttack = config.ReadBoolean("Callouts", "KnifeAttack", true);
             HelpMessages = config.ReadBoolean("Settings", "HelpMessages", true);
             MissionMessages = config.ReadBoolean("Settings", "MissionMessages", true);
+            LSIAAirportIncident = config.ReadBoolean("Callouts", "LSIAAirportIncident", true);
+            LostDog = config.ReadBoolean("Callouts", "LostDog", true);
+            NakedDrugUser = config.ReadBoolean("Callouts", "NakedDrugUser", true);
+            TrafficAccident = config.ReadBoolean("Callouts", "TrafficAccident", true);
+            RoadDebris = config.ReadBoolean("Callouts", "RoadDebris", true);
+            SovereignCitizen = config.ReadBoolean("Callouts", "SovereignCitizen", true);
+            TrafficLightOut = config.ReadBoolean("Callouts", "TrafficLightOut", true);
+            SpectrumAlert = config.ReadBoolean("Callouts", "SpectrumAlert", true);
+            LSIAAirportIncident = config.ReadBoolean("Callouts", "LSIAAirportIncident", true);
+            IllegalHuntingBlaineCounty = config.ReadBoolean("Callouts", "IllegalHuntingBlaineCounty", true);
+            DisabledVehicle = config.ReadBoolean("Callouts", "DisabledVehicle", true);
             EndCall = config.ReadEnum<Keys>("Keys", "EndCall", Keys.End);
             Dialog = config.ReadEnum<Keys>("Keys", "Dialog", Keys.Y);
             PickUp = config.ReadEnum<Keys>("Keys", "PickUp", Keys.E);
