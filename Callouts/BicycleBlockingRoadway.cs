@@ -10,6 +10,7 @@ namespace Adam69Callouts.Callouts
     public class BicycleBlockingRoadway : Callout
     {
         private static readonly string[] BicycleList = new string[] { "bmx", "cruiser", "fixter", "scorcher", "tribike", "tribike2", "tribike3" };
+        private static readonly Random random = new Random();
         private static Vehicle thebike;
         private static Blip blip;
         private static Vector3 spawnpoint;
@@ -50,19 +51,13 @@ namespace Adam69Callouts.Callouts
             {
                 Game.LogTrivial("[Adam69 Callouts LOG]: Bicycle Blocking Roadway callout accepted!");
             }
-            else
-            {
-                Settings.EnableLogs = false;
-            }
 
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Bicycle Blocking Roadway", "~b~Dispatch~w~: The vehicle has been spotted! Respond ~r~Code2~w~.");
 
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_2_Audio");
 
-            thebike = new Vehicle(BicycleList[new Random().Next((int)BicycleList.Length)], spawnpoint, 0f);
-            thebike.IsValid();
+            thebike = new Vehicle(BicycleList[random.Next(BicycleList.Length)], spawnpoint, 0f);
             thebike.IsPersistent = true;
-            thebike.Exists();
 
             thebike.IsStolen = false;
 
@@ -70,7 +65,6 @@ namespace Adam69Callouts.Callouts
             blip.Color = System.Drawing.Color.Yellow;
             blip.Alpha = 0.8f;
             blip.IsRouteEnabled = true;
-            blip.Exists();
 
             // Stop traffic around the spawn point
             StopTraffic();
@@ -80,9 +74,8 @@ namespace Adam69Callouts.Callouts
 
         public override void OnCalloutNotAccepted()
         {
-
-            if (thebike.Exists()) thebike.Delete();
-            if (blip.Exists()) blip.Delete();
+            if (thebike != null && thebike.Exists()) thebike.Delete();
+            if (blip != null && blip.Exists()) blip.Delete();
 
             // Ensure traffic restored if callout not accepted
             if (trafficStopped) RestoreTraffic();
@@ -114,14 +107,11 @@ namespace Adam69Callouts.Callouts
                 LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Tow_Truck_Audio");
             }
 
-            if (MainPlayer.DistanceTo(thebike) <= 10f)
+            if (thebike != null && thebike.Exists() && MainPlayer.DistanceTo(thebike) <= 10f)
             {
                 if (Settings.HelpMessages)
                 {
                     Game.DisplayHelp("Deal with the situation as you see fit.", 5000);
-                }
-                else
-                {
                     Settings.HelpMessages = false;
                 }
             }
@@ -131,31 +121,19 @@ namespace Adam69Callouts.Callouts
                 if (Settings.MissionMessages)
                 {
                     BigMessageThread bigMessage = new BigMessageThread();
-
                     bigMessage.MessageInstance.ShowColoredShard("Callout Failed!", "You'll get 'em next time.", RAGENativeUI.HudColor.Red, RAGENativeUI.HudColor.Black, 5000);
                 }
-                else
-                {
-                    Settings.MissionMessages = false;
-                }
-
                 End();
+            }
 
-                if (Game.IsKeyDown(System.Windows.Forms.Keys.End))
+            if (Game.IsKeyDown(System.Windows.Forms.Keys.End))
+            {
+                if (Settings.MissionMessages)
                 {
-                    if (Settings.MissionMessages)
-                    {
-                        BigMessageThread bigMessage = new BigMessageThread();
-
-                        bigMessage.MessageInstance.ShowColoredShard("Callout Complete!", "You are now ~g~CODE4~w~.", RAGENativeUI.HudColor.Green, RAGENativeUI.HudColor.Black, 5000);
-                    }
-                    else
-                    {
-                        Settings.MissionMessages = false;
-                    }
-
-                        End();
+                    BigMessageThread bigMessage = new BigMessageThread();
+                    bigMessage.MessageInstance.ShowColoredShard("Callout Complete!", "You are now ~g~CODE4~w~.", RAGENativeUI.HudColor.Green, RAGENativeUI.HudColor.Black, 5000);
                 }
+                End();
             }
 
             base.Process();
@@ -163,8 +141,8 @@ namespace Adam69Callouts.Callouts
 
         public override void End()
         {
-            if (thebike) thebike.Dismiss();
-            if (blip) blip.Delete();
+            if (thebike != null && thebike.Exists()) thebike.Dismiss();
+            if (blip != null && blip.Exists()) blip.Delete();
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Vehicle Blocking Crosswalk", "~b~You~w~: Dispatch, we are ~g~CODE4~w~. Show me back 10-8.");
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
 
@@ -176,10 +154,6 @@ namespace Adam69Callouts.Callouts
             if (Settings.EnableLogs)
             {
                 Game.LogTrivial("[Adam69 Callouts LOG]: Bicycle Blocking Roadway callout is CODE4!");
-            }
-            else
-            {
-                Settings.EnableLogs = false;
             }
         }
 
