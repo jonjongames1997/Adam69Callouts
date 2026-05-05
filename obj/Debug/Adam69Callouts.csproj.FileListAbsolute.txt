@@ -29,3 +29,6 @@ D:\Adam69Callouts\bin\Debug\Newtonsoft.Json.xml
 D:\Adam69Callouts\bin\Debug\PolicingRedefined.dll
 D:\Adam69Callouts\bin\Debug\RagePluginHook.dll
 D:\Adam69Callouts\bin\Debug\RagePluginHook.xml
+D:\Adam69Callouts\bin\Debug\SceneManager.dll
+D:\Adam69Callouts\bin\Debug\StopThePed.dll
+D:\Adam69Callouts\bin\Debug\UltimateBackup.dll
