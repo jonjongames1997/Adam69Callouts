@@ -1,10 +1,11 @@
 ﻿Changelog:
 
-[April 2026]
+[May 2026]
 
-- Added 4 new callouts
+- Added 3 new callouts
 - Minor Bug Fixes
-- 
+- Major Optimizations to a few callouts
+- Minor adjustments
 
 Note: Lost Dog callout has returned. May expect bugs.
 
