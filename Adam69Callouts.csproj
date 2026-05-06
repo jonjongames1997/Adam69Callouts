@@ -110,6 +110,7 @@
     <Compile Include="Callouts\SpectrumAlertFlorida.cs" />
     <Compile Include="Callouts\SuspiciousPerson.cs" />
     <Compile Include="Callouts\SuspiciousVehicle.cs" />
+    <Compile Include="Callouts\ToplessBeachGoer.cs" />
     <Compile Include="Callouts\TrafficAccident.cs" />
     <Compile Include="Callouts\TrafficLightOut.cs" />
     <Compile Include="Callouts\VehicleBlockingCrosswalk.cs" />
