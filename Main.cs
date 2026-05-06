@@ -197,6 +197,7 @@ namespace Adam69Callouts
             if (Settings.TrafficAccident) { Functions.RegisterCallout(typeof(TrafficAccident)); }
             if (Settings.RoadDebris) { Functions.RegisterCallout(typeof(RoadDebris)); }
             if (Settings.DisabledVehicle) { Functions.RegisterCallout(typeof(DisabledVehicle)); }
+            if (Settings.ToplessBeachgoer) { Functions.RegisterCallout(typeof(ToplessBeachgoer)); }
             Game.Console.Print("[LOG]: All callouts of the Adam69Callouts.ini were loaded successfully.");
             Game.Console.Print();
             Game.Console.Print("================================================== Adam69 Callouts ===================================================");
