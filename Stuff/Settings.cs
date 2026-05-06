@@ -37,6 +37,7 @@ namespace Adam69Callouts
         internal static bool TrafficAccident { get; set; } = true;
         internal static bool RoadDebris { get; set; } = true;
         internal static bool DisabledVehicle { get; set; } = true;
+        internal static bool ToplessBeachgoer { get; set; } = true;
 
         // Traffic settings (configurable via INI)
         internal static float TrafficStopRadius { get; set; } = 60f; // meters
@@ -81,6 +82,7 @@ namespace Adam69Callouts
             Settings.TrafficAccident = initializationFile.ReadBoolean("Callouts", "TrafficAccident", true);
             Settings.RoadDebris = initializationFile.ReadBoolean("Callouts", "RoadDebris", true);
             Settings.DisabledVehicle = initializationFile.ReadBoolean("Callouts", "DisabledVehicle", true);
+            Settings.ToplessBeachgoer = initializationFile.ReadBoolean("Callouts", "ToplessBeachgoer", true);
 
             // Read traffic settings (as strings then parse to allow safe parsing)
             var radiusStr = initializationFile.ReadString("Traffic", "StopRadius", Settings.TrafficStopRadius.ToString(CultureInfo.InvariantCulture));
@@ -142,6 +144,7 @@ namespace Adam69Callouts
             ini.Write("Callouts", "TrafficAccident", true);
             ini.Write("Callouts", "RoadDebris", true);
             ini.Write("Callouts", "DisabledVehicle", true);
+            ini.Write("Callouts", "ToplessBeachgoer", true);
 
             // Traffic settings
             ini.Write("Traffic", "StopRadius", TrafficStopRadius);
