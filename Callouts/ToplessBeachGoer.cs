@@ -4,6 +4,7 @@ using CalloutInterfaceAPI;
 namespace Adam69Callouts.Callouts
 {
     [CalloutInterface("[Adam69 Callouts] Topless Beachgoer", CalloutProbability.Medium, "Report of topless beachgoer", "Code 2", "LSPD")]
+    
     public class ToplessBeachgoer : Callout
     {
         private static Ped suspect;
@@ -328,7 +329,7 @@ namespace Adam69Callouts.Callouts
             // Request backup hotkey
             if (Game.IsKeyDown(System.Windows.Forms.Keys.B) && !Game.IsKeyDownRightNow(System.Windows.Forms.Keys.B))
             {
-                UltimateBackup.API.Functions.callCode2Backup();
+                PolicingRedefined.API.BackupAPI.RequestBackup(EBackupUnit.LocalFemalePatrol, PolicingRedefined.Backup.Entities.EBackupResponseCode.Code1, true, true, true);
                 Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Dispatch:", "Additional units en route to your location.");
             }
 
