@@ -8,6 +8,7 @@ v0.4.7
 - Minor Bug Fixes
 - Major Optimizations to a few callouts
 - Minor adjustments
+- Updated the LCPDFR version check endpoint API to the newest endpoint API.
 
 Note: Lost Dog callout has returned. May expect bugs.
 
