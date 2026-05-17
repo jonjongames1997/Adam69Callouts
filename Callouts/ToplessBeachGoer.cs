@@ -602,7 +602,7 @@ namespace Adam69Callouts.Callouts
                         Game.DisplaySubtitle("~r~Suspect~w~: Ugh, fine! You're killing my engagement rate! But whatever!");
                         GameFiber.Sleep(2000);
                         Game.DisplaySubtitle("~g~The influencer reluctantly complies. Consider citation for public disturbance.");
-                        UltimateBackup.API.Functions.callCode2Backup(suspect);
+                        PolicingRedefined.API.BackupDispatchAPI.RequestCode1Backup();
                         scenarioTriggered = true;
                     }
                     else
@@ -611,7 +611,7 @@ namespace Adam69Callouts.Callouts
                         Game.DisplaySubtitle("~r~Suspect~w~: You can't stop me! This is art! I'm live streaming this police harassment!");
                         GameFiber.Sleep(1000);
                         Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Suspect Non-Compliant", "~r~Subject refusing lawful orders!");
-                        UltimateBackup.API.Functions.callCode2Backup(suspect);
+                        PolicingRedefined.API.BackupDispatchAPI.RequestCode2Backup();
                         scenarioTriggered = true;
                     }
                     break;
@@ -710,7 +710,7 @@ namespace Adam69Callouts.Callouts
                         Game.DisplaySubtitle("~g~Subject is refusing lawful orders. Prepare citation for indecent exposure.");
                         GameFiber.Sleep(2000);
                         Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Citation Required", "~r~Subject refusing compliance. Issue citation for PC 314.");
-                        UltimateBackup.API.Functions.callCode2Backup(suspect);
+                        PolicingRedefined.API.BackupDispatchAPI.RequestCode2Backup();
                         scenarioTriggered = true;
                     }
                     else
@@ -718,10 +718,12 @@ namespace Adam69Callouts.Callouts
                         suspect.Tasks.ReactAndFlee(MainPlayer);
                         if (suspectBlip != null && suspectBlip.Exists())
                             suspectBlip.Color = System.Drawing.Color.Yellow;
-                        Game.DisplaySubtitle("~r~Suspect~w~: You'll never take me alive! *runs away*");
+                        Game.DisplaySubtitle("~r~Suspect~w~: You'll never take me alive!");
                         GameFiber.Sleep(1000);
                         Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Suspect Fleeing", "~r~Subject is fleeing the scene!");
                         scenarioTriggered = true;
+                        PolicingRedefined.API.BackupDispatchAPI.RequestPursuitBackup();
+                        PolicingRedefined.API.BackupDispatchAPI.RequestAirPursuitBackup();
                     }
                     break;
             }
@@ -754,7 +756,9 @@ namespace Adam69Callouts.Callouts
                 witness.Dismiss();
 
             if (pursuit != null)
+            {
                 LSPD_First_Response.Mod.API.Functions.ForceEndPursuit(pursuit);
+            }
         }
     }
 }
