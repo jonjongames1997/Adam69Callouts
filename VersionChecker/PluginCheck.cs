@@ -9,7 +9,7 @@ namespace Adam69Callouts.VersionChecker
         public static async Task<bool> IsUpdateAvailableAsync()
         {
             string curVersion = Settings.PluginVersion;
-            Uri latestVersionUri = new("https://www.lcpdfr.com/applications/downloadsng/interface/api.php?do=checkForUpdates&fileId=49465&textOnly=1");
+            Uri latestVersionUri = new("https://api-prod.lcpdfr.com/api/downloadsng/files/49465/version");
             string receiveData;
 
             try
