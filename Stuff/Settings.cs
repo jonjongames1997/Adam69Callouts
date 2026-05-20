@@ -47,7 +47,19 @@ namespace Adam69Callouts
         internal static void LoadSettings()
         {
             Game.Console.Print("[LOG]: Loading config file from Adam69 Callouts");
-            InitializationFile initializationFile = new("Plugins\\LSPDFR\\Adam69Callouts\\Adam69Callouts.ini");
+            string iniPath = "Plugins\\LSPDFR\\Adam69Callouts\\Adam69Callouts.ini";
+            InitializationFile initializationFile = new(iniPath);
+            
+            // Check if the file exists and has content
+            bool fileExists = System.IO.File.Exists(iniPath);
+            bool fileHasContent = fileExists && new System.IO.FileInfo(iniPath).Length > 0;
+            
+            if (!fileHasContent)
+            {
+                Game.LogTrivial("INI file doesn't exist or is empty. Creating with default values...");
+                SaveConfigSettings();
+            }
+            
             initializationFile.Create();
             Game.LogTrivial("Initializing config for Adam69 Callouts....");
             Settings.VehicleBlockingSidewalk = initializationFile.ReadBoolean("Callouts", "VehicleBlockingSidewalk", true);
