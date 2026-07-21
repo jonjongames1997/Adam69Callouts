@@ -29,7 +29,6 @@ namespace Adam69Callouts
         internal static Keys RequestTowTruck { get; set; } = Keys.L;
         public static bool EnableLogs { get; set; }
         internal static bool LSIAAirportIncident { get; set; } = true;
-        internal static bool IndecentExposure { get; set; } = true;
         internal static bool IllegalHuntingBlaineCounty { get; set; } = true;
         internal static bool LostDogCallout { get; set; } = true;
         internal static bool SpectrumAlertFlorida { get; set; } = true;
@@ -37,7 +36,6 @@ namespace Adam69Callouts
         internal static bool TrafficAccident { get; set; } = true;
         internal static bool RoadDebris { get; set; } = true;
         internal static bool DisabledVehicle { get; set; } = true;
-        internal static bool ToplessBeachgoer { get; set; } = true;
 
         // Traffic settings (configurable via INI)
         internal static float TrafficStopRadius { get; set; } = 60f; // meters
@@ -86,7 +84,6 @@ namespace Adam69Callouts
             CallAmbulanceKey = initializationFile.ReadEnum<Keys>("Keys", "CallAmbulanceKey", Keys.K);
             RequestTowTruck = initializationFile.ReadEnum<Keys>("Keys", "RequestTowTruck", Keys.L);
             Settings.LSIAAirportIncident = initializationFile.ReadBoolean("Callouts", "LSIAAirportIncident", true);
-            Settings.IndecentExposure = initializationFile.ReadBoolean("Callouts", "IndecentExposure", true);
             Settings.IllegalHuntingBlaineCounty = initializationFile.ReadBoolean("Callouts", "IllegalHuntingBlaineCounty", true);
             Settings.SpectrumAlertFlorida = initializationFile.ReadBoolean("Callouts", "SpectrumAlertFlorida", true);
             Settings.LostDogCallout = initializationFile.ReadBoolean("Callouts", "LostDog", true);
@@ -94,7 +91,6 @@ namespace Adam69Callouts
             Settings.TrafficAccident = initializationFile.ReadBoolean("Callouts", "TrafficAccident", true);
             Settings.RoadDebris = initializationFile.ReadBoolean("Callouts", "RoadDebris", true);
             Settings.DisabledVehicle = initializationFile.ReadBoolean("Callouts", "DisabledVehicle", true);
-            Settings.ToplessBeachgoer = initializationFile.ReadBoolean("Callouts", "ToplessBeachgoer", true);
 
             // Read traffic settings (as strings then parse to allow safe parsing)
             var radiusStr = initializationFile.ReadString("Traffic", "StopRadius", Settings.TrafficStopRadius.ToString(CultureInfo.InvariantCulture));
@@ -122,7 +118,8 @@ namespace Adam69Callouts
         internal static void SaveConfigSettings()
         {
             var ini = new InitializationFile("Plugins\\LSPDFR\\Adam69Callouts\\Adam69Callouts.ini");
-            ini.Create();
+            ini.ReCreate();
+
             ini.Write("Callouts", "VehicleBlockingSidewalk", true);
             ini.Write("Callouts", "BicyclePursuit", true);
             ini.Write("Callouts", "PersonCarryingAConcealedWeapon", true);
@@ -148,7 +145,6 @@ namespace Adam69Callouts
             ini.Write("Keys", "RequestTowTruck", Keys.L);
             ini.Write("Settings", "EnableLogs", false);
             ini.Write("Callouts", "LSIAAirportIncident", true);
-            ini.Write("Callouts", "IndecentExposure", true);
             ini.Write("Callouts", "IllegalHuntingBlaineCounty", true);
             ini.Write("Callouts", "SpectrumAlertFlorida", true);
             ini.Write("Callouts", "LostDog", true);
@@ -156,14 +152,11 @@ namespace Adam69Callouts
             ini.Write("Callouts", "TrafficAccident", true);
             ini.Write("Callouts", "RoadDebris", true);
             ini.Write("Callouts", "DisabledVehicle", true);
-            ini.Write("Callouts", "ToplessBeachgoer", true);
 
             // Traffic settings
             ini.Write("Traffic", "StopRadius", TrafficStopRadius);
             ini.Write("Traffic", "DensityMultiplier", TrafficDensityMultiplier);
             ini.Write("Traffic", "RestoreMultiplier", TrafficRestoreMultiplier);
-
-            ini.ReCreate();
         }
 
         public static readonly string PluginVersion = "0.4.7";
