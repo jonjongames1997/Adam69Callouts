@@ -61,7 +61,7 @@ namespace Adam69Callouts.Callouts
             {
                 owner.IsPersistent = true;
                 owner.BlockPermanentEvents = true;
-                owner.Tasks.PlayAnimation(new AnimationDictionary("amb@world_human_bum_wash@male@base"), "base", -1f, AnimationFlags.Loop);
+                owner.Tasks.PlayAnimation(new AnimationDictionary("amb@world_human_window_shop@male@base"), "base", -1f, AnimationFlags.Loop);
                 ownerBlip = owner.AttachBlip();
                 ownerBlip.Color = System.Drawing.Color.Green;
                 ownerBlip.Scale = 0.8f;
