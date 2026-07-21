@@ -52,6 +52,7 @@ namespace Adam69Callouts
             {
                 GameFiber.StartNew(delegate
                 {
+                    Settings.SaveConfigSettings();
                     RegisterCallouts();
                     Game.Console.Print();
                     Game.Console.Print("=============================================== Adam69 Callouts by JM Modifications ================================================");
@@ -116,7 +117,7 @@ namespace Adam69Callouts
                         Settings.MissionMessages = false;
                     }
 
-                    VersionChecker.PluginCheck.IsUpdateAvailableAsync().GetAwaiter().GetResult();
+                    VersionChecker.PluginCheck.IsUpdateAvailable();
 
                     GameFiber.Wait(300);
                 });
@@ -188,7 +189,6 @@ namespace Adam69Callouts
             if (Settings.DeadBirdOnTheRoad) { Functions.RegisterCallout(typeof(DeadBirdOnTheRoad)); }
             if (Settings.KnifeAttack) { Functions.RegisterCallout(typeof(KnifeAttack)); }
             if (Settings.LSIAAirportIncident) { Functions.RegisterCallout(typeof(LSIAAirportIncident)); }
-            if (Settings.IndecentExposure) { Functions.RegisterCallout(typeof(IndecentExposure)); }
             if (Settings.IllegalHuntingBlaineCounty) { Functions.RegisterCallout(typeof(IllegalHuntingBlaineCounty)); }
             if (Settings.SpectrumAlertFlorida) { Functions.RegisterCallout(typeof(SpectrumAlertFlorida)); }
             if (Settings.LostDogCallout) { Functions.RegisterCallout(typeof(LostDog)); }
@@ -196,7 +196,6 @@ namespace Adam69Callouts
             if (Settings.TrafficAccident) { Functions.RegisterCallout(typeof(TrafficAccident)); }
             if (Settings.RoadDebris) { Functions.RegisterCallout(typeof(RoadDebris)); }
             if (Settings.DisabledVehicle) { Functions.RegisterCallout(typeof(DisabledVehicle)); }
-            if (Settings.ToplessBeachgoer) { Functions.RegisterCallout(typeof(ToplessBeachgoer)); }
             Game.Console.Print("[LOG]: All callouts of the Adam69Callouts.ini were loaded successfully.");
             Game.Console.Print();
             Game.Console.Print("================================================== Adam69 Callouts ===================================================");
