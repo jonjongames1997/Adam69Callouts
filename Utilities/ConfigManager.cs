@@ -34,7 +34,6 @@ namespace Adam69Callouts.Utilities
         private static Keys RequestTowTruck { get; set; }
         private static Keys CallFireDepartmentKey { get; set; }
         private static bool LostDog { get; set; }
-        private static bool NakedDrugUser { get; set; }
         private static bool TrafficAccident {  get; set; }
         private static bool RoadDebris { get; set; }
         private static bool SovereignCitizen { get; set; }
@@ -107,7 +106,6 @@ namespace Adam69Callouts.Utilities
                     DeadBirdOnTheRoad = true
                     KnifeAttack = true
                     LostDog = true
-                    NakedDrugUser = true // This is a beta callout. Use at your own risk. This will not be in the final build.
                     TrafficAccident = true
                     RoadDebris = true
                     SovereignCitizen = true
@@ -165,7 +163,6 @@ namespace Adam69Callouts.Utilities
             MissionMessages = config.ReadBoolean("Settings", "MissionMessages", true);
             LSIAAirportIncident = config.ReadBoolean("Callouts", "LSIAAirportIncident", true);
             LostDog = config.ReadBoolean("Callouts", "LostDog", true);
-            NakedDrugUser = config.ReadBoolean("Callouts", "NakedDrugUser", true);
             TrafficAccident = config.ReadBoolean("Callouts", "TrafficAccident", true);
             RoadDebris = config.ReadBoolean("Callouts", "RoadDebris", true);
             SovereignCitizen = config.ReadBoolean("Callouts", "SovereignCitizen", true);
