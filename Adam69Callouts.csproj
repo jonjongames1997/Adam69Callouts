@@ -98,7 +98,6 @@
     <Compile Include="Callouts\DisabledVehicle.cs" />
     <Compile Include="Callouts\DrugsFound.cs" />
     <Compile Include="Callouts\IllegalHuntingBlaineCounty.cs" />
-    <Compile Include="Callouts\IndecentExposure.cs" />
     <Compile Include="Callouts\KnifeAttack.cs" />
     <Compile Include="Callouts\Loitering.cs" />
     <Compile Include="Callouts\LostDog.cs" />
@@ -110,7 +109,6 @@
     <Compile Include="Callouts\SpectrumAlertFlorida.cs" />
     <Compile Include="Callouts\SuspiciousPerson.cs" />
     <Compile Include="Callouts\SuspiciousVehicle.cs" />
-    <Compile Include="Callouts\ToplessBeachGoer.cs" />
     <Compile Include="Callouts\TrafficAccident.cs" />
     <Compile Include="Callouts\TrafficLightOut.cs" />
     <Compile Include="Callouts\VehicleBlockingCrosswalk.cs" />
