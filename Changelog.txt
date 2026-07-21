@@ -1,14 +1,19 @@
 ﻿Changelog:
 
-[May 2026]
+[July 21, 2026]
 
 v0.4.7
 
+- Updated LSPDFR API reference to latest version
+- Fixed the ini being blank. It will now generate when going on duty at least once.
 - Added 3 new callouts
 - Minor Bug Fixes
 - Major Optimizations to a few callouts
 - Minor adjustments
 - Updated the LCPDFR version check endpoint API to the newest endpoint API.
+- Reverted the version checker code back to the old version check code it used to use.
+- Refactored sovereign citizen callout
+- Fixed invalid animation in Lost Dog Callout
 
 Note: Lost Dog callout has returned. May expect bugs.
 
