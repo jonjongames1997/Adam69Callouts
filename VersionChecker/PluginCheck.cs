@@ -5,16 +5,18 @@ namespace Adam69Callouts.VersionChecker
     public class PluginCheck
     {
 
+        private const string GitHubVersionUrl = "https://raw.githubusercontent.com/jonjongames1997/Adam69Callouts_VersionChecker/main/version.txt";
+        private const string LSPDFRDownloadUrl = "https://www.lcpdfr.com/downloads/gta5mods/scripts/49465-adam69-callouts";
+
         public static bool IsUpdateAvailable()
         {
             string curVersion = Settings.PluginVersion;
-            Uri latestVersionUri = new("https://api-prod.lcpdfr.com/api/downloadsng/files/49465/version");
-            WebClient webClient = new();
-            string recievedData;
+            WebClient webClient = new WebClient();
+            string receivedData = string.Empty;
 
             try
             {
-                recievedData = webClient.DownloadString(latestVersionUri).Trim();
+                receivedData = webClient.DownloadString(GitHubVersionUrl).Trim();
             }
             catch (WebException ex)
             {
@@ -32,20 +34,22 @@ namespace Adam69Callouts.VersionChecker
                 return false;
             }
 
-            if (recievedData != Settings.PluginVersion)
+            if (receivedData != Settings.PluginVersion)
             {
-                Game.DisplayNotification("commonmenu", "mp_alerttriangle", "~w~Adam69 Callouts Warning", "~y~A new update is available!", $"Current Version: ~r~{curVersion}~w~<br>New Version: ~y~{recievedData}<br>~w~Please Update to the latest build for new ~p~callouts~w~ and ~g~improvements~w~!:-)");
-                Game.DisplayNotification("commonmenu", "mp_alerttriangle", "~w~Adam69 Callouts Deprecation Warning", "~y~Adam69Callouts Deprecation Info:", "v0.3.3.3 or lower is ~r~NO LONGER supported~w~ and ~r~deprecated~w~. Update to latest build for guaranteed support.");
+                Game.DisplayNotification("commonmenu", "mp_alerttriangle", "~w~Adam69 Callouts Warning", "~y~A new update is available!", $"Current Version: ~r~{curVersion}~w~<br>New Version: ~y~{receivedData}~w~<br>~y~Please Update to the latest build!~w~ Download at: ~b~LSPDFR.com~w~.");
+                Game.DisplayNotification("commonmenu", "mp_alerttriangle", "~w~Adam69 Callouts Deprecation Warning", "~y~Adam69Callouts Deprecation Info:", "v0.4.6 or lower is ~r~NO LONGER supported~w~ and ~r~deprecated~w~. Update to latest build for guaranteed support.");
                 Game.Console.Print();
                 Game.Console.Print("===================================================== Adam69 Callouts ===========================================");
                 Game.Console.Print();
                 Game.Console.Print("[WARNING!]: A new version of Adam69 Callouts is NOW AVAILABLE to download! Update to latest build!");
                 Game.Console.Print("[WARNING!]: v0.4.6.0 or lower is NO LONGER Supported! Update to latest build for guaranteed suppport");
                 Game.Console.Print($"[LOG]: Current Version: {curVersion}");
-                Game.Console.Print($"[LOG]: New Version: {recievedData}");
+                Game.Console.Print($"[LOG]: New Version: {receivedData}");
+                Game.Console.Print("[LOG]: Download the latest version at: " + LSPDFRDownloadUrl);
                 Game.Console.Print();
                 Game.Console.Print("===================================================== Adam69 Callouts ===========================================");
                 LoggingManager.Log("[Adam69 Callouts] LOG: This version is OUTDATED. Update to the latest version.");
+                LoggingManager.Log("[LOG]: Download at: " + LSPDFRDownloadUrl);
                 Game.Console.Print();
                 return true;
             }
