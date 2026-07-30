@@ -13,26 +13,24 @@ namespace Adam69Callouts.Callouts
     {
 
         private static readonly string[] pedsList = new string[] { "s_f_y_cop_01", "s_m_y_cop_01", "csb_cop", "s_f_y_sheriff_01", "s_m_y_sheriff_01", "s_m_y_hwaycop_01", "s_m_m_security_01", "s_f_y_ranger_01", "s_m_y_ranger_01" };
-        private static Ped suspect;
-        private static Ped officer;
-        private static Blip copBlip;
-        private static Vehicle emergencyVehicle;
+        private Ped suspect;
+        private Ped officer;
+        private Blip copBlip;
+        private Vehicle emergencyVehicle;
         private static readonly string[] officerVehicle = new string[] { "police", "police2", "police3", "police4", "police5", "polgauntlet", "poldominator10", "poldorado", "polgreenwood", "polimpaler5", "polimpaler6", "polcaracara", "polcoquette4", "polfaction2", "polterminus", "dilettante2", "fbi", "pbus", "policeb", "pranger", "riot", "riot2", "sheriff", "sheriff2", "policeb2" };
-        private static Blip officerVehicleBlip;
-        private static Vector3 spawnpoint;
-        private static Vector3 vehicleSpawn;
-        private static Vector3 susSpawn;
-        private static float vehicleHeading;
-        private static float officerheading;
-        private static float susHeading;
-        private static Blip suspectBlip;
-        private static int counter;
-        private static string malefemale;
-        private static readonly int armorCount = 1500; // Set the armor value for the officer and suspect
-
-        // NEW: shooting behavior fields
-        private static bool suspectStartedShooting = false;
-        private static readonly Vector3 stripClubPosition = new(127.0f, -1297.0f, 29.2f); // interior entry-ish position
+        private Blip officerVehicleBlip;
+        private Vector3 spawnpoint;
+        private Vector3 vehicleSpawn;
+        private Vector3 susSpawn;
+        private float vehicleHeading;
+        private float officerheading;
+        private float susHeading;
+        private Blip suspectBlip;
+        private int counter;
+        private string malefemale;
+        private static readonly int armorCount = 1500;
+        private bool suspectStartedShooting = false;
+        private static readonly Vector3 stripClubPosition = new Vector3(127.0f, -1297.0f, 29.2f);
 
         public static bool IsDlcInstalled(string dlcName)
         {
@@ -53,8 +51,8 @@ namespace Adam69Callouts.Callouts
 
             spawnpoint = new(132.69f, -1308.34f, 29.03f);
             officerheading = 318.26f;
-            susSpawn = new(116.04f, -1291.59f, 28.26f);
-            susHeading = 246.21f;
+            susSpawn = new Vector3(118.5986f, -1289.3770f, 28.2614f);
+            susHeading = 286.0643f;
             vehicleSpawn = new(140.00f, -1308.37f, 29.00f);
             vehicleHeading = 46.70f;
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
@@ -168,36 +166,27 @@ namespace Adam69Callouts.Callouts
 
         public override void Process()
         {
-            if (MainPlayer.DistanceTo(officer) <= 10f)
+            if (officer != null && officer.IsValid() && MainPlayer.DistanceTo(officer) <= 10f)
             {
                 if (Settings.HelpMessages)
                 {
                     Game.DisplayHelp("Press ~y~" + Settings.Dialog.ToString() + "~w~ to Call in a officer down to ~b~dispatch~w~.");
                 }
-                else
-                {
-                    Settings.HelpMessages = false;
-                    return;
-                }
 
-                // NEW: when player arrives, have suspect run into strip club and start shooting
                 if (!suspectStartedShooting && suspect != null && suspect.IsValid())
                 {
                     try
                     {
                         suspectStartedShooting = true;
 
-                        // Clear current tasks and start navigation in a separate fiber so we don't block Process()
                         suspect.Tasks.Clear();
 
                         GameFiber.StartNew(() =>
                         {
                             try
                             {
-                                // Ask the suspect to move toward the interior position
                                 suspect.Tasks.FollowNavigationMeshToPosition(stripClubPosition, 2.0f, -1);
 
-                                // Wait until suspect is close to the target or until suspect becomes invalid
                                 int waitTicks = 0;
                                 while (suspect != null && suspect.IsValid() && suspect.Position.DistanceTo2D(stripClubPosition) > 3f && waitTicks < 1000)
                                 {
