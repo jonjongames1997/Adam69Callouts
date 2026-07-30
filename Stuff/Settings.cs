@@ -159,6 +159,6 @@ namespace Adam69Callouts
             ini.Write("Traffic", "RestoreMultiplier", TrafficRestoreMultiplier);
         }
 
-        public static readonly string PluginVersion = "0.4.7";
+        public static readonly string PluginVersion = "0.4.8";
     }
 }
