@@ -93,6 +93,7 @@
     <Compile Include="Callouts\AbandonedVehicle.cs" />
     <Compile Include="Callouts\BicycleBlockingRoadway.cs" />
     <Compile Include="Callouts\BicyclePursuit.cs" />
+    <Compile Include="Callouts\ClownCarPursuit.cs" />
     <Compile Include="Callouts\DeadBirdOnTheRoad.cs" />
     <Compile Include="Callouts\DerangedDrunkenFeller.cs" />
     <Compile Include="Callouts\DisabledVehicle.cs" />
