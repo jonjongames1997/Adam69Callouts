@@ -1,0 +1,16 @@
+D:\Adam69Callouts\obj\Release\Adam69Callouts.csproj.AssemblyReference.cache
+D:\Adam69Callouts\obj\Release\Adam69Callouts.csproj.CoreCompileInputs.cache
+D:\Adam69Callouts\bin\Release\Adam69Callouts.dll
+D:\Adam69Callouts\bin\Release\Adam69Callouts.pdb
+D:\Adam69Callouts\bin\Release\CalloutInterfaceAPI.dll
+D:\Adam69Callouts\bin\Release\LSPD First Response.dll
+D:\Adam69Callouts\bin\Release\Newtonsoft.Json.dll
+D:\Adam69Callouts\bin\Release\RAGENativeUI.dll
+D:\Adam69Callouts\bin\Release\RagePluginHook.dll
+D:\Adam69Callouts\bin\Release\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+D:\Adam69Callouts\bin\Release\LSPD First Response.pdb
+D:\Adam69Callouts\bin\Release\Newtonsoft.Json.xml
+D:\Adam69Callouts\bin\Release\RagePluginHook.xml
+D:\Adam69Callouts\obj\Release\Adam69Ca.98F163C7.Up2Date
+D:\Adam69Callouts\obj\Release\Adam69Callouts.dll
+D:\Adam69Callouts\obj\Release\Adam69Callouts.pdb

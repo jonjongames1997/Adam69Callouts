@@ -1,4 +1,5 @@
 ﻿using CalloutInterfaceAPI;
+using Adam69Callouts.Common;
 
 namespace Adam69Callouts.Callouts
 {
@@ -74,9 +75,9 @@ namespace Adam69Callouts.Callouts
 
             if (Game.IsKeyDown(System.Windows.Forms.Keys.L))
             {
-                PolicingRedefined.API.TrafficControlAPI.Slow(true);
-                PolicingRedefined.API.TrafficControlAPI.IsActive();
-                PolicingRedefined.API.VehicleAPI.RunVehicleThroughDispatch(_vehicle, true, true, true);
+                Adam69Callouts.Common.PolicingRedefinedCompat.Slow(true);
+                Adam69Callouts.Common.PolicingRedefinedCompat.IsActive();
+                Adam69Callouts.Common.PolicingRedefinedCompat.RunVehicleThroughDispatch(_vehicle, true, true, true);
                 LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Tow_Truck_Audio");
             }
 
@@ -128,7 +129,7 @@ namespace Adam69Callouts.Callouts
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Abandoned Vehicle", "~b~You~w~: Dispatch, we are ~g~CODE 4~w~. Show me back 10-8.");
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
 
-            PolicingRedefined.API.TrafficControlAPI.Clear();
+            Adam69Callouts.Common.PolicingRedefinedCompat.Clear();
 
             if (Settings.MissionMessages)
             {

@@ -1,4 +1,5 @@
 ﻿using CalloutInterfaceAPI;
+using Adam69Callouts.Common;
 
 namespace Adam69Callouts.Callouts
 {
@@ -72,7 +73,7 @@ namespace Adam69Callouts.Callouts
 
             if (Game.IsKeyDown(System.Windows.Forms.Keys.NumPad1))
             {
-                PolicingRedefined.API.BackupDispatchAPI.RequestAnimalControlBackup();
+                Adam69Callouts.Common.PolicingRedefinedCompat.RequestAnimalControl(deadBird);
                 Game.DisplaySubtitle("~b~You~w~: Dispatch, requesting Animal Control to my 20.");
                 LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_AnimalControl_Audio_01");
             }
@@ -134,8 +135,8 @@ namespace Adam69Callouts.Callouts
 
         public override void End()
         {
-            if (deadBird) deadBird.Dismiss();
-            if (deadBirdBlip) deadBirdBlip.Delete();
+            if (deadBird != null && deadBird.Exists()) deadBird.Dismiss();
+            if (deadBirdBlip != null && deadBirdBlip.Exists()) deadBirdBlip.Delete();
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Dead Bird On The Road", "~b~You~w~: We are Code 4. Show me back 10-8!");
 

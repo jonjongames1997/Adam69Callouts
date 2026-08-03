@@ -230,6 +230,7 @@ namespace Adam69Callouts.Callouts
                                     pursuit = LSPD_First_Response.Mod.API.Functions.CreatePursuit();
                                     LSPD_First_Response.Mod.API.Functions.AddPedToPursuit(pursuit, suspect);
                                     LSPD_First_Response.Mod.API.Functions.SetPursuitIsActiveForPlayer(pursuit, true);
+                                    Adam69Callouts.Common.PolicingRedefinedCompat.RequestPursuitBackup(spawnpoint);
                                     Game.DisplayNotification("~r~Suspect is fleeing! Pursue the vehicle!");
                                     
                                     if (susBlip.Exists())
@@ -271,6 +272,7 @@ namespace Adam69Callouts.Callouts
                 if (Game.IsKeyDown(Settings.CallAnimalControlKey))
                 {
                     GameFiber.Sleep(500);
+                    Adam69Callouts.Common.PolicingRedefinedCompat.RequestAnimalControl(theAnimal);
                     Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Animal Control", "~b~Dispatch~w~: Animal Control is en route to handle the " + (animalKilled ? "deceased" : "wounded") + " animal.");
                     LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Code_4_Audio");
                     

@@ -1,4 +1,5 @@
 ﻿using CalloutInterfaceAPI;
+using Adam69Callouts.Common;
 
 namespace Adam69Callouts.Callouts
 {
@@ -78,7 +79,7 @@ namespace Adam69Callouts.Callouts
         {
             if (Game.IsKeyDown(System.Windows.Forms.Keys.P))
             {
-                PolicingRedefined.API.VehicleAPI.RunVehicleThroughDispatch(motorVehicle, true, true, true);
+                Adam69Callouts.Common.PolicingRedefinedCompat.RunVehicleThroughDispatch(motorVehicle, true, true, true);
                 LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Dispatch_Audio");
             }
 

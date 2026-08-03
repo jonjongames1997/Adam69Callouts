@@ -1,3 +1,6 @@
+using System;
+using Rage;
+using Rage.Native;
 using CalloutInterfaceAPI;
 using Adam69Callouts.Common;
 using LSPD_First_Response.Engine.Scripting.Entities;
@@ -49,20 +52,31 @@ namespace Adam69Callouts.Callouts
             suspectArmed = rng.Next(0, 10) > 5;
             lastSeenPosition = spawnPoint.Around2D(15f, 60f);
 
-            // Spawn reporting officer
-            reportingOfficer = new Ped("s_m_y_hwaycop_01", spawnPoint.Around2D(5f, 12f), 0f);
-            if (reportingOfficer.Exists())
+            // Spawn reporting officer (use safe creation + model request)
+            reportingOfficer = CreatePedSafe("s_m_y_hwaycop_01", spawnPoint.Around2D(5f, 12f), 0f);
+            if (reportingOfficer != null && reportingOfficer.Exists())
             {
-                reportingOfficer.IsPersistent = true;
-                reportingOfficer.BlockPermanentEvents = true;
-                reportingOfficer.Tasks.PlayAnimation(new AnimationDictionary("misscommon@response"), "idle_c", -1f, AnimationFlags.Loop);
-                officerBlip = reportingOfficer.AttachBlip();
-                officerBlip.Color = System.Drawing.Color.Green;
-                officerBlip.Scale = 0.8f;
+                try
+                {
+                    reportingOfficer.IsPersistent = true;
+                    reportingOfficer.BlockPermanentEvents = true;
+                    reportingOfficer.Tasks.PlayAnimation(new AnimationDictionary("misscommon@response"), "idle_c", -1f, AnimationFlags.Loop);
+                    officerBlip = reportingOfficer.AttachBlip();
+                    if (officerBlip != null && officerBlip.Exists())
+                    {
+                        officerBlip.Color = System.Drawing.Color.Green;
+                        officerBlip.Scale = 0.8f;
+                    }
+                }
+                catch (Rage.Exceptions.InvalidHandleableException ex)
+                {
+                    // If AttachBlip or other operations fail because the handle became invalid, log and continue gracefully.
+                    if (Settings.EnableLogs) LoggingManager.Log($"Adam69 Callouts: Failed to attach officer blip or set officer props: {ex.Message}");
+                }
             }
 
             // Spawn missing person — always create the Ped first
-            missingPerson = new Ped("a_m_m_prolhost_01", lastSeenPosition, 0f);
+            missingPerson = new Ped(lastSeenPosition, 0f);
             if (missingPerson.Exists())
             {
                 missingPerson.IsPersistent = true;
@@ -75,8 +89,8 @@ namespace Adam69Callouts.Callouts
                 else // in vehicle — spawn a separate vehicle for the missing person
                 {
                     var mpVehicleModel = suspectCars[rng.Next(suspectCars.Length)];
-                    var mpVehicle = new Vehicle(mpVehicleModel, lastSeenPosition);
-                    if (mpVehicle.Exists())
+                    var mpVehicle = CreateVehicleSafe(mpVehicleModel, lastSeenPosition);
+                    if (mpVehicle != null && mpVehicle.Exists())
                     {
                         mpVehicle.IsPersistent = true;
                         mpVehicle.IsEngineOn = false;
@@ -87,21 +101,31 @@ namespace Adam69Callouts.Callouts
                     }
                 }
 
-                missingBlip = missingPerson.AttachBlip();
-                missingBlip.Color = System.Drawing.Color.Yellow;
-                missingBlip.IsRouteEnabled = false;
+                try
+                {
+                    missingBlip = missingPerson.AttachBlip();
+                    if (missingBlip != null && missingBlip.Exists())
+                    {
+                        missingBlip.Color = System.Drawing.Color.Yellow;
+                        missingBlip.IsRouteEnabled = false;
+                    }
+                }
+                catch (Rage.Exceptions.InvalidHandleableException ex)
+                {
+                    if (Settings.EnableLogs) LoggingManager.Log($"Adam69 Callouts: Failed to attach missing person blip: {ex.Message}");
+                }
             }
 
-            // Spawn suspect vehicle and driver
+            // Spawn suspect vehicle and driver (ensure model loaded)
             var suspectModel = suspectCars[rng.Next(suspectCars.Length)];
-            suspectVehicle = new Vehicle(suspectModel, spawnPoint.Around2D(20f, 60f));
-            if (suspectVehicle.Exists())
+            suspectVehicle = CreateVehicleSafe(suspectModel, spawnPoint.Around2D(20f, 60f));
+            if (suspectVehicle != null && suspectVehicle.Exists())
             {
                 suspectVehicle.IsPersistent = true;
                 suspectVehicle.IsEngineOn = false;
 
                 suspect = suspectVehicle.CreateRandomDriver();
-                if (suspect.Exists())
+                if (suspect != null && suspect.Exists())
                 {
                     suspect.IsPersistent = true;
                     suspect.BlockPermanentEvents = true;
@@ -110,9 +134,19 @@ namespace Adam69Callouts.Callouts
                         SafeInventory.SafeGiveWeapon(suspect, "weapon_pistol", 60, true);
                     }
 
-                    suspectBlip = suspect.AttachBlip();
-                    suspectBlip.Color = System.Drawing.Color.Red;
-                    suspectBlip.IsRouteEnabled = true;
+                    try
+                    {
+                        suspectBlip = suspect.AttachBlip();
+                        if (suspectBlip != null && suspectBlip.Exists())
+                        {
+                            suspectBlip.Color = System.Drawing.Color.Red;
+                            suspectBlip.IsRouteEnabled = true;
+                        }
+                    }
+                    catch (Rage.Exceptions.InvalidHandleableException ex)
+                    {
+                        if (Settings.EnableLogs) LoggingManager.Log($"Adam69 Callouts: Failed to attach suspect blip: {ex.Message}");
+                    }
                 }
             }
 
@@ -213,7 +247,7 @@ namespace Adam69Callouts.Callouts
             if (Game.IsKeyDown(Settings.RequestVehicleInfo))
             {
                 GameFiber.Sleep(200);
-                PolicingRedefined.API.InfoDispatchAPI.RunNearestVehicleThroughDispatch(true);
+                Adam69Callouts.Common.PolicingRedefinedCompat.RunVehicleThroughDispatch(suspectVehicle, true, true, true);
                 LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Backup_Audio");
             }
 
@@ -265,6 +299,47 @@ namespace Adam69Callouts.Callouts
             {
                 Game.LogTrivial("Adam69 Callouts [LOG]: Spectrum Alert (Florida) callout ended CODE 4.");
                 LoggingManager.Log("Adam69 Callouts: Spectrum Alert (Florida) callout ended CODE 4.");
+            }
+        }
+
+        /// <summary>
+        /// Safely request a ped model, create the ped and return it. Returns null if not possible.
+        /// </summary>
+        private Ped CreatePedSafe(string modelName, Vector3 position, float heading = 0f)
+        {
+            try
+            {
+                Model model = new(modelName);
+                if (!model.IsValid) return null;
+                model.LoadAndWait();
+                if (!model.IsLoaded) return null;
+
+                var ped = new Ped(model, position, heading);
+                return ped;
+            }
+            catch (Exception ex)
+            {
+                if (Settings.EnableLogs) LoggingManager.Log($"Adam69 Callouts: CreatePedSafe failed for '{modelName}': {ex.Message}");
+                return null;
+            }
+        }
+
+        private Vehicle CreateVehicleSafe(string modelName, Vector3 position, float heading = 0f)
+        {
+            try
+            {
+                var model = new Model(modelName);
+                if (!model.IsValid) return null;
+                model.LoadAndWait();
+                if (!model.IsLoaded) return null;
+
+                var veh = new Vehicle(model, position, heading);
+                return veh;
+            }
+            catch (Exception ex)
+            {
+                if (Settings.EnableLogs) LoggingManager.Log($"Adam69 Callouts: CreateVehicleSafe failed for '{modelName}': {ex.Message}");
+                return null;
             }
         }
     }

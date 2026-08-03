@@ -318,7 +318,7 @@ namespace Adam69Callouts.Callouts
             // Request backup hotkey
             if (Game.IsKeyDown(System.Windows.Forms.Keys.B) && !Game.IsKeyDownRightNow(System.Windows.Forms.Keys.B))
             {
-                PolicingRedefined.API.BackupDispatchAPI.RequestCode3Backup();
+                Adam69Callouts.Common.PolicingRedefinedCompat.RequestCode3(spawnpoint);
                 Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Dispatch:", "Additional units en route to LSIA.");
             }
 
@@ -614,7 +614,7 @@ namespace Adam69Callouts.Callouts
                         if (victim != null && victim.Exists() && victim.IsValid())
                         {
                             suspect.Tasks.FightAgainst(victim);
-                            PolicingRedefined.API.PedAPI.IsPedResistingRightNow(suspect);
+                            Adam69Callouts.Common.PolicingRedefinedCompat.IsPedResistingRightNow(victim);
                         }
                         scenarioTriggered = true;
                     }
@@ -664,7 +664,7 @@ namespace Adam69Callouts.Callouts
                 SafeInventory.SafeGiveWeapon(suspect, "WEAPON_COMBATPISTOL", 500, true);
             }
 
-            PolicingRedefined.API.BackupDispatchAPI.RequestPanicBackup();
+            Adam69Callouts.Common.PolicingRedefinedCompat.RequestPanicBackup(MainPlayer);
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("OFFICERS_UNDER_FIRE");
         }
 
@@ -709,7 +709,7 @@ namespace Adam69Callouts.Callouts
                         Game.DisplaySubtitle("~r~Suspect~w~: *aggressive* Get away from me!");
                         GameFiber.Sleep(1000);
                         suspect.Tasks.FightAgainst(MainPlayer);
-                        PolicingRedefined.API.PedAPI.IsPedResistingRightNow(suspect);
+                        Adam69Callouts.Common.PolicingRedefinedCompat.IsPedResistingRightNow(suspect);
                         scenarioTriggered = true;
                     }
                     break;
@@ -755,7 +755,7 @@ namespace Adam69Callouts.Callouts
                                 pursuit = LSPD_First_Response.Mod.API.Functions.CreatePursuit();
                                 LSPD_First_Response.Mod.API.Functions.AddPedToPursuit(pursuit, suspect);
                                 LSPD_First_Response.Mod.API.Functions.SetPursuitIsActiveForPlayer(pursuit, true);
-                                PolicingRedefined.API.BackupDispatchAPI.RequestPursuitBackup();
+                                Adam69Callouts.Common.PolicingRedefinedCompat.RequestPursuitBackup(spawnpoint);
                                 pursuitCreated = true;
                             }
                         }

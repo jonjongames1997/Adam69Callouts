@@ -131,6 +131,7 @@ namespace Adam69Callouts.Callouts
                     if (Game.IsKeyDown(Settings.CallAnimalControlKey))
                     {
                         GameFiber.Sleep(200);
+                        Adam69Callouts.Common.PolicingRedefinedCompat.RequestAnimalControl(dog);
                         Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "Animal Control", "~b~Dispatch~w~: Animal Control en route to handle the animal.");
                         LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Animal_Control_Audio");
                         if (dog.Exists()) dog.Dismiss();
@@ -148,12 +149,12 @@ namespace Adam69Callouts.Callouts
                             Game.DisplaySubtitle("~b~You~w~: It's okay, come here. Good dog.");
                             GameFiber.Sleep(1200);
 
-                            // Play simple lead animation on the player to simulate leash
+                            
                             try
                             {
                                 MainPlayer.Tasks.PlayAnimation(new AnimationDictionary("mp_ped_interaction"), "handshake_guy_a", 2f, AnimationFlags.None);
                             }
-                            catch { /* best-effort - ignore if anim missing */ }
+                            catch {  }
 
                             // Make the dog follow closely with a stable offset
                             dog.Tasks.FollowToOffsetFromEntity(MainPlayer, new Vector3(0f, 1f, 0f));
@@ -171,7 +172,7 @@ namespace Adam69Callouts.Callouts
                     }
                 }
 
-                // Improved follow: if leashed, keep player playing a "lead" walk animation for realism
+                
                 if (dogIsLeashed && dog != null && dog.Exists())
                 {
                     try
@@ -180,7 +181,7 @@ namespace Adam69Callouts.Callouts
                     }
                     catch
                     {
-                        // ignore missing animation at runtime; follow behavior still works
+                        
                     }
                 }
 
@@ -303,7 +304,7 @@ namespace Adam69Callouts.Callouts
             }
             catch
             {
-                // ignore cleanup errors
+                
             }
 
             base.End();

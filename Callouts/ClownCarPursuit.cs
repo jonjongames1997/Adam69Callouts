@@ -1,4 +1,5 @@
 ﻿using CalloutInterfaceAPI;
+using Adam69Callouts.Common;
 
 namespace Adam69Callouts.Callouts
 {
@@ -124,6 +125,7 @@ namespace Adam69Callouts.Callouts
             LSPD_First_Response.Mod.API.Functions.AddPedToPursuit(_pursuit, _suspect2);
             LSPD_First_Response.Mod.API.Functions.SetPursuitIsActiveForPlayer(_pursuit, true);
             _pursuitCreated = true;
+            Adam69Callouts.Common.PolicingRedefinedCompat.RequestPursuitBackup(_spawnpoint);
 
             return base.OnCalloutAccepted();
         }

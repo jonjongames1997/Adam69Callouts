@@ -1,12 +1,15 @@
 ﻿Changelog:
 
-[July 28, 2026]
+[October 29, 2026]
 
-v0.4.8:
+v0.4.9:
 
 - Fixed the version checker
-- Minor fixes in Officer Down callout
-- 
+- Fixed some issues with Spectrum Alert (Florida Based) callout
+- Fixed the issue with Officer Down Callout
+- Minor fixes
+- Added Adam69Callouts.Common with Policing Redefined Helper (Visual Studio was having its quirky moment where it wouldn't detect the Polciing Redefined dll in the references in the project.)
+- Disabled Spectrum Alert  - Florida Based callout for a complete rewrite.
 
 [July 21, 2026]
 

@@ -4,8 +4,6 @@ using Rage;
 using Rage.Native;
 using System;
 using System.Collections.Generic;
-using PolicingRedefined.API;
-using PolicingRedefined;
 
 namespace Adam69Callouts.Callouts
 {
@@ -248,7 +246,7 @@ namespace Adam69Callouts.Callouts
                         {
                             _suspect.Tasks.FightAgainst(MainPlayer);
                             _suspect.Armor = 300;
-                            PolicingRedefined.API.BackupDispatchAPI.RequestPanicBackup();
+                            Adam69Callouts.Common.PolicingRedefinedCompat.RequestPanicBackup(MainPlayer);
                             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("OFFICERS_UNDER_FIRE");
                         }
                         else
@@ -282,7 +280,7 @@ namespace Adam69Callouts.Callouts
             if (Game.IsKeyDown(Settings.RequestVehicleInfo))
             {
                 GameFiber.Sleep(300);
-                PolicingRedefined.API.InfoDispatchAPI.RunNearestVehicleThroughDispatch(true);
+                Adam69Callouts.Common.PolicingRedefinedCompat.RunVehicleThroughDispatch(_suspectVehicle, true, true, true);
                 LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Backup_Audio");
                 Game.DisplaySubtitle("~b~You~w~: Dispatch, requesting backup.");
             }
@@ -290,7 +288,7 @@ namespace Adam69Callouts.Callouts
             if (Game.IsKeyDown(Settings.RequestTowTruck))
             {
                 GameFiber.Sleep(300);
-                PolicingRedefined.API.BackupDispatchAPI.RequestTowServiceBackup();
+                Adam69Callouts.Common.PolicingRedefinedCompat.RequestTowService(_suspectVehicle);
                 LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Tow_Truck_Audio");
                 Game.DisplaySubtitle("~b~You~w~: Dispatch, request tow/K9 as needed.");
             }
@@ -305,6 +303,9 @@ namespace Adam69Callouts.Callouts
                     var pursuit = LSPD_First_Response.Mod.API.Functions.CreatePursuit();
                     LSPD_First_Response.Mod.API.Functions.AddPedToPursuit(pursuit, _suspect);
                     LSPD_First_Response.Mod.API.Functions.SetPursuitIsActiveForPlayer(pursuit, true);
+                    Adam69Callouts.Common.PolicingRedefinedCompat.IsPedResistingRightNow(_suspect);
+                    Adam69Callouts.Common.PolicingRedefinedCompat.GetPedResistanceAction(_suspect);
+                    Adam69Callouts.Common.PolicingRedefinedCompat.RequestPursuitBackup(_spawnPoint);
                     Game.DisplayNotification("~r~Suspect fleeing! Pursue and attempt to stop the vehicle!");
                     if (_suspectBlip != null && _suspectBlip.Exists()) _suspectBlip.Color = System.Drawing.Color.Red;
                 }

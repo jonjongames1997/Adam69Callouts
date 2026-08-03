@@ -1,7 +1,7 @@
-﻿using CalloutInterfaceAPI;
-using Rage;
+﻿using Rage;
 using Rage.Native;
 using Adam69Callouts.Common;
+using CalloutInterfaceAPI;
 
 namespace Adam69Callouts.Callouts
 {
@@ -75,7 +75,7 @@ namespace Adam69Callouts.Callouts
                 Settings.EnableLogs = false;
             }
 
-                Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Officer Down", "~b~Dispatch~w~: The suspect has been spotted! Respond ~r~Code3~w~.");
+            Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "~w~Officer Down", "~b~Dispatch~w~: The suspect has been spotted! Respond ~r~Code3~w~.");
 
 
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_3_Audio");
@@ -166,16 +166,17 @@ namespace Adam69Callouts.Callouts
 
         public override void Process()
         {
-            if (officer != null && officer.IsValid() && MainPlayer.DistanceTo(officer) <= 10f)
+            if (officer != null && officer.Exists() && Helper.MainPlayer != null && Helper.MainPlayer.Exists())
             {
-                if (Settings.HelpMessages)
+                float distanceToOfficer = Helper.MainPlayer.Position.DistanceTo(officer.Position);
+                if (distanceToOfficer <= 10f)
                 {
-                    Game.DisplayHelp("Press ~y~" + Settings.Dialog.ToString() + "~w~ to Call in a officer down to ~b~dispatch~w~.");
-                }
+                    if (Settings.HelpMessages)
+                    {
+                        Game.DisplayHelp("Press ~y~" + Settings.Dialog.ToString() + "~w~ to Call in a officer down to ~b~dispatch~w~.");
+                    }
 
-                if (!suspectStartedShooting && suspect != null && suspect.IsValid())
-                {
-                    try
+                    if (!suspectStartedShooting && suspect != null && suspect.Exists())
                     {
                         suspectStartedShooting = true;
 
@@ -183,65 +184,41 @@ namespace Adam69Callouts.Callouts
 
                         GameFiber.StartNew(() =>
                         {
-                            try
+                            suspect.Tasks.FollowNavigationMeshToPosition(stripClubPosition, 2.0f, -1);
+
+                            int waitTicks = 0;
+                            while (suspect != null && suspect.Exists() && suspect.Position.DistanceTo2D(stripClubPosition) > 3f && waitTicks < 1000)
                             {
-                                suspect.Tasks.FollowNavigationMeshToPosition(stripClubPosition, 2.0f, -1);
-
-                                int waitTicks = 0;
-                                while (suspect != null && suspect.IsValid() && suspect.Position.DistanceTo2D(stripClubPosition) > 3f && waitTicks < 1000)
-                                {
-                                    GameFiber.Yield();
-                                    waitTicks++;
-                                }
-
-                                if (suspect != null && suspect.IsValid())
-                                {
-                                    // Equip weapon and armour
-                                    suspect.Inventory.GiveNewWeapon("WEAPON_COMBATPISTOL", 500, true);
-                                    suspect.Armor = armorCount;
-
-                                    // Make suspect aggressive toward the player
-                                    suspect.Tasks.Clear();
-                                    suspect.Tasks.FightAgainst(MainPlayer);
-
-                                    // Request backup and play shots fired audio
-                                    PolicingRedefined.API.BackupDispatchAPI.RequestPanicBackup();
-                                    LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_ShotsFired_Audio_Remastered_01");
-
-                                    if (Settings.EnableLogs)
-                                    {
-                                        Game.LogTrivial("[Adam69 Callouts LOG]: Suspect started shooting inside strip club.");
-                                    }
-                                }
+                                GameFiber.Yield();
+                                waitTicks++;
                             }
-                            catch (Exception ex)
+
+                            if (suspect != null && suspect.Exists())
                             {
-                                Game.LogTrivial("Adam69 Callouts [LOG]: Error in suspect navigation fiber: " + ex.Message);
+                                // Equip weapon and armour
+                                suspect.Inventory.GiveNewWeapon("WEAPON_COMBATPISTOL", 500, true);
+                                suspect.Armor = armorCount;
+
+                                // Make suspect aggressive toward the player
+                                suspect.Tasks.Clear();
+                                suspect.Tasks.FightAgainst(Helper.MainPlayer);
+
+                                // Request backup and play shots fired audio
+                                Adam69Callouts.Common.PolicingRedefinedCompat.RequestPanicBackup(spawnpoint);
+                                LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_ShotsFired_Audio_Remastered_01");
+
                                 if (Settings.EnableLogs)
                                 {
-                                    LoggingManager.Log("Adam69 Callouts [LOG]: Error in suspect navigation fiber: " + ex.Message);
-                                    LoggingManager.Log(ex.StackTrace);
+                                    Game.LogTrivial("[Adam69 Callouts LOG]: Suspect started shooting inside strip club.");
                                 }
                             }
                         });
                     }
-                    catch (Exception ex)
-                    {
-                        Game.LogTrivial("Adam69 Callouts [LOG]: Error while making suspect shoot: " + ex.Message);
-                        if (Settings.EnableLogs)
-                        {
-                            LoggingManager.Log("Adam69 Callouts [LOG]: Error while making suspect shoot: " + ex.Message);
-                            LoggingManager.Log(ex.StackTrace);
-                        }
-                    }
-                }
 
-                if (Game.IsKeyDown(System.Windows.Forms.Keys.Y))
-                {
-                    counter++;
-
-                    try
+                    if (Game.IsKeyDown(System.Windows.Forms.Keys.Y))
                     {
+                        counter++;
+
                         if (counter == 1)
                         {
                             Game.DisplaySubtitle("~b~You~w~: Dispatch, we got an officer down, requesting medic but have them stage a few blocks away from the scene until the scene is secured.");
@@ -249,53 +226,45 @@ namespace Adam69Callouts.Callouts
                         if (counter == 2)
                         {
                             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_OfficerDown_Audio_2");
-                            PolicingRedefined.API.BackupDispatchAPI.RequestOfficerDownBackup();
-                            PolicingRedefined.API.BackupDispatchAPI.RequestEMSCode3Backup();
+                            Adam69Callouts.Common.PolicingRedefinedCompat.RequestPanicBackup(spawnpoint);
+                            Adam69Callouts.Common.PolicingRedefinedCompat.RequestCode3Ambulance(spawnpoint);
                         }
                         if (counter == 3)
                         {
-                            suspect.Tasks.FightAgainst(MainPlayer);
-                            suspect.Inventory.GiveNewWeapon("WEAPON_COMBATPISTOL", 500, true);
-                            suspect.Armor = armorCount;
-                            MainPlayer.Armor = armorCount;
+                            if (suspect != null && suspect.Exists())
+                            {
+                                suspect.Tasks.FightAgainst(Helper.MainPlayer);
+                                suspect.Inventory.GiveNewWeapon("WEAPON_COMBATPISTOL", 500, true);
+                                suspect.Armor = armorCount;
+                            }
+                            Helper.MainPlayer.Armor = armorCount;
                         }
                         if (counter == 4)
                         {
                             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_ShotsFired_Audio_Remastered_01");
-                            PolicingRedefined.API.BackupDispatchAPI.RequestPanicBackup();
+                            Adam69Callouts.Common.PolicingRedefinedCompat.RequestPanicBackup(MainPlayer);
                         }
                     }
-                    catch (Exception ex)
-                    {
-                        Game.DisplayNotification("commonmenu", "mp_alerttriangle", "~r~Error", "~w~Officer Down", "An error occurred, please report this on the JM Modifications Discord server.");
 
-                        if (Settings.EnableLogs)
+                    if (Helper.MainPlayer.IsDead)
+                    {
+                        if (Settings.MissionMessages)
                         {
-                            Game.LogTrivial("Adam69 Callouts [LOG]: " + ex.Message);
-                            LoggingManager.Log("Adam69 Callouts [LOG]: " + ex.Message);
-                            LoggingManager.Log("Adam69 Callouts [LOG]: " + ex.StackTrace);
+                            BigMessageThread bigMessage = new BigMessageThread();
+                            bigMessage.MessageInstance.ShowColoredShard("MISSION FAILED!", "You'll get 'em next time!", RAGENativeUI.HudColor.Red, RAGENativeUI.HudColor.Black, 5000);
                         }
-                    }
-                }
+                        else
+                        {
+                            Settings.MissionMessages = false;
+                        }
 
-                if (MainPlayer.IsDead)
-                {
-                    if (Settings.MissionMessages)
+                        End();
+                    }
+
+                    if (Game.IsKeyDown(System.Windows.Forms.Keys.End))
                     {
-                        BigMessageThread bigMessage = new BigMessageThread();
-                        bigMessage.MessageInstance.ShowColoredShard("MISSION FAILED!", "You'll get 'em next time!", RAGENativeUI.HudColor.Red, RAGENativeUI.HudColor.Black, 5000);
+                        End();
                     }
-                    else
-                    {
-                        Settings.MissionMessages = false;
-                    }
-
-                    End();
-                }
-
-                if(Game.IsKeyDown(System.Windows.Forms.Keys.End))
-                {
-                    End();
                 }
             }
 

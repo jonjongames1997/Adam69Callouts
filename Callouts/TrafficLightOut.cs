@@ -1,6 +1,7 @@
 using CalloutInterfaceAPI;
 using Rage;
 using Rage.Native;
+using Adam69Callouts.Common;
 
 namespace Adam69Callouts.Callouts
 {
@@ -145,21 +146,6 @@ namespace Adam69Callouts.Callouts
                     NativeFunction.Natives.TASK_TURN_PED_TO_FACE_ENTITY(officer, MainPlayer, -1);
                     Game.DisplaySubtitle("~g~Officer~w~: Traffic lights are down. Multiple cars stuck in the intersection and a few minor fender-benders. We need you to direct traffic and request tow trucks.");
                 }
-            }
-
-            // Allow requesting tow truck or backup
-            if (Game.IsKeyDown(Settings.RequestTowTruck))
-            {
-                GameFiber.Sleep(200);
-                PolicingRedefined.API.BackupDispatchAPI.RequestTowServiceBackup();
-                LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Tow_Truck_Audio");
-            }
-
-            if (Game.IsKeyDown(Settings.RequestVehicleInfo))
-            {
-                GameFiber.Sleep(200);
-                PolicingRedefined.API.InfoDispatchAPI.RunNearestVehicleThroughDispatch(true);
-                LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Backup_Audio");
             }
 
             // Player death handling

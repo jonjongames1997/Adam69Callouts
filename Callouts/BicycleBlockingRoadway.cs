@@ -1,6 +1,7 @@
 ﻿using CalloutInterfaceAPI;
 using Rage;
 using Rage.Native;
+using Adam69Callouts.Common;
 
 namespace Adam69Callouts.Callouts
 {
@@ -103,7 +104,7 @@ namespace Adam69Callouts.Callouts
 
             if (Game.IsKeyDown(System.Windows.Forms.Keys.L))
             {
-                PolicingRedefined.API.BackupDispatchAPI.RequestTowServiceBackup();
+                Adam69Callouts.Common.PolicingRedefinedCompat.RequestTowService(thebike);
                 LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Tow_Truck_Audio");
             }
 

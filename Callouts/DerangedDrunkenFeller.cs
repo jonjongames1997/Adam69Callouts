@@ -243,6 +243,7 @@ namespace Adam69Callouts.Callouts
                     break;
                 case 4:
                     Game.DisplaySubtitle("~y~Suspect is fleeing! Pursue and apprehend!");
+                    Adam69Callouts.Common.PolicingRedefinedCompat.RequestPursuitBackup(spawnpoint);
                     break;
             }
         }
@@ -272,6 +273,7 @@ namespace Adam69Callouts.Callouts
                 case 5:
                     Game.DisplaySubtitle("~g~Suspect is down. Secure the scene and wait for EMS.");
                     LSPD_First_Response.Mod.API.Functions.IsPedArrested(suspect);
+                    Adam69Callouts.Common.PolicingRedefinedCompat.RequestCode3Ambulance(spawnpoint);
                     break;
             }
         }

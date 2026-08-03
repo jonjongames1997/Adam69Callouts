@@ -1,6 +1,7 @@
 using CalloutInterfaceAPI;
 using System;
 using System.Drawing;
+using Adam69Callouts.Common;
 
 namespace Adam69Callouts.Callouts
 {
@@ -56,6 +57,8 @@ namespace Adam69Callouts.Callouts
                 Game.LogTrivial("Adam69 Callouts [LOG]: Disabled Vehicle callout has been accepted!");
                 LoggingManager.Log("Adam69 Callouts [LOG]: Disabled Vehicle callout has been accepted!");
             }
+
+            Adam69Callouts.Common.PolicingRedefinedCompat.RequestTowService(disabledVehicle);
 
             breakdownReason = breakdownReasons[rng.Next(breakdownReasons.Length)];
 

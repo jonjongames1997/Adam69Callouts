@@ -1,4 +1,5 @@
 ﻿using CalloutInterfaceAPI;
+using Adam69Callouts.Common;
 
 namespace Adam69Callouts.Callouts
 {
@@ -135,7 +136,7 @@ namespace Adam69Callouts.Callouts
                                 if (counter == 7)
                                 {
                                     Game.DisplaySubtitle("~b~You~w~: Dispatch, request a 10-27.");
-                                    PolicingRedefined.API.PedAPI.CanRunPedThroughDispatch(suspect);
+                                    Adam69Callouts.Common.PolicingRedefinedCompat.CanRunPedThroughDispatch(suspect);
                                 }
                                 if (counter == 8)
                                 {

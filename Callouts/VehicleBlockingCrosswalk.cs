@@ -1,4 +1,6 @@
 ﻿using CalloutInterfaceAPI;
+using Adam69Callouts.Common;
+
 
 namespace Adam69Callouts.Callouts
 {
@@ -82,7 +84,7 @@ namespace Adam69Callouts.Callouts
         {
             if (Game.IsKeyDown(System.Windows.Forms.Keys.P))
             {
-                PolicingRedefined.API.VehicleAPI.RunVehicleThroughDispatch(motorVehicle, true, true, true);
+                Adam69Callouts.Common.PolicingRedefinedCompat.RunVehicleThroughDispatch(motorVehicle, true, true, true);
                 LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69_Callouts_Request_Vehicle_Info_Audio");
                 LoggingManager.Log("Adam69 Callouts [LOG]: Player has requested vehicle information.");
                 Game.LogTrivial("Adam69 Callouts [LOG]: Player has requested vehicle information.");

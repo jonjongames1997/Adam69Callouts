@@ -1,4 +1,7 @@
 ﻿using Adam69Callouts.Utilities;
+using Adam69Callouts.Common;
+using LSPD_First_Response;
+using LSPD_First_Response.Mod.API;
 
 [assembly: Rage.Attributes.Plugin("Adam69Callouts", Description = "LSPDFR Callout Pack", Author = "JM Modifications")]
 namespace Adam69Callouts
@@ -162,12 +165,12 @@ namespace Adam69Callouts
             }
             if (Functions.GetAllUserPlugins().ToList().Any(a => a != null && a.FullName.Contains("PolicingRedefined")) == true)
             {
-                Game.LogTrivial("User has Policing Redefined 1.0.0.2 by MarcelWRLD INSTALLED. starting integration.......");
+                Game.LogTrivial("User has Policing Redefined 1.0.0.5 by MarcelWRLD INSTALLED. starting integration.......");
                 PolicingRedefined = true;
             }
             else
             {
-                Game.LogTrivial("User does NOT have Policing Redefined 1.0.0.2 by MarcelWRLD installed. Stopping integration....");
+                Game.LogTrivial("User does NOT have Policing Redefined 1.0.0.5 by MarcelWRLD installed. Stopping integration....");
                 PolicingRedefined = false;
             }
 
@@ -189,8 +192,8 @@ namespace Adam69Callouts
             if (Settings.DeadBirdOnTheRoad) { Functions.RegisterCallout(typeof(DeadBirdOnTheRoad)); }
             if (Settings.KnifeAttack) { Functions.RegisterCallout(typeof(KnifeAttack)); }
             if (Settings.LSIAAirportIncident) { Functions.RegisterCallout(typeof(LSIAAirportIncident)); }
-            if (Settings.IllegalHuntingBlaineCounty) { Functions.RegisterCallout(typeof(IllegalHuntingBlaineCounty)); }
             if (Settings.SpectrumAlertFlorida) { Functions.RegisterCallout(typeof(SpectrumAlertFlorida)); }
+            if (Settings.IllegalHuntingBlaineCounty) { Functions.RegisterCallout(typeof(IllegalHuntingBlaineCounty)); }
             if (Settings.LostDogCallout) { Functions.RegisterCallout(typeof(LostDog)); }
             if (Settings.SoveriegnCitizen) { Functions.RegisterCallout(typeof(SovereignCitizen)); }
             if (Settings.TrafficAccident) { Functions.RegisterCallout(typeof(TrafficAccident)); }
