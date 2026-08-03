@@ -6,7 +6,7 @@ v0.4.8:
 
 - Fixed the version checker
 - Minor fixes in Officer Down callout
-- 
+- Fixed some issues with Spectrum Alert (Florida Based) callout
 
 [July 21, 2026]
 
