@@ -7,23 +7,23 @@ namespace Adam69Callouts.Callouts
     [CalloutInterface("[Adam69 Callouts] Spectrum Alert (Florida)", CalloutProbability.Medium, "Statewide Spectrum Alert: Missing person possibly abducted. Vehicle last seen in the area.", "Code 2", "FDLE")]
     public class SpectrumAlertFlorida : Callout
     {
-        private static Ped missingPerson;
-        private static Ped suspect;
-        private static Vehicle suspectVehicle;
-        private static Ped reportingOfficer;
-        private static Blip missingBlip;
-        private static Blip suspectBlip;
-        private static Blip officerBlip;
-        private static Vector3 spawnPoint;
-        private static Vector3 lastSeenPosition;
-        private static int dialogStage;
-        private static bool suspectArmed;
+        private Ped missingPerson;
+        private Ped suspect;
+        private Vehicle suspectVehicle;
+        private Ped reportingOfficer;
+        private Blip missingBlip;
+        private Blip suspectBlip;
+        private Blip officerBlip;
+        private Vector3 spawnPoint;
+        private Vector3 lastSeenPosition;
+        private int dialogStage;
+        private bool suspectArmed;
+        private bool pursuitStarted;
         private static readonly string[] suspectCars = new string[] { "jackal", "emperor", "fusilade", "cogcabrio", "intruder" };
         private static readonly string[] suspectModels = new string[] { "s_m_m_security_01", "g_m_y_mexgoon_02", "s_f_y_cop_01" };
 
         public override bool OnBeforeCalloutDisplayed()
         {
-            // choose a road position near player, representative of a Florida coastal/urban area
             spawnPoint = World.GetNextPositionOnStreet(MainPlayer.Position.Around2D(400f, 900f));
             ShowCalloutAreaBlipBeforeAccepting(spawnPoint, 120f);
             CalloutInterfaceAPI.Functions.SendMessage(this, "Spectrum Alert: Missing person reported; possible abduction vehicle last seen nearby.");
@@ -43,14 +43,13 @@ namespace Adam69Callouts.Callouts
             }
 
             Game.DisplayNotification("web_adam69callouts", "web_adam69callouts", "~w~Adam69 Callouts", "Spectrum Alert (Florida)", "~b~Dispatch~w~: Missing person reported. Possible abductor vehicle. Respond ~r~Code 2~w~.");
-
             LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Respond_Code_2_Audio");
 
-            // Randomize scenario
-            suspectArmed = new Random().Next(0, 10) > 5; // ~40% chance unarmed, 60% armed
+            var rng = new Random();
+            suspectArmed = rng.Next(0, 10) > 5;
             lastSeenPosition = spawnPoint.Around2D(15f, 60f);
 
-            // Spawn a reporting officer on scene
+            // Spawn reporting officer
             reportingOfficer = new Ped("s_m_y_hwaycop_01", spawnPoint.Around2D(5f, 12f), 0f);
             if (reportingOfficer.Exists())
             {
@@ -62,63 +61,63 @@ namespace Adam69Callouts.Callouts
                 officerBlip.Scale = 0.8f;
             }
 
-            // Spawn missing person (on foot or in vehicle)
-            if (new Random().Next(0, 10) > 3) // ~60% on foot
+            // Spawn missing person — always create the Ped first
+            missingPerson = new Ped("a_m_m_prolhost_01", lastSeenPosition, 0f);
+            if (missingPerson.Exists())
             {
-                missingPerson = new Ped("a_m_m_prolhost_01", lastSeenPosition, 0f);
-                if (missingPerson.Exists())
+                missingPerson.IsPersistent = true;
+                missingPerson.BlockPermanentEvents = true;
+
+                if (rng.Next(0, 10) > 3) // ~60% on foot
                 {
-                    missingPerson.IsPersistent = true;
-                    missingPerson.BlockPermanentEvents = true;
                     missingPerson.Tasks.PlayAnimation(new AnimationDictionary("random@homelandsecurity"), "idle_a", -1f, AnimationFlags.Loop);
-                    missingBlip = missingPerson.AttachBlip();
-                    missingBlip.Color = System.Drawing.Color.Yellow;
-                    missingBlip.IsRouteEnabled = false;
                 }
-            }
-            else // in vehicle
-            {
-                var vehModel = suspectCars[new Random().Next(suspectCars.Length)];
-                suspectVehicle = new Vehicle(vehModel, lastSeenPosition);
-                if (suspectVehicle.Exists())
+                else // in vehicle — spawn a separate vehicle for the missing person
                 {
-                    suspectVehicle.IsPersistent = true;
-                    suspectVehicle.IsEngineOn = false;
-                    if (suspectVehicle.IsSeatFree((int)VehicleSeat.Passenger))
+                    var mpVehicleModel = suspectCars[rng.Next(suspectCars.Length)];
+                    var mpVehicle = new Vehicle(mpVehicleModel, lastSeenPosition);
+                    if (mpVehicle.Exists())
                     {
-                        missingPerson.IsPersistent = true;
-                        missingPerson.BlockPermanentEvents = true;
-                        missingBlip = missingPerson.AttachBlip();
-                        missingBlip.Color = System.Drawing.Color.Yellow;
+                        mpVehicle.IsPersistent = true;
+                        mpVehicle.IsEngineOn = false;
+                        if (mpVehicle.IsSeatFree((int)VehicleSeat.Passenger))
+                        {
+                            missingPerson.WarpIntoVehicle(mpVehicle, (int)VehicleSeat.Passenger);
+                        }
                     }
                 }
+
+                missingBlip = missingPerson.AttachBlip();
+                missingBlip.Color = System.Drawing.Color.Yellow;
+                missingBlip.IsRouteEnabled = false;
             }
 
-            // Spawn suspect and suspect vehicle separately (vehicle may contain suspect)
-            var suspectModel = suspectCars[new Random().Next(suspectCars.Length)];
+            // Spawn suspect vehicle and driver
+            var suspectModel = suspectCars[rng.Next(suspectCars.Length)];
             suspectVehicle = new Vehicle(suspectModel, spawnPoint.Around2D(20f, 60f));
             if (suspectVehicle.Exists())
             {
                 suspectVehicle.IsPersistent = true;
                 suspectVehicle.IsEngineOn = false;
-            }
 
-            suspect = suspectVehicle.CreateRandomDriver();
-            if (suspect.Exists())
-            {
-                suspect.IsPersistent = true;
-                suspect.BlockPermanentEvents = true;
-                if (suspectArmed)
+                suspect = suspectVehicle.CreateRandomDriver();
+                if (suspect.Exists())
                 {
-                    SafeInventory.SafeGiveWeapon(suspect, "weapon_pistol", 60, true);
-                }
+                    suspect.IsPersistent = true;
+                    suspect.BlockPermanentEvents = true;
+                    if (suspectArmed)
+                    {
+                        SafeInventory.SafeGiveWeapon(suspect, "weapon_pistol", 60, true);
+                    }
 
-                suspectBlip = suspect.AttachBlip();
-                suspectBlip.Color = System.Drawing.Color.Red;
-                suspectBlip.IsRouteEnabled = true;
+                    suspectBlip = suspect.AttachBlip();
+                    suspectBlip.Color = System.Drawing.Color.Red;
+                    suspectBlip.IsRouteEnabled = true;
+                }
             }
 
             dialogStage = 0;
+            pursuitStarted = false;
 
             return base.OnCalloutAccepted();
         }
@@ -140,7 +139,7 @@ namespace Adam69Callouts.Callouts
         {
             base.Process();
 
-            // Interact with reporting officer to gather information
+            // Interact with reporting officer
             if (reportingOfficer != null && reportingOfficer.Exists() && MainPlayer.DistanceTo(reportingOfficer) <= 12f && dialogStage == 0)
             {
                 if (Settings.HelpMessages)
@@ -159,7 +158,7 @@ namespace Adam69Callouts.Callouts
                 }
             }
 
-            // Interact with the suspect (if player approaches)
+            // Interact with suspect
             if (suspect != null && suspect.Exists() && MainPlayer.DistanceTo(suspect) <= 18f && dialogStage >= 1)
             {
                 if (Settings.HelpMessages)
@@ -175,7 +174,7 @@ namespace Adam69Callouts.Callouts
                     if (dialogStage == 2)
                     {
                         NativeFunction.Natives.TASK_TURN_PED_TO_FACE_ENTITY(suspect, MainPlayer, -1);
-                        Game.DisplaySubtitle("~b~You~w~: Sir/Ma'am, pull over, step out of the vehicle. You're being investigated in a Spectrum Alert.");
+                        Game.DisplaySubtitle("~b~You~w~: Citizen, pull over, step out of the vehicle. You're being investigated in a Spectrum Alert.");
                         GameFiber.Sleep(3000);
 
                         if (suspectArmed)
@@ -195,25 +194,22 @@ namespace Adam69Callouts.Callouts
                 }
             }
 
-            // If suspect flees in vehicle, trigger pursuit via LSPDFR API
-            if (suspectVehicle != null && suspectVehicle.Exists() && suspect.IsInVehicle(suspectVehicle, false) && suspectVehicle.IsDriveable && suspect.IsInCombat == false)
+            // Start pursuit only once when suspect flees
+            if (!pursuitStarted && suspect != null && suspect.Exists() &&
+                suspectVehicle != null && suspectVehicle.Exists() &&
+                suspect.IsInVehicle(suspectVehicle, false) &&
+                suspectVehicle.IsDriveable && !suspect.IsInCombat &&
+                suspectVehicle.Speed > 5f && MainPlayer.DistanceTo(suspectVehicle) > 20f)
             {
-                // If suspect attempts to flee by pressing gas (simulated randomly), start pursuit
-                if (suspect.IsInVehicle(suspectVehicle, false) && !suspect.IsBailingOutOfVehicle)
-                {
-                    // If vehicle is driving away (distance from spawnpoint increases quickly)
-                    if (suspectVehicle.Speed > 5f && MainPlayer.DistanceTo(suspectVehicle) > 20f)
-                    {
-                        var pursuit = LSPD_First_Response.Mod.API.Functions.CreatePursuit();
-                        LSPD_First_Response.Mod.API.Functions.AddPedToPursuit(pursuit, suspect);
-                        LSPD_First_Response.Mod.API.Functions.SetPursuitIsActiveForPlayer(pursuit, true);
-                        Game.DisplayNotification("~r~Suspect fleeing! Engage and attempt to stop the vehicle!");
-                        if (suspectBlip.Exists()) suspectBlip.Color = System.Drawing.Color.Red;
-                    }
-                }
+                pursuitStarted = true;
+                var pursuit = LSPD_First_Response.Mod.API.Functions.CreatePursuit();
+                LSPD_First_Response.Mod.API.Functions.AddPedToPursuit(pursuit, suspect);
+                LSPD_First_Response.Mod.API.Functions.SetPursuitIsActiveForPlayer(pursuit, true);
+                Game.DisplayNotification("~r~Suspect fleeing! Engage and attempt to stop the vehicle!");
+                if (suspectBlip != null && suspectBlip.Exists()) suspectBlip.Color = System.Drawing.Color.Red;
             }
 
-            // Allow calling backup or K9
+            // Request backup
             if (Game.IsKeyDown(Settings.RequestVehicleInfo))
             {
                 GameFiber.Sleep(200);
@@ -221,7 +217,7 @@ namespace Adam69Callouts.Callouts
                 LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_Backup_Audio");
             }
 
-            // Player death or manual end
+            // Player death
             if (MainPlayer.IsDead)
             {
                 if (Settings.MissionMessages)
