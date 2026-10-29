@@ -5,6 +5,8 @@
 v0.4.9:
 
 - Fixed the version checker
+- Minor fixes in Officer Down callout
+- Fixed some issues with Spectrum Alert (Florida Based) callout
 - Fixed some issues with Spectrum Alert (Florida Based) callout
 - Fixed the issue with Officer Down Callout
 - Minor fixes
