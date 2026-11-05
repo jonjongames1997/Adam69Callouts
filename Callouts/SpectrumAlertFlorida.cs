@@ -30,7 +30,7 @@ namespace Adam69Callouts.Callouts
             spawnPoint = World.GetNextPositionOnStreet(MainPlayer.Position.Around2D(400f, 900f));
             ShowCalloutAreaBlipBeforeAccepting(spawnPoint, 120f);
             CalloutInterfaceAPI.Functions.SendMessage(this, "Spectrum Alert: Missing person reported; possible abduction vehicle last seen nearby.");
-            LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("SUSPICIOUS_VEHICLE_LOITERING_02", spawnPoint);
+            LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("Adam69Callouts_SpectrumAlert_Florida_01", spawnPoint);
             CalloutMessage = "Spectrum Alert: Missing Person";
             CalloutPosition = spawnPoint;
 
