@@ -146,7 +146,7 @@ namespace Adam69Callouts.Callouts
                 malefemale = "Ma'am";
 
             counter = 0;
-            suspectStartedShooting = false; // ensure flag reset on accept
+            suspectStartedShooting = false;
 
             return base.OnCalloutAccepted();
         }
