@@ -6,12 +6,13 @@ v0.4.9:
 
 - Fixed the version checker
 - Minor fixes in Officer Down callout
-- Fixed some issues with Spectrum Alert (Florida Based) callout
-- Fixed some issues with Spectrum Alert (Florida Based) callout
+- Disabled Spectrum Alert (Florida Based) callout for a complete rewrite
 - Fixed the issue with Officer Down Callout
 - Minor fixes
 - Added Adam69Callouts.Common with Policing Redefined Helper (Visual Studio was having its quirky moment where it wouldn't detect the Polciing Redefined dll in the references in the project.)
 - Disabled Spectrum Alert  - Florida Based callout for a complete rewrite.
+- Added missing audio for Spectrum Alert callout
+- Reworked most of the callout audio (NO MORE LOUD ASS DISPATCH)
 
 [July 21, 2026]
 
