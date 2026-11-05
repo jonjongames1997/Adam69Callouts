@@ -21,7 +21,8 @@ namespace Adam69Callouts.Callouts
             Aggressive,
             Compliant,
             Flees,
-            PassesOut
+            PassesOut,
+            Shootout
         }
 
         private DrunkScenario scenario;
@@ -31,7 +32,7 @@ namespace Adam69Callouts.Callouts
             spawnpoint = World.GetNextPositionOnStreet(MainPlayer.Position.Around(500f));
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
             CalloutInterfaceAPI.Functions.SendMessage(this, "A Deranged Drunken Feller has been reported in the area. Respond Code 2.");
-            LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("SUSPICIOUS_PERSON_02", spawnpoint);
+            LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("Adam69Callouts_Deranged_Drunken_Feller_Crimes_01", spawnpoint);
             CalloutMessage = "Deranged Drunken Feller Reported";
             CalloutPosition = spawnpoint;
 
@@ -160,6 +161,9 @@ namespace Adam69Callouts.Callouts
                 case DrunkScenario.PassesOut:
                     HandlePassesOutScenario();
                     break;
+                case DrunkScenario.Shootout:
+                    HandleShootoutScenario();
+                    break;
             }
         }
 
@@ -274,6 +278,45 @@ namespace Adam69Callouts.Callouts
                     Game.DisplaySubtitle("~g~Suspect is down. Secure the scene and wait for EMS.");
                     LSPD_First_Response.Mod.API.Functions.IsPedArrested(suspect);
                     Adam69Callouts.Common.PolicingRedefinedCompat.RequestCode3Ambulance(spawnpoint);
+                    break;
+            }
+        }
+
+        // Scenario 5: Suspect draws a weapon and starts a shootout
+        private void HandleShootoutScenario()
+        {
+            switch (counter)
+            {
+                case 1:
+                    NativeFunction.Natives.TASK_TURN_PED_TO_FACE_ENTITY(suspect, MainPlayer, -1);
+                    Game.DisplaySubtitle("~b~You~w~: Sir, put your hands where I can see them!");
+                    break;
+                case 2:
+                    suspect.Tasks.PlayAnimation(new AnimationDictionary("random@drunk_driver_1"), "drunk_driver_stand_loop_dd2", -1f, AnimationFlags.Loop);
+                    Game.DisplaySubtitle("~r~Suspect~w~: *slurring* You ain't takin' me anywhere, pig!");
+                    break;
+                case 3:
+                    Game.DisplaySubtitle("~y~The suspect has produced a firearm! Take cover!");
+                    LSPD_First_Response.Mod.API.Functions.PlayScannerAudio("Adam69Callouts_ShotsFired_Audio_Remastered_01");
+                    Adam69Callouts.Common.PolicingRedefinedCompat.RequestPanicBackup(spawnpoint);
+
+                    if (suspect != null && suspect.Exists() && suspect.IsValid())
+                    {
+                        suspect.Tasks.Clear();
+                        suspect.Armor = 100;
+                        SafeInventory.SafeGiveWeapon(suspect, wepList[random.Next(wepList.Length)], 500, true);
+                        suspect.Tasks.FightAgainst(MainPlayer);
+                    }
+
+                    if (blip != null && blip.Exists())
+                    {
+                        blip.Color = System.Drawing.Color.Red;
+                    }
+
+                    break;
+                case 4:
+                    Game.DisplaySubtitle("~y~Shots fired! Neutralize the suspect and secure the scene!");
+                    Adam69Callouts.Common.PolicingRedefinedCompat.RequestPanicBackup(spawnpoint);
                     break;
             }
         }
