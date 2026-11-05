@@ -146,8 +146,6 @@ namespace Adam69Callouts.Common
 
         public static void Clear() => InvokeStatic("PolicingRedefined.API.TrafficControlAPI", "Clear");
 
-        // New helpers: request services / code responses / panic backup via PolicingRedefined if available.
-        // These methods attempt multiple plausible PolicingRedefined API types and method names and will silently no-op if none match.
 
         public static void RequestTowService(Vehicle vehicle)
         {
