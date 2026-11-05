@@ -2,6 +2,7 @@
 using Adam69Callouts.Common;
 using LSPD_First_Response;
 using LSPD_First_Response.Mod.API;
+using Adam69Callouts.Stuff;
 
 [assembly: Rage.Attributes.Plugin("Adam69Callouts", Description = "LSPDFR Callout Pack", Author = "JM Modifications")]
 namespace Adam69Callouts
