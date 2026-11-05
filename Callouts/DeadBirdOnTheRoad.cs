@@ -19,10 +19,13 @@ namespace Adam69Callouts.Callouts
                 new(894.278137f, 420.9684f, 119.312004f),
                 new(-1641.65662f, 986.3751f, 152.623215f),
                 new(-1048.19531f, -1520.81824f, 5.106961f),
+                new(1899.7080f, 3948.9720f, 32.7366f), // Marina Drive - Sandy Shores
+                new(-203.1090f, 6165.0320f, 31.2543f), // Paleto Bay - GOH
+                new(-2540.5510f, 2285.1420f, 32.8560f), // Route 68 
             };
             spawnpoint = LocationChooser.ChooseNearestLocation(list);
             ShowCalloutAreaBlipBeforeAccepting(spawnpoint, 100f);
-            LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("CRIME_ANIMAL_KILLED_02", spawnpoint);
+            LSPD_First_Response.Mod.API.Functions.PlayScannerAudioUsingPosition("Adam69Callouts_Dead_Bird_On_The_Road_01", spawnpoint);
             CalloutInterfaceAPI.Functions.SendMessage(this, "A dead bird is on the road.");
             CalloutMessage = "Dead Bird Reported";
             CalloutPosition = spawnpoint;
